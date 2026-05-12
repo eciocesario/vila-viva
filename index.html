@@ -1817,10 +1817,10 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
 <!-- BOTTOM SHEET CONTRIBUIR -->
 <div class="bso" id="bso" onclick="closeShByOverlay(event)"></div>
-<div class="bsh" id="bsh">
-  <div class="bshd"></div>
+<div class="bsh" id="bsh" role="dialog" aria-modal="true" aria-labelledby="bsh-title">
+  <div class="bshd" aria-hidden="true"></div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-    <div style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca)">O que você quer plantar hoje?</div>
+    <h2 id="bsh-title" style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin:0">O que você quer plantar hoje?</h2>
     <button onclick="closeSh()" aria-label="Fechar" style="background:var(--ar);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ci);display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
   </div>
   <div class="bsop">
@@ -1836,11 +1836,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 </div>
 
 <!-- CONTACT MODAL -->
-<div class="ctmo" id="ctmo">
+<div class="ctmo" id="ctmo" role="dialog" aria-modal="true" aria-labelledby="ct-title">
   <div class="ctin" style="position:relative">
     <button onclick="document.getElementById('ctmo').classList.remove('op')" aria-label="Fechar" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ci);display:flex;align-items:center;justify-content:center">×</button>
-    <div class="cthd"></div>
-    <div style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin-bottom:6px" id="ct-title">Conectar com</div>
+    <div class="cthd" aria-hidden="true"></div>
+    <h2 style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin:0 0 6px 0" id="ct-title">Conectar com</h2>
     <div style="font-size:13px;color:var(--ci);margin-bottom:20px;line-height:1.5">Sua intenção de participar foi registrada na plataforma e o organizador será notificado. Para combinar os detalhes, entre em contato pelo WhatsApp:</div>
     <div class="ctib"><strong id="ct-name"></strong><span id="ct-phone"></span></div>
     <a id="ct-link" href="#" class="wabtn" target="_blank"><svg class="waico"><use href="#wa"/></svg>Abrir conversa no WhatsApp</a>
@@ -1849,10 +1849,10 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 </div>
 
 <!-- EDIT PROFILE -->
-<div class="edov" id="edov">
+<div class="edov" id="edov" role="dialog" aria-modal="true" aria-labelledby="edov-title">
   <div class="edsh">
-    <div class="edshh"></div>
-    <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin-bottom:20px">Editar meu perfil</div>
+    <div class="edshh" aria-hidden="true"></div>
+    <h2 id="edov-title" style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin:0 0 20px 0">Editar meu perfil</h2>
     <div class="edf"><div class="edl">Nome</div><input class="edi" value="Mónica Reis"></div>
     <div class="edf"><div class="edl">Casa em Piracanga</div><input class="edi" value="Terra Maré"></div>
     <div class="edf"><div class="edl">Tagline</div><input class="edi" value="Arquiteta · Tecelã · Mãe de Piracanga"></div>
@@ -1896,12 +1896,12 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 </div>
 
 <!-- BADGE OVERLAY -->
-<div class="bdov" id="bdov" onclick="closeBadgeOverlay(event)">
+<div class="bdov" id="bdov" role="dialog" aria-modal="true" aria-labelledby="bdmt" onclick="closeBadgeOverlay(event)">
   <div class="bdmo" style="position:relative">
     <button onclick="document.getElementById('bdov').classList.remove('sh')" aria-label="Fechar" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--ci);display:flex;align-items:center;justify-content:center;line-height:1">×</button>
-    <span class="bdic" id="bdic">🌳</span>
+    <span class="bdic" id="bdic" aria-hidden="true">🌳</span>
     <div class="bdse">🌱 +15 sementes conquistadas!</div>
-    <div class="bdmt" id="bdmt">Badge conquistado!</div>
+    <h2 class="bdmt" id="bdmt" style="font-family:var(--fd);margin:0">Badge conquistado!</h2>
     <div class="bdmd" id="bdmd">Descrição</div>
     <div class="bdsrow">
       <button class="bdwbtn" id="bdwbtn"><svg class="waico"><use href="#wa"/></svg>Compartilhar</button>
@@ -1913,10 +1913,10 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
 
 <!-- MODAL: CADASTRAR VAGA -->
-<div class="edov" id="cadvaga-ov">
+<div class="edov" id="cadvaga-ov" role="dialog" aria-modal="true" aria-labelledby="cadvaga-title">
   <div class="edsh" style="max-height:92vh;overflow-y:auto">
-    <div class="edshh"></div>
-    <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin-bottom:4px">Cadastrar vaga</div>
+    <div class="edshh" aria-hidden="true"></div>
+    <h2 id="cadvaga-title" style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin:0 0 4px 0">Cadastrar vaga</h2>
     <div style="font-size:13px;color:var(--ci);margin-bottom:20px">Publique uma oportunidade de voluntariado ou trabalho remunerado na vila</div>
 
     <!-- Tipo de vaga (prominent toggle) -->
@@ -1964,10 +1964,10 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 </div>
 
 <!-- MODAL: CADASTRAR PROJETO/INICIATIVA no perfil -->
-<div class="edov" id="cadprojeto-ov">
+<div class="edov" id="cadprojeto-ov" role="dialog" aria-modal="true" aria-labelledby="cadproj-title">
   <div class="edsh" style="max-height:92vh;overflow-y:auto">
-    <div class="edshh"></div>
-    <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin-bottom:4px">Projeto ou iniciativa</div>
+    <div class="edshh" aria-hidden="true"></div>
+    <h2 id="cadproj-title" style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin:0 0 4px 0">Projeto ou iniciativa</h2>
     <div style="font-size:13px;color:var(--ci);margin-bottom:20px">Registre algo que você participou ou lidera na vila</div>
 
     <div class="edf"><div class="edl">Nome do projeto *</div><input class="edi" placeholder="Ex: Farmácia Viva, Mutirão da Escola..."></div>
@@ -2013,10 +2013,10 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 </div>
 
 <!-- MODAL: EDITAR SEÇÃO DO PERFIL (sobre/formação/exp) -->
-<div class="edov" id="editsec-ov">
+<div class="edov" id="editsec-ov" role="dialog" aria-modal="true" aria-labelledby="editsec-title">
   <div class="edsh" style="max-height:88vh;overflow-y:auto">
-    <div class="edshh"></div>
-    <div style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin-bottom:16px" id="editsec-title">Editar</div>
+    <div class="edshh" aria-hidden="true"></div>
+    <h2 id="editsec-title" style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin:0 0 16px 0">Editar</h2>
     <div id="editsec-body"><!-- content injected by JS --></div>
     <button class="edsv" onclick="saveEditSection()">Salvar</button>
     <button class="edcl" onclick="document.getElementById('editsec-ov').classList.remove('op')">Cancelar</button>
