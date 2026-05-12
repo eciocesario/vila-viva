@@ -58,9 +58,15 @@ Se algum achado novo aparecer nessa validação, registrar como adendo abaixo.
 
 ## Achados durante execução (não previstos)
 
-Nenhum. Plano executado conforme spec.
+Plano executado conforme spec. Um ponto operacional + dois achados do code review aplicados em-cima desta rodada:
 
-Único ponto de atenção: o JS one-liner que aplica `aria-hidden` em SVGs decorativos roda no DOMContentLoaded implícito (script no fim do body). Cobre os elementos presentes na carga inicial. Elementos injetados dinamicamente (ex.: cards de projeto via `submitCadProjeto`) ficam sem o atributo — não-bloqueante porque esses são casos de demo/protótipo. Anotado para Onda 3 (refactor de event handlers).
+**Operacional:** o JS one-liner que aplica `aria-hidden` em SVGs decorativos roda no carregamento inicial. Cobre os elementos presentes na carga. Elementos injetados dinamicamente (ex.: cards de projeto via `submitCadProjeto`) ficam sem o atributo — não-bloqueante porque esses são casos de demo. Anotado para Onda 3 (refactor de event handlers).
+
+**Code review (commit pós-revisão):** o revisor encontrou duas regressões sutis introduzidas pelos próprios fixes, corrigidas in-line:
+- `.tic` (sino de notificações no topbar) perdeu o background tan/cream porque o `style="...background:none..."` inline do botão sobrescreveu a regra de classe. Inline tem maior especificidade que selector. Fix: remover `background:none` do inline; CSS de `.tic` volta a aplicar.
+- `:focus-visible{...border-radius:inherit}` global era ruído com efeito colateral: o `outline` não respeita `border-radius` nativamente (só Firefox parcialmente), e o `inherit` no elemento focado herdava `0` do pai, ameaçando arredondamento de botões pill (`.lbtn`, `.obtn`, etc.). Fix: remover `border-radius:inherit` da regra.
+
+**Achado de contraste pós-review (vai para Onda 2):** o novo `--ci:#5A6E5C` dá 4.93:1 sobre `--ar` (passa AA), mas só 4.42:1 sobre `--ar2`. O token é usado em texto de `.shst-txt` (share strip), banner do feed e similares onde o fundo é `--ar2`. Marginal (4.42 vs 4.5 mínimo AA texto normal). Decisão: escurecer mais para `~#566A58` na Onda 2, ou criar token específico `--ci-on-ar2`. Lighthouse pode flagrar.
 
 ## Backlog — Ondas 2/3/4 (inalterado vs spec seção 7)
 
