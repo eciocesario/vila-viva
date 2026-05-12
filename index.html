@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Vila Viva — Rede Social Comunitária de Piracanga</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --v:#1A5C38;--v2:#2E8B57;--v3:#4FAF7A;--vc:#E6F3EC;--vm:#C8EDD8;
+  --tr:#B85C2A;--tc:#F5E8DF;--ar:#F7F2EA;--ar2:#EDE6D6;
+  --ca:#1E2B20;--ca2:#3A4D3C;--ci:#7A8C7C;--ci2:#A8B8A9;
+  --br:#FAFDF8;--ou:#C49A2A;--oc:#FDF3D0;--az:#2A6B8A;--azc:#DFF0F7;
+  --rx:#6B4FA0;--rxc:#EDE7F8;--bo:rgba(30,43,32,.10);
+  --r:14px;--r2:20px;--r3:999px;
+  --fd:'Fraunces',serif;--fb:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar);color:var(--ca);-webkit-font-smoothing:antialiased}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;background:var(--ar);display:none;flex-direction:column}
+.screen.active{display:flex;animation:fu .3s ease-out}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SPLASH */
+#splash{background:linear-gradient(160deg,#0D3D22 0%,#1A5C38 50%,#2A7A4F 100%);align-items:center;justify-content:center;overflow:hidden}
+.sbg{position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle at 20% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 80% 20%,#fff 1px,transparent 1px);background-size:60px 60px,80px 80px}
+.sc{text-align:center;z-index:1;animation:si .8s ease-out}
+@keyframes si{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.slf{width:72px;height:72px;margin:0 auto 20px;animation:lg 1s .3s both ease-out}
+@keyframes lg{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.slo{font-family:var(--fd);font-size:42px;font-weight:300;color:#fff;letter-spacing:-1px}
+.sta{font-size:14px;color:rgba(255,255,255,.65);margin-top:8px}
+.sds{display:flex;gap:6px;justify-content:center;margin-top:40px}
+.sd{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);animation:dp 1.4s ease-in-out infinite}
+.sd:nth-child(2){animation-delay:.2s}.sd:nth-child(3){animation-delay:.4s}
+@keyframes dp{0%,80%,100%{transform:scale(.8);opacity:.3}40%{transform:scale(1.2);opacity:1}}
+
+/* TOOLTIPS */
+.ht{position:relative}
+.tb{display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--ca);color:#fff;font-size:12px;line-height:1.5;padding:9px 12px;border-radius:10px;width:210px;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.25);font-family:var(--fb)}
+.tb::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ca)}
+.tb.tl{left:0;transform:none}.tb.tl::after{left:16px;transform:none}
+.tb.tr{left:auto;right:0;transform:none}.tb.tr::after{left:auto;right:16px;transform:none}
+.ht:hover .tb,.ht:focus .tb{display:block}
+
+/* AGENT SYSTEM */
+.agent-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--r3);font-size:12px;font-weight:500;cursor:default}
+.ag-cultivador{background:#E6F3EC;color:#1A5C38}
+.ag-guardiao{background:#FDF3D0;color:#96720A}
+.ag-aliado{background:#DFF0F7;color:#1A5C8A}
+.ag-semente{background:#EDE7F8;color:#5B3F90}
+.ag-trab_regiao{background:#EDE6D6;color:#5A4A30}
+.ag-polinizador{background:#E6F3EC;color:#2A6B44}
+.ag-embaixador{background:#FDF3D0;color:#7A5800}
+.ag-remoto{background:#DFF0F7;color:#0C447C}
+.match-tab{flex:0 0 auto;padding:10px 14px;font-size:13px;font-weight:500;color:var(--ci);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:var(--fb);white-space:nowrap;transition:all .15s}
+.match-tab.a{color:var(--v);border-bottom-color:var(--v)}
+.arq-filter{padding:5px 11px;border-radius:var(--r3);font-size:11px;font-weight:500;border:1.5px solid var(--bo);background:var(--ar);color:var(--ca2);cursor:pointer;margin-right:5px;margin-bottom:4px;font-family:var(--fb);white-space:nowrap;transition:all .15s}
+.arq-filter.a{border-width:2px}
+.vagas-screen-tab{flex:1;padding:11px 8px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:var(--fb);transition:all .15s}
+.vagas-screen-tab.a{color:#fff;border-bottom-color:#fff}
+
+/* LOGIN */
+#login{background:var(--br)}
+.lhd{padding:80px 24px 32px;background:linear-gradient(160deg,#0D3D22,#1A5C38);text-align:center}
+.lbd{padding:28px 24px 40px}
+.ltabs{display:flex;border-radius:var(--r);overflow:hidden;border:1.5px solid var(--bo);margin-bottom:24px}
+.ltab{flex:1;padding:11px;text-align:center;font-size:14px;font-weight:500;cursor:pointer;background:var(--br);color:var(--ci);transition:all .2s}
+.ltab.a{background:var(--v);color:#fff}
+.lf{margin-bottom:16px}
+.ll{font-size:12px;font-weight:500;color:var(--ci);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+.li{width:100%;padding:13px 14px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:14px;color:var(--ca);outline:none}
+.li:focus{border-color:var(--v)}
+.lbtn{width:100%;padding:15px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:16px;font-weight:500;cursor:pointer;margin-top:4px}
+.ldiv{text-align:center;font-size:13px;color:var(--ci);margin:20px 0;position:relative}
+.ldiv::before,.ldiv::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--bo)}
+.ldiv::before{left:0}.ldiv::after{right:0}
+.lwbtn{width:100%;padding:14px;background:#25D366;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:15px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.lhint{background:var(--vc);border-radius:var(--r);padding:12px 14px;font-size:13px;color:var(--v);line-height:1.5;margin-top:16px}
+
+/* ONBOARDING */
+#onboarding{background:var(--br)}
+.ohd{padding:56px 24px 20px;background:var(--v);position:relative;overflow:hidden}
+.osl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.55);margin-bottom:8px}
+.oti{font-family:var(--fd);font-size:26px;font-weight:300;color:#fff;line-height:1.25}
+.opr{display:flex;gap:6px;margin-top:20px}
+.opd{height:3px;border-radius:2px;background:rgba(255,255,255,.25);flex:1;transition:background .3s}
+.opd.a{background:#fff}
+.obd{padding:24px 24px 100px;flex:1}
+.ose{margin-bottom:24px}
+.olab{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:10px}
+.oin{width:100%;padding:13px 16px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:15px;color:var(--ca);outline:none;transition:border-color .2s}
+.oin:focus{border-color:var(--v)}
+.osel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A8C7C' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.sgr{display:flex;flex-wrap:wrap;gap:8px}
+.stag{padding:8px 14px;border-radius:var(--r3);font-size:13px;border:1.5px solid var(--bo);background:var(--ar);color:var(--ca2);cursor:pointer;transition:all .15s;user-select:none}
+.stag.s{background:var(--vc);border-color:var(--v);color:var(--v);font-weight:500}
+.obtn{position:fixed;bottom:24px;left:24px;right:24px;padding:16px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:16px;font-weight:500;cursor:pointer}
+.pretag{display:inline-block;padding:3px 10px;background:var(--vc);color:var(--v);border-radius:var(--r3);font-size:12px;font-weight:500;margin-bottom:12px}
+/* Agent selector cards */
+.agent-selector-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.agent-sel-card{padding:14px;border-radius:var(--r2);border:2px solid var(--bo);background:var(--ar);cursor:pointer;transition:all .15s;text-align:left}
+.agent-sel-card.sel{border-color:var(--v);background:var(--vc)}
+.agent-sel-card:active{transform:scale(.97)}
+.asc-icon{font-size:24px;margin-bottom:6px}
+.asc-name{font-size:13px;font-weight:500;color:var(--ca);margin-bottom:3px}
+.asc-desc{font-size:11px;color:var(--ci);line-height:1.4}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;background:var(--br);border-bottom:1px solid var(--bo);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tlog{font-family:var(--fd);font-size:22px;font-weight:300;color:var(--v);letter-spacing:-.5px}
+.trig{display:flex;align-items:center;gap:10px}
+.pud{width:8px;height:8px;border-radius:50%;background:var(--v3);position:relative}
+.pud::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:var(--v3);opacity:.3;animation:pda 2s ease-in-out infinite}
+@keyframes pda{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.8);opacity:0}}
+.tic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ar);cursor:pointer}
+.tav{width:32px;height:32px;border-radius:50%;background:var(--vc);border:2px solid var(--v);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--v);cursor:pointer}
+.notif-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:var(--tr);border:2px solid var(--br)}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--br);border-top:1px solid var(--bo);display:flex;align-items:center;height:64px;padding:0 8px}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;padding:8px 4px;color:var(--ci);transition:color .15s;position:relative}
+.bni.a{color:var(--v)}
+.bni svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
+.bni span{font-size:10px;font-weight:500}
+.bnc{flex:0 0 64px;display:flex;align-items:center;justify-content:center}
+.fab{width:52px;height:52px;border-radius:50%;background:var(--v);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(26,92,56,.35);transition:transform .15s;position:relative}
+.fab:active{transform:scale(.93)}
+.fab svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2}
+
+/* CONTENT */
+.cnt{flex:1;padding-bottom:80px}
+
+/* BANNER */
+.cbn{margin:16px;background:var(--v);border-radius:var(--r2);padding:16px 18px;position:relative;overflow:hidden}
+.cbng{font-size:13px;color:rgba(255,255,255,.65)}
+.cbnname{font-family:var(--fd);font-size:20px;color:#fff;font-weight:300;margin:2px 0 12px}
+.csts{display:flex;gap:8px;flex-wrap:wrap}
+.cst{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border-radius:var(--r3);padding:5px 10px;font-size:12px;color:rgba(255,255,255,.85);cursor:default}
+
+/* STORIES */
+.strw{padding:16px 0 4px}
+.strt{padding:0 16px 10px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--ci)}
+.strsc{display:flex;gap:12px;padding:0 16px;overflow-x:auto;scrollbar-width:none}
+.strsc::-webkit-scrollbar{display:none}
+.sri{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.srr{width:58px;height:58px;border-radius:50%;padding:2.5px}
+.srr.g{background:var(--v)}.srr.t{background:var(--tr)}.srr.o{background:var(--ou)}.srr.b{background:var(--az)}.srr.p{background:var(--rx)}
+.srr.add{background:transparent;border:2px dashed var(--ci2)}
+.srav{width:100%;height:100%;border-radius:50%;background:var(--ar);border:2px solid var(--br);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:18px;color:var(--v)}
+.srn{font-size:11px;color:var(--ca2);max-width:60px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* FILTERS */
+.ffs{display:flex;gap:8px;padding:8px 16px;overflow-x:auto;scrollbar-width:none}
+.ffs::-webkit-scrollbar{display:none}
+.fch{flex-shrink:0;padding:7px 14px;border-radius:var(--r3);font-size:13px;border:1.5px solid var(--bo);background:var(--br);color:var(--ca2);cursor:pointer;white-space:nowrap;transition:all .15s;position:relative}
+.fch.a{background:var(--vc);border-color:var(--v);color:var(--v);font-weight:500}
+
+/* CARDS */
+.cards{padding:8px 16px 0;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);overflow:hidden}
+.chd{display:flex;align-items:center;gap:10px;padding:14px 14px 10px}
+.cav{width:40px;height:40px;border-radius:50%;background:var(--vc);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:16px;color:var(--v);flex-shrink:0}
+.cav.t{background:var(--tc);color:var(--tr)}.cav.o{background:var(--oc);color:var(--ou)}.cav.b{background:var(--azc);color:var(--az)}.cav.p{background:var(--rxc);color:var(--rx)}.cav.c{background:#F5E8DF;color:#8B3A10}
+.cmt{flex:1}
+.cnm{font-size:14px;font-weight:500;color:var(--ca)}
+.csb{font-size:12px;color:var(--ci);margin-top:1px}
+.cbdg{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:var(--r3);font-size:11px;font-weight:500;position:relative}
+.bdp{background:var(--vc);color:var(--v)}.bdr{background:var(--tc);color:var(--tr)}.bde{background:var(--oc);color:var(--ou)}.bdcq{background:var(--rxc);color:var(--rx)}
+.cbd{padding:0 14px 12px}
+.ctx{font-size:14px;color:var(--ca2);line-height:1.6}
+.skr{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.skp{padding:4px 10px;border-radius:var(--r3);font-size:12px;background:var(--ar);color:var(--ca2);border:1px solid var(--bo);position:relative}
+.skp.m{background:var(--vc);color:var(--v);border-color:transparent}
+.rcts{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--bo);flex-wrap:wrap}
+.rbtn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--r3);border:1.5px solid var(--bo);background:var(--br);font-size:12px;color:var(--ca2);cursor:pointer;transition:all .15s;font-family:var(--fb);position:relative}
+.rbtn:active{transform:scale(.95)}.rbtn.rc{background:var(--vc);border-color:var(--v);color:var(--v)}
+.cacs{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--bo);flex-wrap:wrap}
+.abtn{flex:1;padding:10px;border-radius:var(--r);border:1.5px solid var(--bo);background:var(--br);font-family:var(--fb);font-size:13px;font-weight:500;color:var(--ca2);cursor:pointer;transition:all .15s;min-width:80px;position:relative}
+.abtn.pri{background:var(--tr);border-color:var(--tr);color:#fff}
+.abtn.grn{background:var(--v);border-color:var(--v);color:#fff}
+.abtn:active{transform:scale(.97)}
+.pbr{height:6px;background:var(--ar2);border-radius:3px;overflow:hidden;margin:8px 0}
+.pf{height:100%;border-radius:3px;background:var(--v)}
+.parts{display:flex;align-items:center;gap:6px;margin:6px 0}
+.pavs{display:flex}
+.pav{width:24px;height:24px;border-radius:50%;background:var(--vc);border:2px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--v);margin-left:-6px}
+.pav:first-child{margin-left:0}
+.pt{font-size:12px;color:var(--ci)}
+.cqcard{background:linear-gradient(135deg,var(--rxc) 0%,var(--vc) 100%);border:1px dashed rgba(107,79,160,.3)}
+.cqbb{width:52px;height:52px;border-radius:50%;background:var(--br);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 2px 12px rgba(107,79,160,.2);margin-right:12px;flex-shrink:0}
+
+/* SHARE STRIP */
+.shst{background:var(--ar2);border-top:1px solid var(--bo);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.shst-txt{font-size:12px;color:var(--ci);flex:1;line-height:1.4}
+.shst-btns{display:flex;gap:6px;flex-shrink:0}
+.shbtn{padding:6px 11px;border-radius:var(--r3);font-size:12px;font-weight:500;border:none;cursor:pointer;font-family:var(--fb);display:flex;align-items:center;gap:4px;transition:all .15s}
+.shbtn.wp{background:#25D366;color:#fff}
+.shbtn.cp{background:var(--ar);border:1.5px solid var(--bo);color:var(--ca2)}
+.shbtn:active{transform:scale(.95)}
+
+/* COMMENTS */
+.cmsec{padding:10px 14px;border-top:1px solid var(--bo);display:none}
+.cmsec.op{display:block}
+.cminr{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.cmsm{width:30px;height:30px;border-radius:50%;background:var(--vc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--v);flex-shrink:0}
+.cminp{flex:1;padding:8px 12px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:13px;color:var(--ca);outline:none}
+.cminp:focus{border-color:var(--v)}
+.cmsd{padding:8px 14px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:13px;cursor:pointer}
+.cmit{display:flex;gap:8px;margin-bottom:10px}
+.cmbd{background:var(--ar);border-radius:0 var(--r) var(--r) var(--r);padding:8px 12px;flex:1}
+.cmat{font-size:12px;font-weight:500;color:var(--v);margin-bottom:2px}
+.cmtx{font-size:13px;color:var(--ca2);line-height:1.45}
+
+/* CONTACT MODAL */
+.ctmo{position:fixed;inset:0;z-index:500;display:none;align-items:flex-end;background:rgba(30,43,32,.45)}
+.ctmo.op{display:flex;animation:fdi .2s ease}
+@keyframes fdi{from{opacity:0}to{opacity:1}}
+.ctin{background:var(--br);border-radius:24px 24px 0 0;padding:20px 20px 40px;width:100%;animation:su .3s ease-out}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.cthd{width:36px;height:4px;background:var(--bo);border-radius:2px;margin:0 auto 16px}
+.ctib{background:var(--vc);border-radius:var(--r);padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--v);line-height:1.5}
+.ctib strong{display:block;font-size:14px;margin-bottom:2px}
+.wabtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;background:#25D366;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:15px;font-weight:500;cursor:pointer;text-decoration:none;margin-bottom:8px}
+.cnlbtn{width:100%;padding:13px;background:transparent;border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:14px;color:var(--ci);cursor:pointer}
+
+/* PROFILE */
+.phero{min-height:200px;background:linear-gradient(160deg,#0D3D22 0%,#2E8B57 100%);position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;overflow:hidden;flex-shrink:0}
+.hpat{position:absolute;inset:0;opacity:.05;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:24px 24px}
+.hav{width:72px;height:72px;border-radius:50%;background:var(--vc);border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:28px;color:var(--v);margin-bottom:10px}
+.hnm{font-family:var(--fd);font-size:24px;font-weight:300;color:#fff}
+.htg{font-size:13px;color:rgba(255,255,255,.65);font-style:italic;margin-top:3px}
+.pbd{padding:20px 16px 100px}
+.psc{margin-bottom:24px}
+.pst{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--ci);margin-bottom:12px}
+
+/* AGENT CARD IN PROFILE */
+.agent-profile-card{background:var(--ar);border-radius:var(--r2);padding:14px 16px;border:1.5px solid var(--bo);margin-bottom:20px}
+.apc-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.apc-icon{font-size:32px}
+.apc-info{}
+.apc-name{font-size:16px;font-weight:500;color:var(--ca)}
+.apc-tipo{font-size:12px;color:var(--ci);margin-top:1px}
+.apc-bar{height:4px;background:var(--ar2);border-radius:2px;overflow:hidden;margin:8px 0 6px}
+.apc-bar-fill{height:100%;border-radius:2px;background:var(--v)}
+.apc-stats{display:flex;gap:8px;flex-wrap:wrap}
+.apc-stat{padding:3px 10px;border-radius:var(--r3);font-size:11px;font-weight:500}
+.apc-desc{font-size:13px;color:var(--ci);line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid var(--bo)}
+.apc-actions{display:flex;gap:8px;margin-top:10px}
+.apc-btn{flex:1;padding:8px;border-radius:var(--r3);font-size:12px;font-weight:500;cursor:pointer;font-family:var(--fb);border:1.5px solid var(--bo);background:var(--br);color:var(--ca2);transition:all .15s}
+.apc-btn.green{background:var(--v);border-color:var(--v);color:#fff}
+
+/* SEEDS */
+.scard{background:linear-gradient(135deg,var(--vc),var(--ar2));border-radius:var(--r2);padding:16px;border:1px solid rgba(26,92,56,.1)}
+.slv{font-family:var(--fd);font-size:20px;color:var(--v)}
+.ssb{font-size:12px;color:var(--ci);margin:2px 0 10px}
+.srow{display:flex;gap:16px;margin-top:12px}
+.sst{text-align:center}
+.ssv{font-size:20px;font-weight:500;color:var(--ca)}
+.ssl{font-size:11px;color:var(--ci)}
+.bdgr{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bdgi{display:flex;flex-direction:column;align-items:center;gap:4px}
+.bdgic{width:52px;height:52px;border-radius:50%;background:var(--ar2);display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--bo);cursor:pointer;transition:transform .15s;position:relative}
+.bdgic:hover{transform:scale(1.1)}
+.bdgic.ea{background:var(--vc);border-color:var(--v)}
+.bdgic.te{background:var(--tc);border-color:var(--tr)}
+.bdgic.oe{background:var(--oc);border-color:var(--ou)}
+.bdgic.lk{opacity:.35;filter:grayscale(1)}
+.bdgn{font-size:10px;color:var(--ca2);text-align:center;line-height:1.3}
+.tl{position:relative;padding-left:20px}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:var(--bo)}
+.tli{position:relative;padding:0 0 20px 16px}
+.tld{position:absolute;left:-20px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--v);border:2px solid var(--br)}
+.tldt{font-size:11px;color:var(--ci)}.tltx{font-size:13px;color:var(--ca2);margin-top:2px}
+
+/* EDIT OVERLAY */
+.edov{position:fixed;inset:0;z-index:600;background:rgba(30,43,32,.5);display:none;align-items:flex-end}
+.edov.op{display:flex;animation:fdi .2s ease}
+.edsh{background:var(--br);border-radius:24px 24px 0 0;padding:20px 20px 40px;width:100%;max-height:90vh;overflow-y:auto;animation:su .3s ease-out}
+.edshh{width:36px;height:4px;background:var(--bo);border-radius:2px;margin:0 auto 16px}
+.edf{margin-bottom:16px}
+.edl{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:6px}
+.edi{width:100%;padding:12px 14px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:14px;color:var(--ca);outline:none}
+.edi:focus{border-color:var(--v)}
+.edsv{width:100%;padding:14px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:15px;font-weight:500;cursor:pointer;margin-top:8px}
+.edcl{width:100%;padding:12px;background:transparent;border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:14px;color:var(--ci);cursor:pointer;margin-top:8px}
+
+/* MAP */
+.mapc{flex:1;position:relative;background:#E8F0E0;overflow:hidden;min-height:300px}
+.msvg{width:100%;height:100%}
+.mapf{padding:12px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.mapf::-webkit-scrollbar{display:none}
+.mleg{position:absolute;bottom:88px;left:16px;background:rgba(250,253,248,.95);border-radius:var(--r);padding:10px 12px;backdrop-filter:blur(8px);border:1px solid var(--bo)}
+.mli{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ca2);padding:2px 0}
+.mld{width:10px;height:10px;border-radius:50%}
+.mfab{position:absolute;bottom:88px;right:16px;background:var(--tr);border:none;border-radius:var(--r3);padding:12px 18px;font-family:var(--fb);font-size:13px;font-weight:500;color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(184,92,42,.35);display:flex;align-items:center;gap:6px}
+.mpp{position:absolute;bottom:148px;left:16px;right:16px;background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);padding:14px;box-shadow:0 2px 20px rgba(30,43,32,.08);display:none}
+.mpp.vis{display:block;animation:fu .2s ease-out}
+
+/* MATCH */
+.mhdr{padding:56px 24px 16px;background:var(--br);border-bottom:1px solid var(--bo);flex-shrink:0}
+.mc{background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);padding:14px;display:flex;gap:12px;align-items:flex-start}
+.mav{width:48px;height:48px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:20px}
+.mi{flex:1}
+.mnm{font-size:15px;font-weight:500;color:var(--ca)}
+.mme{font-size:12px;color:var(--ci);margin:2px 0 4px}
+.mtgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.mtg{padding:3px 9px;border-radius:var(--r3);font-size:11px}
+.mtg.co{background:var(--vc);color:var(--v)}.mtg.cl{background:var(--azc);color:var(--az)}
+.snbtn{padding:8px 12px;border-radius:var(--r3);background:var(--v);color:#fff;border:none;font-family:var(--fb);font-size:12px;cursor:pointer;white-space:nowrap}
+
+/* QUIZ */
+.qhdr{background:var(--v);padding:56px 24px 24px;flex-shrink:0}
+.qo{padding:16px;border-radius:var(--r);border:1.5px solid var(--bo);background:var(--br);font-size:15px;color:var(--ca);cursor:pointer;margin-bottom:10px;text-align:left;font-family:var(--fb);width:100%;transition:all .15s}
+.qo.cr{background:var(--vc);border-color:var(--v);color:var(--v)}
+.qo.wr{background:var(--tc);border-color:var(--tr);color:var(--tr)}
+.qfb{margin-top:16px;padding:14px;border-radius:var(--r);background:var(--vc);color:var(--v);font-size:14px;display:none;line-height:1.6}
+.qfb.sh{display:block}
+.sea{display:inline-flex;align-items:center;gap:4px;background:var(--v);color:#fff;padding:4px 10px;border-radius:var(--r3);font-size:12px;font-weight:500;margin-top:8px}
+
+/* DASHBOARD */
+.dhdr{padding:56px 24px 16px;background:var(--v);flex-shrink:0}
+.dbdy{padding:16px;display:flex;flex-direction:column;gap:14px;padding-bottom:100px}
+.dcd{background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);overflow:hidden}
+.dcdhd{padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:center}
+.dct{font-size:13px;font-weight:500;color:var(--ca)}
+.dcbd{padding:0 16px 14px}
+.mbr{display:flex;align-items:center;gap:8px;margin:6px 0}
+.mbl{font-size:12px;color:var(--ca2);width:110px;flex-shrink:0}
+.mbt{flex:1;height:6px;background:var(--ar2);border-radius:3px;overflow:hidden}
+.mbf{height:100%;border-radius:3px}
+.psr{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.ps{background:var(--ar);border-radius:var(--r);padding:8px 12px;text-align:center;flex:1;min-width:60px}
+.psv{font-size:18px;font-weight:500;color:var(--ca)}
+.psl{font-size:10px;color:var(--ci);margin-top:2px}
+.pch{height:60px;display:flex;align-items:flex-end;gap:4px;padding:8px 0}
+.pb{flex:1;border-radius:3px 3px 0 0;background:var(--v3);opacity:.6;min-height:4px}
+.pb.hl{opacity:1;background:var(--v)}
+/* Agent breakdown chart */
+.ag-breakdown{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.ag-seg{border-radius:var(--r3);padding:6px 12px;font-size:12px;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;min-width:60px}
+.ag-seg-n{font-size:18px;font-weight:600}
+.ag-seg-l{font-size:10px;opacity:.8}
+
+/* NOTIFS */
+.nhdr{padding:56px 24px 16px;background:var(--br);border-bottom:1px solid var(--bo);flex-shrink:0}
+.nls{padding:8px 16px;display:flex;flex-direction:column;gap:2px;padding-bottom:100px}
+.nit{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--bo)}
+.nic{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ng{background:var(--vc)}.nt{background:var(--tc)}.no{background:var(--oc)}.nr{background:var(--rxc)}
+.nif{flex:1}
+.ntx{font-size:14px;color:var(--ca);line-height:1.5}
+.ntm{font-size:12px;color:var(--ci);margin-top:3px}
+.nbtn{padding:6px 12px;border-radius:var(--r3);background:var(--ar);border:1px solid var(--bo);font-family:var(--fb);font-size:12px;color:var(--ca2);cursor:pointer;white-space:nowrap;margin-top:6px}
+
+/* BOTTOM SHEET */
+.bso{position:fixed;inset:0;background:rgba(30,43,32,.4);z-index:300;display:none}
+.bso.sh{display:block;animation:fdi .2s ease}
+.bsh{position:fixed;bottom:0;left:0;right:0;z-index:301;background:var(--br);border-radius:24px 24px 0 0;padding:16px 16px 40px;animation:su .3s ease-out;display:none}
+.bshd{width:36px;height:4px;border-radius:2px;background:var(--bo);margin:0 auto 20px}
+.bsti{font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin-bottom:16px;text-align:center}
+.bsop{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bso2{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:var(--ar);border-radius:var(--r2);cursor:pointer;transition:all .15s;border:1.5px solid transparent;position:relative}
+.bso2:active{transform:scale(.96)}
+.bso2:hover{border-color:var(--v);background:var(--vc)}
+.bsoi{font-size:24px}.bsol{font-size:12px;font-weight:500;color:var(--ca);text-align:center}
+.bsos{font-size:10px;color:var(--ci);text-align:center}
+
+/* BADGE OVERLAY */
+.bdov{position:fixed;inset:0;background:rgba(30,43,32,.7);z-index:700;display:none;align-items:center;justify-content:center}
+.bdov.sh{display:flex}
+.bdmo{background:var(--br);border-radius:var(--r2);padding:32px 24px;text-align:center;margin:24px;animation:bp .4s cubic-bezier(.34,1.56,.64,1);max-width:320px;width:100%}
+@keyframes bp{from{transform:scale(0) rotate(-10deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.bdic{font-size:64px;margin-bottom:12px;display:block}
+.bdmt{font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin-bottom:6px}
+.bdmd{font-size:14px;color:var(--ci);margin-bottom:16px;line-height:1.5}
+.bdsrow{display:flex;gap:8px;margin-bottom:12px}
+.bdbtn{flex:1;padding:13px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;cursor:pointer}
+.bdwbtn{flex:1;padding:13px;background:#25D366;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.bdse{display:inline-flex;align-items:center;gap:4px;background:var(--vc);color:var(--v);padding:5px 12px;border-radius:var(--r3);font-size:13px;font-weight:500;margin-bottom:12px}
+
+/* UTILS */
+.bkbtn{background:none;border:none;cursor:pointer;font-size:14px;color:var(--ci);margin-bottom:8px;font-family:var(--fb);padding:0}
+.sctop{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:500;color:var(--v);background:var(--vc);padding:4px 10px;border-radius:var(--r3)}
+.divlbl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--ci);padding:12px 16px 4px}
+
+/* WA ICON SVG */
+.waico{width:18px;height:18px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- WA SVG SYMBOL -->
+<svg style="display:none"><symbol id="wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/></symbol></svg>
+
+<!-- SPLASH -->
+<div class="screen active" id="splash">
+  <div class="sbg"></div>
+  <div class="sc">
+    <svg class="slf" viewBox="0 0 72 72" fill="none"><path d="M36 8C36 8 12 20 12 40C12 56 24 64 36 64C48 64 60 56 60 40C60 20 36 8 36 8Z" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/><line x1="36" y1="8" x2="36" y2="64" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="3 3"/></svg>
+    <div class="slo">Vila Viva</div>
+    <div class="sta">Rede Social Comunitária de Piracanga</div>
+    <div class="sds"><div class="sd"></div><div class="sd"></div><div class="sd"></div></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="screen" id="login">
+  <div class="lhd">
+    <div style="font-size:44px;margin-bottom:12px">🌿</div>
+    <div style="font-family:var(--fd);font-size:32px;font-weight:300;color:#fff;margin-bottom:6px">Vila Viva</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.6)">Entrar ou criar seu perfil na vila</div>
+  </div>
+  <div class="lbd">
+    <div class="ltabs"><div class="ltab a" id="tab-e" onclick="setTab('e')">Entrar</div><div class="ltab" id="tab-c" onclick="setTab('c')">Criar perfil</div></div>
+    <div id="fe">
+      <div class="lf"><div class="ll">Nome ou e-mail</div><input class="li" placeholder="monica@piracanga.org" type="text"></div>
+      <div class="lf"><div class="ll">Senha</div><input class="li" placeholder="••••••••" type="password"></div>
+      <button class="lbtn" onclick="goTo('feed')">Entrar na Vila →</button>
+      <div style="text-align:center;margin-top:10px"><a href="#" style="font-size:13px;color:var(--ci)">Esqueci minha senha</a></div>
+    </div>
+    <div id="fc" style="display:none">
+      <div class="lf"><div class="ll">Nome completo</div><input class="li" placeholder="Seu nome na vila"></div>
+      <div class="lf"><div class="ll">E-mail</div><input class="li" placeholder="seu@email.com" type="email"></div>
+      <div class="lf"><div class="ll">Criar senha</div><input class="li" placeholder="Mínimo 8 caracteres" type="password"></div>
+      <button class="lbtn" onclick="goTo('onboarding')">Criar perfil e entrar →</button>
+    </div>
+    <div class="ldiv">ou</div>
+    <button class="lwbtn" onclick="goTo('feed')"><svg class="waico"><use href="#wa"/></svg>Entrar com WhatsApp</button>
+    <div class="lhint">✦ Se você respondeu o Censo Piracanga 2025, seus dados já estão aqui. Crie seu perfil para ativá-los.</div>
+  </div>
+</div>
+
+<!-- ONBOARDING -->
+<div class="screen" id="onboarding">
+  <div class="ohd">
+    <div class="osl">Passo <span id="osn">1</span> de 4</div>
+    <div class="oti" id="oti">Quem sou eu na vila</div>
+    <div class="opr"><div class="opd a" id="op1"></div><div class="opd" id="op2"></div><div class="opd" id="op3"></div><div class="opd" id="op4"></div></div>
+  </div>
+  <div class="obd">
+    <!-- Step 1: Identity -->
+    <div id="os1">
+      <div class="ose"><div class="pretag">✦ Dados pré-preenchidos do Censo 2025</div>
+        <div class="olab">Seu nome</div><input class="oin" type="text" value="Mónica Reis">
+      </div>
+      <div class="ose"><div class="olab">Casa em Piracanga</div>
+        <select class="oin osel"><option>Terra Maré</option><option>Escola da Natureza</option><option>Acolhimento</option><option>Raiz</option><option>Semente</option><option>Girassol</option><option>Dos Anjos</option><option>Golfinhos</option><option>Shambala</option><option>Templo do Ser</option><option>Olho D'água</option><option>Outra...</option></select>
+      </div>
+      <div class="ose"><div class="olab">Tempo em Piracanga</div><input class="oin" type="text" value="14 anos"></div>
+    </div>
+    <!-- Step 2: Agent type -->
+    <div id="os2" style="display:none">
+      <div class="ose">
+        <div class="olab">Qual é a sua relação com Piracanga?</div>
+        <div style="font-size:13px;color:var(--ci);margin-bottom:14px;line-height:1.5">Isso define como você aparece no mapa, no feed e nas conexões com outros moradores.</div>
+        <div style="font-size:12px;color:var(--ci);background:var(--ar2);border-radius:var(--r);padding:10px 12px;margin-bottom:14px;line-height:1.5">Sua relação define seu arquétipo na plataforma, seu feed e como você aparece no Jardim de Conexões.</div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:8px">Pessoas físicas</div>
+        <div class="agent-selector-grid" id="agent-grid" style="margin-bottom:12px">
+          <div class="agent-sel-card sel" onclick="selectAgent(this,'cultivador')" data-agent="cultivador">
+            <div class="asc-icon">🌱</div>
+            <div class="asc-name">Cultivador/a</div>
+            <div class="asc-desc">Moro em Piracanga, não sou proprietário/a</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'guardiao')" data-agent="guardiao">
+            <div class="asc-icon">🏡</div>
+            <div class="asc-name">Guardião/ã</div>
+            <div class="asc-desc">Moro e tenho propriedade em Piracanga</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'aliado')" data-agent="aliado">
+            <div class="asc-icon">🌍</div>
+            <div class="asc-name">Aliado/a</div>
+            <div class="asc-desc">Tenho propriedade mas moro fora</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'remoto')" data-agent="remoto">
+            <div class="asc-icon">💻</div>
+            <div class="asc-name">Prof. Remoto/a</div>
+            <div class="asc-desc">Moro aqui, trabalho digitalmente</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'semente')" data-agent="semente">
+            <div class="asc-icon">🌰</div>
+            <div class="asc-name">Semente</div>
+            <div class="asc-desc">Cheguei e quero criar raízes aqui</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'trab_regiao')" data-agent="trab_regiao">
+            <div class="asc-icon">⚒️</div>
+            <div class="asc-name">Trabalhador da Região</div>
+            <div class="asc-desc">Trabalho aqui, moro no entorno</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'polinizador')" data-agent="polinizador">
+            <div class="asc-icon">🦋</div>
+            <div class="asc-name">Polinizador/a</div>
+            <div class="asc-desc">Visito com frequência, até 1 mês</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'embaixador')" data-agent="embaixador">
+            <div class="asc-icon">🤝</div>
+            <div class="asc-name">Embaixador/a</div>
+            <div class="asc-desc">Venho sempre, sou parceiro/a da vila</div>
+          </div>
+        </div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:8px">Organizações e coletivos</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+          <div class="agent-sel-card" onclick="selectAgent(this,'org_local')" data-agent="org_local" style="flex:1;min-width:140px">
+            <div class="asc-icon">🏢</div>
+            <div class="asc-name">Org. Local</div>
+            <div class="asc-desc">Empreendimento ou iniciativa local</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'org_comunit')" data-agent="org_comunit" style="flex:1;min-width:140px">
+            <div class="asc-icon">🌿</div>
+            <div class="asc-name">Org. Comunitária</div>
+            <div class="asc-desc">Instituto local sem fins lucrativos</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'gt')" data-agent="gt" style="flex:1;min-width:140px">
+            <div class="asc-icon">🌀</div>
+            <div class="asc-name">GT / Coletivo</div>
+            <div class="asc-desc">Grupo de Trabalho comunitário</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'governanca')" data-agent="governanca" style="flex:1;min-width:140px">
+            <div class="asc-icon">🏛️</div>
+            <div class="asc-name">Governança</div>
+            <div class="asc-desc">A.MOR ou conselho territorial</div>
+          </div>
+        </div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:8px">Visitantes e atores externos</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <div class="agent-sel-card" onclick="selectAgent(this,'aliado_ext')" data-agent="aliado_ext" style="flex:1;min-width:140px">
+            <div class="asc-icon">🌍</div>
+            <div class="asc-name">Aliado Externo</div>
+            <div class="asc-desc">Proprietário/a rural da bacia hidrográfica</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'embaixador')" data-agent="embaixador" style="flex:1;min-width:140px">
+            <div class="asc-icon">🤝</div>
+            <div class="asc-name">Org. Parceira</div>
+            <div class="asc-desc">Organização externa de apoio / pesquisa</div>
+          </div>
+          <div class="agent-sel-card" onclick="selectAgent(this,'observador')" data-agent="observador" style="flex:1;min-width:140px">
+            <div class="asc-icon">🔍</div>
+            <div class="asc-name">Observador</div>
+            <div class="asc-desc">Gov., inst. públicas — acesso leitura</div>
+          </div>
+        </div>
+      </div>
+      <!-- Extra for Aliado -->
+      <div id="aliado-extra" style="display:none">
+        <div class="ose">
+          <div class="olab">Como você quer apoiar de longe?</div>
+          <div class="sgr">
+            <span class="stag s" onclick="toggleSkill(this)">💰 Apoio financeiro a projetos</span>
+            <span class="stag" onclick="toggleSkill(this)">🔗 Conexões externas</span>
+            <span class="stag s" onclick="toggleSkill(this)">🏠 Minha casa para mutirões</span>
+            <span class="stag" onclick="toggleSkill(this)">📢 Divulgação externa</span>
+            <span class="stag" onclick="toggleSkill(this)">🎓 Mentoria remota</span>
+          </div>
+        </div>
+      </div>
+      <!-- Extra for Semente -->
+      <div id="semente-extra" style="display:none">
+        <div class="ose">
+          <div style="background:var(--vc);border-radius:var(--r);padding:14px;font-size:13px;color:var(--v);line-height:1.6">
+            🌿 <strong>Bem-vindo/a, Semente!</strong><br>Você será conectado/a automaticamente ao <strong>Programa de Acolhimento</strong> — um Guardião ou Cultivador experiente pode te receber e te apresentar à vila.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3: Talentos -->
+    <div id="os3" style="display:none">
+      <div class="ose">
+        <div class="olab">Seus talentos — máx. 6</div>
+        <div style="font-size:13px;color:var(--ci);margin-bottom:12px">Talentos que você pode oferecer à comunidade, mesmo que informalmente.</div>
+        <div class="sgr" id="skgr">
+          <span class="stag s" onclick="toggleSkill(this)">🎨 Artes</span><span class="stag" onclick="toggleSkill(this)">✂️ Costura</span><span class="stag" onclick="toggleSkill(this)">🪚 Marcenaria</span><span class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</span><span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span><span class="stag s" onclick="toggleSkill(this)">🌿 Terapias</span><span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span><span class="stag s" onclick="toggleSkill(this)">📊 Gestão</span><span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span><span class="stag" onclick="toggleSkill(this)">🌐 Tec. Social</span><span class="stag" onclick="toggleSkill(this)">🗣️ Idiomas</span><span class="stag" onclick="toggleSkill(this)">🧘 Yoga</span><span class="stag" onclick="toggleSkill(this)">🎵 Música</span><span class="stag" onclick="toggleSkill(this)">📸 Foto/Vídeo</span><span class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</span><span class="stag" onclick="toggleSkill(this)">🧠 Psicologia</span><span class="stag" onclick="toggleSkill(this)">✍️ Escrita</span><span class="stag" onclick="toggleSkill(this)">⚽ Esportes</span><span class="stag" onclick="toggleSkill(this)">🎓 Educação</span><span class="stag" onclick="toggleSkill(this)">🌺 Espiritualidade</span>
+        </div>
+      </div>
+    </div>
+    <!-- Step 4: Intenção -->
+    <div id="os4" style="display:none">
+      <div class="ose">
+        <div class="olab">O que você quer explorar aqui</div>
+        <div class="sgr">
+          <span class="stag s" onclick="toggleSkill(this)">🌾 Agrofloresta</span><span class="stag" onclick="toggleSkill(this)">🔨 Bioconstrução</span><span class="stag s" onclick="toggleSkill(this)">🤝 Projetos coletivos</span><span class="stag" onclick="toggleSkill(this)">📚 Aprender & ensinar</span><span class="stag" onclick="toggleSkill(this)">🎉 Celebrar e rituais</span><span class="stag" onclick="toggleSkill(this)">💰 Economia local</span><span class="stag s" onclick="toggleSkill(this)">👨‍👩‍👧 Famílias & crianças</span><span class="stag" onclick="toggleSkill(this)">🌊 Natureza & trilhas</span>
+        </div>
+      </div>
+      <div class="ose">
+        <div class="olab">Minha intenção para esta estação</div>
+        <textarea class="oin" rows="3">Quero fortalecer o senso de comunidade e conectar pessoas com talentos complementares.</textarea>
+      </div>
+    </div>
+  </div>
+  <button class="obtn" id="onbtn" onclick="nextOb()">Continuar →</button>
+</div>
+
+<!-- FEED -->
+<div class="screen" id="feed">
+  <div class="topbar">
+    <div class="tlog">Vila Viva</div>
+    <div class="trig">
+      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ci)"><div class="pud"></div>18 online</div>
+      <div class="tic ht" onclick="goTo('notifs')" style="cursor:pointer;position:relative">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--ca2)" fill="none" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div class="notif-dot"></div>
+        <div class="tb tr">Notificações — conexões, badges e novidades da vila</div>
+      </div>
+      <div class="tav ht" onclick="goTo('perfil')" tabindex="0">MR<div class="tb tr">Seu perfil — badges, sementes e sua jornada</div></div>
+    </div>
+  </div>
+  <div class="cnt">
+    <div class="cbn">
+      <div class="cbng">Boa manhã, Mónica 🌱</div>
+      <div class="cbnname">Lua Nova · tempo de plantar</div>
+      <div class="csts">
+        <div class="cst ht">🌿 18 online<div class="tb tl">Moradores com chama acesa ou ativos agora</div></div>
+        <div class="cst ht">🔥 2 eventos hoje<div class="tb">Encontros presenciais marcados para hoje na vila</div></div>
+        <div class="cst ht">🙌 4 pedidos<div class="tb">Pedidos de ajuda abertos que combinam com seu perfil</div></div>
+        <div class="cst ht">🌻 3 projetos<div class="tb">Projetos florescendo que precisam de colaboradores</div></div>
+        <div class="cst ht" onclick="goTo('desafios')" style="cursor:pointer;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3)">⭐ 5 desafios ativos<div class="tb">Desafios do território baseados no Censo 2025 e no Bioma</div></div>
+      </div>
+    </div>
+    <div class="strw">
+      <div class="strt">Intenções do dia</div>
+      <div class="strsc">
+        <div class="sri ht"><div class="srr add"><div class="srav" style="background:transparent;border:none;color:var(--ci);font-size:24px">+</div></div><div class="srn">Compartilhar</div><div class="tb">Compartilhe sua intenção do dia com a comunidade</div></div>
+        <div class="sri"><div class="srr g"><div class="srav">L</div></div><div class="srn">Láyọ</div></div>
+        <div class="sri"><div class="srr t"><div class="srav">R</div></div><div class="srn">Roni</div></div>
+        <div class="sri"><div class="srr o"><div class="srav">S</div></div><div class="srn">Samkhya</div></div>
+        <div class="sri"><div class="srr b"><div class="srav">T</div></div><div class="srn">Tiago B.</div></div>
+        <div class="sri"><div class="srr p"><div class="srav">J</div></div><div class="srn">Juliana</div></div>
+      </div>
+    </div>
+    <div class="ffs">
+      <div class="fch a ht" onclick="setF(this)">Tudo<div class="tb">Todo o feed: histórias, projetos, pedidos, eventos e conquistas</div></div>
+      <div class="fch ht" onclick="setF(this)">Projetos<div class="tb">Iniciativas abertas buscando colaboradores — participe e ganhe Sementes</div></div>
+      <div class="fch ht" onclick="setF(this)">Pedidos<div class="tb">Moradores que precisam de ajuda — sua habilidade pode fazer diferença</div></div>
+      <div class="fch ht" onclick="setF(this)">Eventos<div class="tb">Mutirões, rodas, oficinas e celebrações na vila</div></div>
+      <div class="fch ht" onclick="setF(this)">Por agente<div class="tb">Filtrar por tipo de morador: Cultivadores, Guardiões, Aliados...</div></div>
+    </div>
+    <!-- Agent filter sub-row (shown when "Por agente" selected) -->
+    <div id="agent-filter-row" style="display:none;padding:4px 16px 8px;overflow-x:auto;white-space:nowrap;scrollbar-width:none">
+      <span class="agent-badge ag-cultivador" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🌱 Cultivadores</span>
+      <span class="agent-badge ag-guardiao" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🏡 Guardiões</span>
+      <span class="agent-badge ag-aliado" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🌍 Aliados</span>
+      <span class="agent-badge ag-semente" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🌰 Sementes</span>
+      <span class="agent-badge ag-polinizador" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🦋 Polinizadores</span>
+    </div>
+    <div class="cards">
+
+      <!-- CONQUISTA COLETIVA -->
+      <div class="card cqcard">
+        <div class="chd">
+          <div class="cqbb ht">🌻<div class="tb">Conquista Coletiva — badge que toda a comunidade ganha quando atinge uma meta juntos</div></div>
+          <div><div class="cbdg bdcq ht">✦ Conquista coletiva<div class="tb">Quando a comunidade toda atinge uma meta, todos celebram e ganham o badge juntos — sem competição</div></div><div class="cnm" style="margin-top:4px">200 mudas nativas plantadas!</div><div class="csb">43 moradores · Desafio da Lua Nova</div></div>
+        </div>
+        <div class="cbd">
+          <div class="ctx">A comunidade completou o desafio — todos ganharam o badge <strong>Plantadores de Sombra</strong> 🌳</div>
+          <div class="parts" style="margin-top:8px"><div class="pavs"><div class="pav">L</div><div class="pav">R</div><div class="pav">S</div><div class="pav">T</div></div><div class="pt">+39 moradores</div></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="showBadge('Plantadores de Sombra','Você participou do plantio coletivo de 200 mudas nativas em Piracanga!','🌳')">Celebrar junto 🎉</button><button class="abtn" onclick="toggleCmt(this)">💬 Comentar</button></div>
+        <div class="cmsec" id="cs0"><div class="cminr"><div class="cmsm">MR</div><input class="cminp" placeholder="Escreva um comentário..."><button class="cmsd" onclick="addCmt(this,'cs0')">Enviar</button></div></div>
+        <div class="shst"><div class="shst-txt">📲 Compartilhe esta conquista — traga mais moradores para a plataforma</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🌳 A comunidade de Piracanga plantou 200 mudas juntos! Veja na Vila Viva: https://vilaviva.piracanga.org')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button><button class="shbtn cp" onclick="cpylink(this)">🔗 Copiar</button></div></div>
+      </div>
+
+      <!-- PEDIDO DE AJUDA -->
+      <div class="card">
+        <div class="chd"><div class="cav t">D</div>
+          <div class="cmt">
+            <div class="cnm">Daniel Augusto</div>
+            <div class="csb" style="display:flex;align-items:center;gap:6px">
+              Casa Olho D'água · há 2h
+              <span class="agent-badge ag-cultivador" style="font-size:10px;padding:2px 7px">🌱 Cultivador</span>
+            </div>
+          </div>
+          <div class="cbdg bdr ht">🙌 Pedido<div class="tb tr">Pedido de ajuda — ofereça-se e entre em contato pelo WhatsApp para combinar os detalhes</div></div>
+        </div>
+        <div class="cbd">
+          <div class="ctx" style="font-size:15px;font-weight:500;margin-bottom:6px">Preciso de ajuda para vedar o telhado antes das chuvas</div>
+          <div class="ctx">Urgência: esta semana. Troco por aulas de gestão de projetos.</div>
+          <div class="skr"><span class="skp m ht">🏗️ Bioconstrução<div class="tb">Combina com o seu perfil!</div></span><span class="skp">Telhas</span><span class="skp">Construção Natural</span></div>
+          <div style="font-size:12px;color:var(--ci)">🙋 3 pessoas já se ofereceram</div>
+        </div>
+        <div class="cacs"><button class="abtn pri" id="btn-ajudar" onclick="toggleAjudar(this,'Daniel Augusto','(73) 9 9999-1234')">Quero ajudar →</button><button class="abtn" onclick="toggleCmt(this)">💬 Comentar</button></div>
+        <div class="cmsec" id="cs1"><div class="cminr"><div class="cmsm">MR</div><input class="cminp" placeholder="Escreva um comentário..."><button class="cmsd" onclick="addCmt(this,'cs1')">Enviar</button></div></div>
+        <div class="shst"><div class="shst-txt">📲 Conhece alguém com talento em bioconstrução?</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🙌 Daniel precisa de ajuda com bioconstrução em Piracanga! https://vilaviva.piracanga.org/pedido/daniel')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button><button class="shbtn cp" onclick="cpylink(this)">🔗 Copiar</button></div></div>
+      </div>
+
+      <!-- PROJETO -->
+      <div class="card">
+        <div class="chd"><div class="cav">S</div>
+          <div class="cmt">
+            <div class="cnm">Samkhya Ananda</div>
+            <div class="csb" style="display:flex;align-items:center;gap:6px">
+              Templo do Ser · há 1 dia
+              <span class="agent-badge ag-cultivador" style="font-size:10px;padding:2px 7px">🌱 Cultivadora</span>
+            </div>
+          </div>
+          <div class="cbdg bdp ht">🌿 Projeto<div class="tb tr">Projeto aberto — participe e ganhe +8 Sementes 🌱</div></div>
+        </div>
+        <div class="cbd">
+          <div style="background:linear-gradient(135deg,var(--vc),var(--ar2));border-radius:var(--r);height:100px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;margin-bottom:12px"><div style="font-size:28px">🌿</div><div style="font-size:13px;font-weight:500;color:var(--ca2)">Farmácia Viva Piracanga</div></div>
+          <div class="ctx">Mapeando plantas medicinais da ecovila para criar um guia vivo e acessível a todos.</div>
+          <div class="skr"><span class="skp m">📸 Fotografia</span><span class="skp m">🌿 Ervas Medicinais</span><span class="skp">🎨 Design</span></div>
+          <div class="pbr"><div class="pf" style="width:65%"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ci)"><span>65% — Florescendo</span><span>7 colaboradoras</span></div>
+          <div class="parts"><div class="pavs"><div class="pav">S</div><div class="pav">L</div><div class="pav">V</div><div class="pav" style="background:var(--ar2);color:var(--ci);font-size:9px">+4</div></div></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" id="btn-participar" onclick="toggleParticipate(this)">Participar →</button><button class="abtn" onclick="toggleCmt(this)">💬 Comentar</button></div>
+        <div class="cmsec" id="cs2"><div class="cminr"><div class="cmsm">MR</div><input class="cminp" placeholder="Escreva um comentário..."><button class="cmsd" onclick="addCmt(this,'cs2')">Enviar</button></div></div>
+        <div class="shst"><div class="shst-txt">📲 Convide alguém com talento em Fotografia ou Ervas</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🌿 Projeto Farmácia Viva precisa de colaboradores! https://vilaviva.piracanga.org/projeto/farmacia-viva')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button><button class="shbtn cp" onclick="cpylink(this)">🔗 Copiar</button></div></div>
+      </div>
+
+      <!-- EVENTO -->
+      <div class="card">
+        <div class="chd"><div class="cav o">M</div>
+          <div class="cmt">
+            <div class="cnm">Marcelo Rothen</div>
+            <div class="csb" style="display:flex;align-items:center;gap:6px">
+              Escola da Natureza · agora
+              <span class="agent-badge ag-cultivador" style="font-size:10px;padding:2px 7px">🌱 Cultivador</span>
+            </div>
+          </div>
+          <div class="cbdg bde ht">🔥 Encontro<div class="tb tr">Evento presencial — confirme e o organizador será notificado. Você receberá orientação para contato direto.</div></div>
+        </div>
+        <div class="cbd">
+          <div class="ctx" style="font-size:15px;font-weight:500;margin-bottom:4px">Roda de Música ao Pôr do Sol</div>
+          <div style="display:flex;gap:12px;font-size:13px;color:var(--ci);margin-bottom:8px"><span>📅 Hoje, 17h</span><span>📍 Pedra do Mirante</span></div>
+          <div class="ctx">Toda sexta. Traga seu instrumento ou sua voz. Sem regras, só presença.</div>
+          <div class="parts" style="margin-top:8px"><div class="pavs"><div class="pav">T</div><div class="pav">R</div><div class="pav">B</div><div class="pav" style="background:var(--ar2);color:var(--ci);font-size:9px">+15</div></div><div class="pt">18 confirmados</div></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" id="btn-evento" onclick="toggleEvento(this,'Marcelo Rothen','(73) 9 8888-5678')">Vou estar lá 🔥</button><button class="abtn" onclick="toggleCmt(this)">💬 Comentar</button></div>
+        <div class="cmsec" id="cs3"><div class="cminr"><div class="cmsm">MR</div><input class="cminp" placeholder="Escreva um comentário..."><button class="cmsd" onclick="addCmt(this,'cs3')">Enviar</button></div></div>
+        <div class="shst"><div class="shst-txt">📲 Chame amigos para a roda de música de hoje</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🔥 Roda de Música hoje 17h na Pedra do Mirante em Piracanga! https://vilaviva.piracanga.org/evento/roda-musica')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button><button class="shbtn cp" onclick="cpylink(this)">🔗 Copiar</button></div></div>
+      </div>
+
+      <!-- ALIADO DISTANTE — pedido de apoio remoto -->
+      <div class="card" style="border:1.5px solid #C8E8F5">
+        <div class="chd"><div class="cav b">J</div>
+          <div class="cmt">
+            <div class="cnm">Josemar Quadros</div>
+            <div class="csb" style="display:flex;align-items:center;gap:6px">
+              Casa Esperança · há 4h
+              <span class="agent-badge ag-aliado" style="font-size:10px;padding:2px 7px">🌍 Aliado</span>
+            </div>
+          </div>
+          <div class="cbdg" style="background:var(--azc);color:var(--az)" title="Apoio Remoto">🌍 Apoio Remoto</div>
+        </div>
+        <div class="cbd">
+          <div class="ctx" style="font-size:15px;font-weight:500;margin-bottom:6px">Quero apoiar o projeto da agrofloresta à distância</div>
+          <div class="ctx">Estou em São Paulo mas posso contribuir com recursos financeiros, contatos com ONGs e mentoria em gestão de projetos. Alguém me conta como posso ajudar concretamente?</div>
+          <div class="skr"><span class="skp" style="background:var(--azc);color:var(--az)">💰 Recursos</span><span class="skp" style="background:var(--azc);color:var(--az)">🔗 Conexões</span><span class="skp" style="background:var(--azc);color:var(--az)">📊 Gestão</span></div>
+        </div>
+        <div class="rcts">
+          <button class="rbtn ht" onclick="togRct(this,3)">🌱 <span class="rc">5</span><div class="tb tl">Aprendi algo com esta história</div></button>
+          <button class="rbtn ht" onclick="togRct(this,5)">💫 <span class="rc">18</span><div class="tb">Me inspirou</div></button>
+          <button class="rbtn" onclick="openCt('Josemar Quadros','(71) 9 9959-1983')">💬 Conectar com Josemar</button>
+        </div>
+        <div class="shst"><div class="shst-txt">📲 Aliados podem apoiar projetos mesmo à distância</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🌍 Josemar quer apoiar projetos de Piracanga remotamente! Saiba mais: https://vilaviva.piracanga.org')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button><button class="shbtn cp" onclick="cpylink(this)">🔗 Copiar</button></div></div>
+      </div>
+
+      <!-- HISTÓRIA -->
+      <div class="card">
+        <div class="chd"><div class="cav p">R</div>
+          <div class="cmt">
+            <div class="cnm">Roni Diniz</div>
+            <div class="csb" style="display:flex;align-items:center;gap:6px">Casa Acolhimento · há 3h <span class="agent-badge ag-cultivador" style="font-size:10px;padding:2px 7px">🌱 Cultivador</span></div>
+          </div>
+        </div>
+        <div class="cbd"><div class="ctx">Hoje o canteiro medicinal finalmente floresceu 🌻 Foram 4 meses de cuidado com as crianças da aldeia. Cada uma escolheu uma planta. Hoje colhemos as primeiras ervas para o chá comunitário.</div></div>
+        <div class="rcts">
+          <button class="rbtn ht" onclick="togRct(this,3)">🌱 <span class="rc">12</span><div class="tb tl">Aprendi algo</div></button>
+          <button class="rbtn ht" onclick="togRct(this,5)">💫 <span class="rc">34</span><div class="tb">Me inspirou</div></button>
+          <button class="rbtn ht" onclick="togRct(this,2)">🙌 <span class="rc">8</span><div class="tb">Quero ajudar</div></button>
+        </div>
+        <div class="shst"><div class="shst-txt">📲 Esta história merece ser lida por mais moradores</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🌻 Roni compartilhou uma história linda no Biomas de Piracanga! https://vilaviva.piracanga.org')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button><button class="shbtn cp" onclick="cpylink(this)">🔗 Copiar</button></div></div>
+      </div>
+
+    </div><!-- /cards -->
+  </div><!-- /cnt -->
+  <div class="bnav">
+    <div class="bni a ht" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span><div class="tb">Feed principal da comunidade</div></div>
+    <div class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></div>
+    <div class="bnc"><button class="fab ht" onclick="openSh()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><div class="tb" style="bottom:calc(100% + 16px)">Contribuir — histórias, pedidos, projetos, eventos ou conquistas</div></button></div>
+    <div class="bni ht" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span><div class="tb">Jardim de Conexões — matching por afinidade e tipo de agente</div></div>
+    <div class="bni ht" onclick="goTo('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span><div class="tb">Seu perfil — agente, badges, sementes e jornada</div></div>
+  </div>
+</div>
+
+<!-- MAPA -->
+<div class="screen" id="vagas">
+  <div class="topbar">
+    <div class="tlog">Vagas</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="sctop ht">🌱 <span id="sdv">342</span><div class="tb tr">Suas Sementes acumuladas</div></div>
+    </div>
+  </div>
+  <div class="cnt">
+    <!-- Header -->
+    <div style="padding:16px 16px 8px;background:var(--v);margin-bottom:0">
+      <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:#fff">Vagas na Vila</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.65);margin-top:3px">Voluntariado e emprego remunerado em Piracanga</div>
+    </div>
+    <!-- Sub-tabs: visually prominent -->
+    <div style="display:flex;gap:10px;padding:14px 16px 0;background:var(--br);border-bottom:1px solid var(--bo)">
+      <button id="vst-vol" onclick="setVagasScreenTab('vol',this)"
+        style="flex:1;padding:12px 8px;border-radius:var(--r2) var(--r2) 0 0;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fb);border:1.5px solid var(--bo);border-bottom:none;background:var(--v);color:#fff;transition:all .15s">
+        🤲 Voluntariado
+        <div style="font-size:11px;font-weight:400;opacity:.8;margin-top:2px">4 oportunidades</div>
+      </button>
+      <button id="vst-rem" onclick="setVagasScreenTab('rem',this)"
+        style="flex:1;padding:12px 8px;border-radius:var(--r2) var(--r2) 0 0;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fb);border:1.5px solid var(--bo);border-bottom:none;background:var(--ar);color:var(--ci);transition:all .15s">
+        💰 Remunerado
+        <div style="font-size:11px;font-weight:400;margin-top:2px">4 oportunidades</div>
+      </button>
+    </div>
+
+    <!-- VOLUNTARIADO -->
+    <div id="vsc-vol" style="padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:var(--vc)">EN</div>
+          <div class="cmt">
+            <div class="cnm">Cuidado das hortas comunitárias</div>
+            <div class="csb">Escola da Natureza · 2–3h/semana</div>
+          </div>
+          <span style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">🤲 Vol.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Regar, plantar e colher junto com as crianças da escola toda quarta-feira de manhã.</div>
+          <div class="skr"><span class="skp m">🌱 Agricultura</span><span class="skp">👶 Crianças</span><span class="skp">🌿 Permacultura</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="toggleParticipate(this)">Quero participar →</button><button class="abtn" onclick="openCt('Escola da Natureza','(73) 9 8000-0010')">Contato</button></div>
+        <div class="shst"><div class="shst-txt">📲 Conhece alguém com talento em agricultura ou educação?</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🌱 Vaga de voluntariado na Escola da Natureza de Piracanga! https://vilaviva.piracanga.org/vagas')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button></div></div>
+      </div>
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:#DFF0F7;color:var(--az)">PL</div>
+          <div class="cmt">
+            <div class="cnm">Praia Limpa — mutirão mensal</div>
+            <div class="csb">Todo 1º sábado · 7h–10h</div>
+          </div>
+          <span style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">🤲 Vol.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Limpeza da praia e registro de resíduos para o projeto Praia Limpa Piracanga. Café da manhã coletivo depois.</div>
+          <div class="skr"><span class="skp">🌊 Meio ambiente</span><span class="skp">📸 Fotografia</span><span class="skp">🗂️ Dados</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="toggleParticipate(this)">Quero participar →</button><button class="abtn" onclick="openCt('Projeto Praia Limpa','(73) 9 8000-0011')">Contato</button></div>
+        <div class="shst"><div class="shst-txt">📲 Chame moradores para o mutirão de sábado!</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🏖️ Mutirão Praia Limpa — todo 1º sábado em Piracanga! https://vilaviva.piracanga.org/vagas')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button></div></div>
+      </div>
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:var(--oc);color:#7A5800">AC</div>
+          <div class="cmt">
+            <div class="cnm">Acolhimento de novos moradores</div>
+            <div class="csb">A.MOR · Programa Semente · contínuo</div>
+          </div>
+          <span style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">🤲 Vol.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Ser referência e guia para pessoas que chegam à vila pela primeira vez. Para Guardiões e Cultivadores com 3+ anos de Piracanga.</div>
+          <div class="skr"><span class="skp m ht">🏡 Guardiões<div class="tb tl">Ideal para quem tem 3+ anos e quer apoiar recém-chegados</div></span><span class="skp m">🌱 Cultivadores</span><span class="skp">🤝 Cuidado</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="toggleParticipate(this)">Quero ser referência →</button><button class="abtn" onclick="openCt('A.MOR Piracanga','(73) 9 8000-0012')">Contato</button></div>
+        <div class="shst"><div class="shst-txt">📲 Guardiões e Cultivadores experientes — a vila precisa de vocês</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('🌰 Programa de Acolhimento Semente — seja referência para quem chega em Piracanga! https://vilaviva.piracanga.org/vagas')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button></div></div>
+      </div>
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:var(--rxc);color:var(--rx)">GT</div>
+          <div class="cmt">
+            <div class="cnm">GT Dados — coleta do Censo 2026</div>
+            <div class="csb">GT Dados & BIOMAS · 4h/mês</div>
+          </div>
+          <span style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">🤲 Vol.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Apoiar na coleta, revisão e validação de dados para o próximo ciclo do Censo de Piracanga.</div>
+          <div class="skr"><span class="skp m">📊 Gestão</span><span class="skp m">💻 Tecnologia</span><span class="skp">📝 Escrita</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="toggleParticipate(this)">Quero colaborar →</button><button class="abtn" onclick="openCt('GT Dados BIOMAS','(73) 9 9000-0003')">Contato</button></div>
+      </div>
+
+    </div>
+
+    <!-- REMUNERADO -->
+    <div id="vsc-rem" style="display:none;padding:14px 16px;flex-direction:column;gap:12px">
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:var(--oc);color:#7A5800">ED</div>
+          <div class="cmt">
+            <div class="cnm">Monitor/a de retiro de yoga</div>
+            <div class="csb">Espaço Dharma · por diária · sazonais</div>
+          </div>
+          <span style="font-size:11px;background:var(--oc);color:#7A5800;border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">💰 Rem.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Apoiar retiros de 3 a 7 dias com grupos externos. Experiência com yoga ou meditação. Alojamento incluso.</div>
+          <div class="skr"><span class="skp m">🧘 Yoga</span><span class="skp m">🌿 Terapias</span><span class="skp">🗣️ Idiomas</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="openCt('Espaço Dharma','(73) 9 8000-0001')">Entrar em contato →</button></div>
+        <div class="shst"><div class="shst-txt">📲 Conhece alguém com talento em yoga ou terapias?</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('💰 Vaga remunerada: Monitor de retiro de yoga no Espaço Dharma em Piracanga! https://vilaviva.piracanga.org/vagas')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button></div></div>
+      </div>
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:var(--tc);color:var(--tr)">FP</div>
+          <div class="cmt">
+            <div class="cnm">Cozinheiro/a — feira de domingo</div>
+            <div class="csb">Terreno da Feira · domingos · R$100–150/dia</div>
+          </div>
+          <span style="font-size:11px;background:var(--oc);color:#7A5800;border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">💰 Rem.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Preparar refeições para a feira comunitária de domingo com ingredientes locais e orgânicos.</div>
+          <div class="skr"><span class="skp m">🍳 Culinária</span><span class="skp">🌱 Alimentos</span><span class="skp">🤝 Comunidade</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="openCt('Feira Piracanga','(73) 9 9700-0002')">Entrar em contato →</button></div>
+        <div class="shst"><div class="shst-txt">📲 Conhece alguém com talento em culinária?</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('💰 Vaga: Cozinheiro na Feira de Domingo de Piracanga! https://vilaviva.piracanga.org/vagas')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button></div></div>
+      </div>
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:#DFF0F7;color:var(--az)">BD</div>
+          <div class="cmt">
+            <div class="cnm">Designer freelance para o BIOMAS</div>
+            <div class="csb">GT Dados · por projeto · remoto ok</div>
+          </div>
+          <span style="font-size:11px;background:var(--oc);color:#7A5800;border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">💰 Rem.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Criar materiais visuais para comunicação do território, relatórios e apresentações do Censo. Trabalho remoto.</div>
+          <div class="skr"><span class="skp m">🎨 Design</span><span class="skp m">📸 Foto/Vídeo</span><span class="skp">💻 Tecnologia</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="openCt('GT Dados BIOMAS','(73) 9 9000-0003')">Entrar em contato →</button></div>
+        <div class="shst"><div class="shst-txt">📲 Conhece um designer que se identificaria com Piracanga?</div><div class="shst-btns"><button class="shbtn wp" onclick="wapp('💰 Vaga: Designer para o projeto BIOMAS em Piracanga! https://vilaviva.piracanga.org/vagas')"><svg class="waico"><use href="#wa"/></svg>WhatsApp</button></div></div>
+      </div>
+
+      <div class="card">
+        <div class="chd">
+          <div class="cav" style="background:var(--vc);color:var(--v)">TU</div>
+          <div class="cmt">
+            <div class="cnm">Guia de trilhas e natureza</div>
+            <div class="csb">Diversos · por saída · R$80–200</div>
+          </div>
+          <span style="font-size:11px;background:var(--oc);color:#7A5800;border-radius:var(--r3);padding:3px 9px;font-weight:500;white-space:nowrap">💰 Rem.</span>
+        </div>
+        <div class="cbd">
+          <div class="ctx">Conduzir visitantes em trilhas, cachoeiras e passeios de caiaque. Conhecimento da fauna e flora local é diferencial.</div>
+          <div class="skr"><span class="skp m">🌊 Natureza</span><span class="skp">🗣️ Idiomas</span><span class="skp">🌿 Meio ambiente</span></div>
+        </div>
+        <div class="cacs"><button class="abtn grn" onclick="openCt('Turismo Piracanga','(73) 9 9800-0004')">Entrar em contato →</button></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></div>
+    <div class="bni a" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span></div>
+    <div class="bnc"><button class="fab" onclick="openSh()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    <div class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></div>
+    <div class="bni ht" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span><div class="tb">Desafios baseados no Censo 2025 e no Bioma</div></div>
+  </div>
+</div>
+
+<!-- PERFIL -->
+<div class="screen" id="perfil">
+  <div class="phero">
+    <div class="hpat"></div>
+    <div style="position:absolute;top:16px;right:16px;display:flex;gap:8px">
+      <button onclick="goTo('feed')" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:var(--r3);padding:6px 12px;font-family:var(--fb);font-size:12px;cursor:pointer">← Vila</button>
+      <button onclick="openEdit()" class="ht" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:var(--r3);padding:6px 12px;font-family:var(--fb);font-size:12px;cursor:pointer">✏️ Editar<div class="tb tr">Edite nome, agente, habilidades, intenção e senha</div></button>
+    </div>
+    <div class="hav">MR</div>
+    <div class="hnm">Mónica Reis</div>
+    <div class="htg">Arquiteta · Tecelã · Mãe de Piracanga</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px">🌱 14 anos em Piracanga · Casa Terra Maré</div>
+  </div>
+  <div class="pbd">
+
+    <!-- AGENT CARD -->
+    <div class="psc">
+      <div class="pst">Meu papel na comunidade</div>
+      <div class="agent-profile-card">
+        <div class="apc-top">
+          <div class="apc-icon">🌱</div>
+          <div class="apc-info">
+            <div class="apc-name">Cultivadora</div>
+            <div class="apc-tipo">Moradora não-proprietária · Ecovila 1 → 3</div>
+          </div>
+          <div class="agent-badge ag-cultivador" style="margin-left:auto">🌱 Cultivadora</div>
+        </div>
+        <div class="apc-bar"><div class="apc-bar-fill" style="width:82%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ci);margin-bottom:8px"><span>14 anos em Piracanga</span><span>Nível: Guardiã da Terra</span></div>
+        <div class="apc-stats">
+          <span class="apc-stat" style="background:var(--vc);color:var(--v)">NPS da vila: 8.9 🌱</span>
+          <span class="apc-stat" style="background:var(--oc);color:#7A5800">65% voluntariam</span>
+          <span class="apc-stat" style="background:var(--ar2);color:var(--ca2)">n=57 moradores</span>
+        </div>
+        <div class="apc-desc">Cultivadores são o coração pulsante da vila — moram aqui, constroem com presença diária, têm o NPS mais alto (8.9) e o maior engajamento em voluntariado. São a força motriz de projetos e pedidos de ajuda.</div>
+        <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--bo)">
+          <div style="font-size:11px;color:var(--ci);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;font-weight:500">Arquétipo do território</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="padding:3px 10px;border-radius:var(--r3);background:var(--vc);color:var(--v);font-size:11px;font-weight:500">🌿 Construtor de Comunidade</span>
+            <span style="padding:3px 10px;border-radius:var(--r3);background:var(--tc);color:var(--tr);font-size:11px;font-weight:500">🌱 Raiz Ameaçada</span>
+          </div>
+          <div style="font-size:11px;color:var(--ci);margin-top:8px">Acesso: <strong style="color:var(--v)">Completo</strong> — feed, projetos, pedidos, gamificação e dashboard</div>
+        </div>
+        <div class="apc-actions">
+          <button class="apc-btn" onclick="goTo('match')">Ver outros Cultivadores</button>
+          <button class="apc-btn green" onclick="showBadge('Cultivadora','Você é uma Cultivadora — o coração da vila!','🌱')">Celebrar ✨</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEMENTES -->
+    <div class="psc">
+      <div class="pst">Sementes & Raízes <span class="ht" style="cursor:help;border-bottom:1px dashed var(--ci2)">(?)<div class="tb">Sementes = pontos por ações rápidas. Raízes = reputação profunda, dada por outros moradores.</div></span></div>
+      <div class="scard">
+        <div style="display:flex;align-items:center;gap:8px"><div style="font-size:28px">🌳</div><div><div class="slv">Guardiã da Terra</div><div class="ssb">Nível 7 de 8 · próximo: Raiz Viva</div></div></div>
+        <div style="height:6px;background:var(--ar2);border-radius:3px;overflow:hidden;margin-top:10px"><div style="height:100%;width:72%;border-radius:3px;background:var(--v)"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ci);margin-top:3px"><span>2.140 sementes</span><span>3.500 para Raiz Viva</span></div>
+        <div class="srow">
+          <div class="sst ht"><div class="ssv" id="seed-display">342</div><div class="ssl">🌱 Sementes</div><div class="tb">Pontos ganhos por contribuições: publicar, ajudar, participar de eventos e desafios</div></div>
+          <div class="sst ht"><div class="ssv">47</div><div class="ssl">🌳 Raízes</div><div class="tb">Dadas por outros moradores quando reconhecem sua contribuição real — impossível de "farmar"</div></div>
+          <div class="sst ht"><div class="ssv">12</div><div class="ssl">✦ Badges</div><div class="tb">Conquistas desbloqueadas — veja abaixo</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BADGES -->
+    <div class="psc">
+      <div class="pst">Conquistas</div>
+      <div class="bdgr">
+        <div class="bdgi ht" onclick="showBadge('Raiz Profunda','10+ anos em Piracanga. Você é pilar desta comunidade.','🌳')"><div class="bdgic ea">🌳</div><div class="bdgn">Raiz Profunda</div><div class="tb">10+ anos de Piracanga. Clique para celebrar.</div></div>
+        <div class="bdgi ht" onclick="showBadge('Tecelã','Participou de 5+ projetos diferentes na vila!','🌀')"><div class="bdgic te">🌀</div><div class="bdgn">Tecelã</div><div class="tb">Participou de 5+ projetos diferentes</div></div>
+        <div class="bdgi ht" onclick="showBadge('Guardiã do Fogo','Organizou um encontro presencial que reuniu a comunidade.','🔥')"><div class="bdgic oe">🔥</div><div class="bdgn">Guardiã do Fogo</div><div class="tb">Organizou um evento presencial na vila</div></div>
+        <div class="bdgi ht" onclick="showBadge('Fonte de Saber','Compartilhou conhecimento com a comunidade.','💧')"><div class="bdgic ea">💧</div><div class="bdgn">Fonte de Saber</div><div class="tb">Compartilhou conhecimento com outros moradores</div></div>
+        <div class="bdgi ht"><div class="bdgic ea">🌻</div><div class="bdgn">Plantadora</div><div class="tb">Participou do desafio coletivo de plantio</div></div>
+        <div class="bdgi ht"><div class="bdgic lk">🦋</div><div class="bdgn">Polinizadora</div><div class="tb">🔒 Conecte duas pessoas que depois colaboraram para desbloquear</div></div>
+        <div class="bdgi ht"><div class="bdgic lk">⭐</div><div class="bdgn">Solstício</div><div class="tb">🔒 Participe do desafio especial do solstício de junho</div></div>
+        <div class="bdgi ht"><div class="bdgic lk">🌙</div><div class="bdgn">Luna Nova</div><div class="tb">🔒 Complete um desafio durante a lua nova</div></div>
+      </div>
+    </div>
+
+    <!-- SOBRE MIM -->
+    <div class="psc">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div class="pst" style="margin-bottom:0">Sobre mim</div>
+        <button onclick="openEditSection('sobre')" style="font-size:12px;color:var(--v);background:var(--vc);border:none;border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);font-weight:500">✏️ Editar</button>
+      </div>
+      <!-- Bio -->
+      <div id="bio-view" style="font-size:14px;color:var(--ca2);line-height:1.65;margin-bottom:16px">
+        Arquiteta de formação, apaixonada por bioconstrução e educação pela natureza. Chegou em Piracanga em 2011 e nunca mais saiu. Trabalha com design regenerativo, produz tecidos naturais e facilita rodas de conversa na comunidade.
+      </div>
+      <!-- Formação -->
+      <div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:8px">Formação</div>
+        <div style="display:flex;flex-direction:column;gap:8px" id="formacao-list">
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:36px;height:36px;border-radius:var(--r);background:var(--ar2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🎓</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--ca)">Arquitetura e Urbanismo</div>
+              <div style="font-size:12px;color:var(--ci)">UFBA · 2003–2008</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:36px;height:36px;border-radius:var(--r);background:var(--ar2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌿</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--ca)">Bioconstrução e Design Regenerativo</div>
+              <div style="font-size:12px;color:var(--ci)">Instituto Elos · 2010 · Certificação</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:36px;height:36px;border-radius:var(--r);background:var(--ar2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🧵</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--ca)">Tecelagem em teares naturais</div>
+              <div style="font-size:12px;color:var(--ci)">Formação autodidata · 2014–presente</div>
+            </div>
+          </div>
+        </div>
+        <button onclick="openEditSection('formacao')" style="margin-top:8px;font-size:12px;color:var(--ci);background:none;border:1px dashed var(--bo);border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);width:100%">+ Adicionar formação</button>
+      </div>
+      <!-- Experiências -->
+      <div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:8px">Experiências relevantes</div>
+        <div style="display:flex;flex-direction:column;gap:8px" id="exp-list">
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:36px;height:36px;border-radius:var(--r);background:var(--vc);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🏗️</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--ca)">Arquiteta independente — Design Regenerativo</div>
+              <div style="font-size:12px;color:var(--ci)">Autônoma · 2009–presente</div>
+              <div style="font-size:12px;color:var(--ca2);margin-top:2px;line-height:1.4">Projetos de bioconstrução em ecovilas no Brasil e Portugal.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:36px;height:36px;border-radius:var(--r);background:var(--vc);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">📚</div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--ca)">Educadora — Escola da Natureza</div>
+              <div style="font-size:12px;color:var(--ci)">Piracanga · 2013–2018 · Voluntária</div>
+              <div style="font-size:12px;color:var(--ca2);margin-top:2px;line-height:1.4">Oficinas de bioconstrução e ecodesign para crianças e adolescentes.</div>
+            </div>
+          </div>
+        </div>
+        <button onclick="openEditSection('exp')" style="margin-top:8px;font-size:12px;color:var(--ci);background:none;border:1px dashed var(--bo);border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);width:100%">+ Adicionar experiência</button>
+      </div>
+    </div>
+
+    <!-- PROJETOS & INICIATIVAS NA VILA -->
+    <div class="psc">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div class="pst" style="margin-bottom:0">Projetos & Iniciativas na Vila</div>
+        <button onclick="openCadProjeto()" style="font-size:12px;color:var(--v);background:var(--vc);border:none;border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);font-weight:500">+ Cadastrar</button>
+      </div>
+      <div id="projetos-perfil" style="display:flex;flex-direction:column;gap:10px">
+
+        <div class="proj-card" style="background:var(--ar);border-radius:var(--r2);padding:14px;border:1px solid var(--bo)">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px">
+            <div style="font-size:14px;font-weight:500;color:var(--ca)">Bioconstrução da Escola da Natureza</div>
+            <span style="font-size:10px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:2px 8px;font-weight:500;white-space:nowrap;flex-shrink:0">🌳 Colhido</span>
+          </div>
+          <div style="font-size:12px;color:var(--ci);margin-bottom:6px">2012–2013 · Ecovila 1</div>
+          <div style="font-size:13px;color:var(--ca2);line-height:1.5;margin-bottom:8px">Coordenação e execução da estrutura de adobe e bambu da sala principal da escola. Voluntária.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px"><span style="padding:3px 9px;border-radius:var(--r3);background:var(--br);border:1px solid var(--bo);font-size:11px;color:var(--ca2)">🏗️ Bioconstrução</span><span style="padding:3px 9px;border-radius:var(--r3);background:var(--br);border:1px solid var(--bo);font-size:11px;color:var(--ca2)">👶 Educação</span><span style="padding:3px 9px;border-radius:var(--r3);background:var(--br);border:1px solid var(--bo);font-size:11px;color:var(--ca2)">🤝 Voluntária</span></div>
+        </div>
+
+        <div class="proj-card" style="background:var(--ar);border-radius:var(--r2);padding:14px;border:1px solid var(--bo)">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px">
+            <div style="font-size:14px;font-weight:500;color:var(--ca)">Mutirão de Bioconstrução — Ecovila 3</div>
+            <span style="font-size:10px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:2px 8px;font-weight:500;white-space:nowrap;flex-shrink:0">🌳 Colhido</span>
+          </div>
+          <div style="font-size:12px;color:var(--ci);margin-bottom:6px">2022 · Ecovila 3</div>
+          <div style="font-size:13px;color:var(--ca2);line-height:1.5;margin-bottom:8px">Organizou e facilitou mutirão com 14 participantes para construção de um banheiro seco em adobe.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px"><span style="padding:3px 9px;border-radius:var(--r3);background:var(--br);border:1px solid var(--bo);font-size:11px;color:var(--ca2)">🏗️ Bioconstrução</span><span style="padding:3px 9px;border-radius:var(--r3);background:var(--br);border:1px solid var(--bo);font-size:11px;color:var(--ca2)">📊 Gestão</span></div>
+        </div>
+
+        <div class="proj-card" style="background:var(--ar);border-radius:var(--r2);padding:14px;border:1.5px solid var(--v)">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px">
+            <div style="font-size:14px;font-weight:500;color:var(--ca)">Farmácia Viva Piracanga</div>
+            <span style="font-size:10px;background:#FAEEDA;color:#8B4A1A;border-radius:var(--r3);padding:2px 8px;font-weight:500;white-space:nowrap;flex-shrink:0">🌿 Em andamento</span>
+          </div>
+          <div style="font-size:12px;color:var(--ci);margin-bottom:6px">2024–presente · Ecovila 2</div>
+          <div style="font-size:13px;color:var(--ca2);line-height:1.5;margin-bottom:8px">Co-criadora do projeto de mapeamento de plantas medicinais da ecovila.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px"><span style="padding:3px 9px;border-radius:var(--r3);background:var(--vc);border:1px solid var(--v);font-size:11px;color:var(--v)">🌿 Ativo</span><span style="padding:3px 9px;border-radius:var(--r3);background:var(--br);border:1px solid var(--bo);font-size:11px;color:var(--ca2)">🌱 Ervas</span></div>
+          <button onclick="goTo('match')" style="margin-top:10px;width:100%;padding:8px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:12px;cursor:pointer">Ver projeto no Jardim →</button>
+        </div>
+
+        <button onclick="openCadProjeto()" id="btn-add-projeto" style="padding:12px;background:transparent;border:1.5px dashed var(--bo);border-radius:var(--r2);font-family:var(--fb);font-size:13px;color:var(--ci);cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:6px">
+          <span style="font-size:18px">+</span> Cadastrar projeto ou iniciativa que participei
+        </button>
+
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="psc">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div class="pst" style="margin-bottom:0">Jardim de Habilidades <span class="ht" style="cursor:help;border-bottom:1px dashed var(--ci2)">(?)<div class="tb">Suas habilidades aparecem no Jardim de Conexões para que outros moradores te encontrem.</div></span></div>
+        <button onclick="openEdit()" style="font-size:12px;color:var(--v);background:var(--vc);border:none;border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);font-weight:500">✏️ Editar</button>
+      </div>
+      <div class="skr">
+        <span class="skp m" style="font-size:13px;padding:6px 14px">🎨 Artes</span>
+        <span class="skp m" style="font-size:13px;padding:6px 14px">🤲 Cuidado</span>
+        <span class="skp m" style="font-size:13px;padding:6px 14px">🌿 Terapias</span>
+        <span class="skp m" style="font-size:13px;padding:6px 14px">📊 Gestão</span>
+        <span class="skp" style="font-size:13px;padding:6px 14px">✂️ Costura</span>
+        <span class="skp" style="font-size:13px;padding:6px 14px">🍳 Culinária</span>
+        <span class="skp" style="font-size:13px;padding:6px 14px">🏗️ Arquitetura</span>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="psc">
+      <div class="pst">Jornada em Piracanga</div>
+      <div class="tl">
+        <div class="tli"><div class="tld" style="background:var(--ou)"></div><div class="tldt">2011</div><div class="tltx">🏡 Chegada — Casa Terra Maré · tornou-se Cultivadora</div></div>
+        <div class="tli"><div class="tld"></div><div class="tldt">2013</div><div class="tltx">🌿 Bioconstrução da Escola da Natureza</div></div>
+        <div class="tli"><div class="tld" style="background:var(--tr)"></div><div class="tldt">2017</div><div class="tltx">🌳 Badge Raiz Profunda conquistado</div></div>
+        <div class="tli"><div class="tld"></div><div class="tldt">2022</div><div class="tltx">🔥 Organizou mutirão de bioconstrução na Ecovila 3</div></div>
+        <div class="tli"><div class="tld" style="background:var(--v)"></div><div class="tldt">2025</div><div class="tltx">🌻 Desafio de plantio coletivo — 200 mudas</div></div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:80px;padding:14px;background:var(--ar2);border-radius:var(--r);font-size:13px;color:var(--ci);line-height:1.6">
+      <strong style="display:block;color:var(--ca2);margin-bottom:4px">Minha intenção desta estação</strong>
+      "Quero fortalecer o senso de comunidade e conectar pessoas com talentos complementares."
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></div>
+    <div class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></div>
+    <div class="bnc"><button class="fab" onclick="openSh()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    <div class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></div>
+    <div class="bni a" onclick="goTo('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></div>
+  </div>
+</div>
+
+<!-- MATCH / JARDIM DE CONEXÕES -->
+<div class="screen" id="match">
+  <div class="mhdr" style="padding-bottom:0">
+    <button class="bkbtn" onclick="goTo('feed')" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--ci);margin-bottom:8px">← voltar</button>
+    <div style="font-family:var(--fd);font-size:26px;font-weight:300;color:var(--ca)">Jardim de Conexões</div>
+    <div style="font-size:13px;color:var(--ci);margin-top:2px;margin-bottom:12px">Pessoas, organizações, projetos e oportunidades da vila</div>
+    <!-- Search bar -->
+    <div style="position:relative;margin-bottom:0">
+      <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--ci);fill:none;stroke-width:1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input id="match-search" type="text" placeholder="Buscar por nome, habilidade ou casa..." oninput="filterMatch(this.value)"
+        style="width:100%;padding:10px 12px 10px 36px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:14px;color:var(--ca);outline:none">
+    </div>
+  </div>
+  <!-- Tab navigation -->
+  <div style="display:flex;gap:0;border-bottom:1px solid var(--bo);background:var(--br);overflow-x:auto;scrollbar-width:none;flex-shrink:0">
+    <button class="match-tab a" id="tab-pessoas" onclick="setMatchTab('pessoas')">👥 Pessoas</button>
+    <button class="match-tab" id="tab-orgs" onclick="setMatchTab('orgs')">🏢 Organizações</button>
+    <button class="match-tab" id="tab-projetos" onclick="setMatchTab('projetos')">🌿 Projetos</button>
+  </div>
+
+  <div class="cnt" style="padding-bottom:80px">
+
+    <!-- ── TAB: PESSOAS ── -->
+    <div id="tab-content-pessoas">
+      <!-- Pares complementares -->
+      <div style="padding:12px 16px;background:var(--vc);border-bottom:1px solid var(--bo)">
+        <div style="font-size:11px;font-weight:500;color:var(--v);margin-bottom:7px;text-transform:uppercase;letter-spacing:.05em">✦ Pares complementares sugeridos</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span style="background:var(--br);border-radius:var(--r3);padding:4px 11px;font-size:11px;color:var(--ca2);border:1px solid var(--bo)" class="ht">🌱 × 🌍 Cultivador × Aliado<div class="tb">Presença + recursos remotos — par ideal</div></span>
+          <span style="background:var(--br);border-radius:var(--r3);padding:4px 11px;font-size:11px;color:var(--ca2);border:1px solid var(--bo)" class="ht">🌰 × 🏡 Semente × Guardião<div class="tb">Recém-chegado + pilar histórico = mentoria</div></span>
+          <span style="background:var(--br);border-radius:var(--r3);padding:4px 11px;font-size:11px;color:var(--ca2);border:1px solid var(--bo)" class="ht">🦋 × 🌱 Polinizador × Cultivador<div class="tb">Visitante traz habilidade que morador precisa</div></span>
+        </div>
+      </div>
+
+      <!-- Filtros por arquétipo -->
+      <div style="padding:10px 16px 6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none">
+        <span style="font-size:11px;color:var(--ci);margin-right:8px;font-weight:500">Arquétipo:</span>
+        <button class="arq-filter a" onclick="filterArq(this,'todos')">Todos</button>
+        <button class="arq-filter" onclick="filterArq(this,'construtor')" style="background:#E6F3EC;color:#1A5C38;border-color:#1A5C38">🌿 Construtor</button>
+        <button class="arq-filter" onclick="filterArq(this,'buscador')" style="background:#E1F5EE;color:#085041;border-color:#085041">✨ Buscador</button>
+        <button class="arq-filter" onclick="filterArq(this,'turismo')" style="background:#FAEEDA;color:#7A4010;border-color:#7A4010">🌊 Turismo</button>
+        <button class="arq-filter" onclick="filterArq(this,'remoto')" style="background:#DFF0F7;color:#0C447C;border-color:#0C447C">💻 Remoto</button>
+        <button class="arq-filter" onclick="filterArq(this,'raiz')" style="background:#FBEAF0;color:#72243E;border-color:#72243E">🌱 Raiz</button>
+        <button class="arq-filter" onclick="filterArq(this,'dono')" style="background:#EEEDFE;color:#3C3489;border-color:#3C3489">🏠 Dono</button>
+      </div>
+
+      <div style="padding:6px 16px 4px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci)">🙌 Match com seu perfil</div>
+      <div id="pessoas-list" style="padding:0 16px;display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+
+        <!-- Pessoa 1 -->
+        <div class="mc pessoa-card" data-arq="construtor" data-nome="Daniel Augusto" data-casa="Olho D'água">
+          <div class="mav" style="background:var(--tc);color:var(--tr)">DA</div>
+          <div class="mi">
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+              <div class="mnm">Daniel Augusto</div>
+              <span class="agent-badge ag-cultivador" style="font-size:10px;padding:2px 7px" title="Cultivador — morador não-proprietário">🌱 Cultivador</span>
+            </div>
+            <div class="mme">Olho D'água · 7 anos · Ecovila 3</div>
+            <div style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">🌿 Construtor de Comunidade<div class="tb">Construtor de Comunidade — mora aqui, constrói com presença e voluntariado ativo</div></div>
+            <div style="font-size:12px;margin:4px 0">🍃🍃🍃🍃 <span style="font-size:11px;color:var(--ci)">Alta afinidade</span></div>
+            <div class="mtgs"><span class="mtg co ht">Gestão<div class="tb tl">Em comum</div></span><span class="mtg cl ht">Bioconstrução<div class="tb">Complementar</div></span><span class="mtg co">Artes</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=5;upSd();this.textContent='Enviado ✓';this.style.background='var(--ca)'">🌱 Conectar</button>
+        </div>
+
+        <!-- Pessoa 2 -->
+        <div class="mc pessoa-card" data-arq="construtor" data-nome="Samkhya Ananda" data-casa="Templo do Ser">
+          <div class="mav" style="background:var(--vc);color:var(--v)">SA</div>
+          <div class="mi">
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+              <div class="mnm">Samkhya Ananda</div>
+              <span class="agent-badge ag-cultivador" style="font-size:10px;padding:2px 7px">🌱 Cultivadora</span>
+            </div>
+            <div class="mme">Templo do Ser · 1.5 anos</div>
+            <div style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">🌿 Construtor de Comunidade<div class="tb">Mora aqui com projetos ativos de plantas medicinais e terapias</div></div>
+            <div style="font-size:12px;margin:4px 0">🍃🍃🍃 <span style="font-size:11px;color:var(--ci)">Boa afinidade</span></div>
+            <div class="mtgs"><span class="mtg co">Artes</span><span class="mtg co">Terapias</span><span class="mtg cl">Tecnologia</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=5;upSd();this.textContent='Enviado ✓';this.style.background='var(--ca)'">🌱 Conectar</button>
+        </div>
+
+        <!-- Pessoa 3 — Aliado -->
+        <div class="mc pessoa-card" data-arq="dono" data-nome="Josemar Quadros" data-casa="Esperança" style="border:1.5px solid #C8E8F5">
+          <div class="mav" style="background:var(--azc);color:var(--az)">JQ</div>
+          <div class="mi">
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+              <div class="mnm">Josemar Quadros</div>
+              <span class="agent-badge ag-aliado" style="font-size:10px;padding:2px 7px">🌍 Aliado</span>
+            </div>
+            <div class="mme">Casa Esperança · quer apoiar remotamente</div>
+            <div style="font-size:11px;background:#EEEDFE;color:#3C3489;border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">🏠 Dono Distante<div class="tb">Dono Distante — tem propriedade, mora fora, quer contribuir com recursos e conexões externas</div></div>
+            <div class="mtgs"><span class="mtg co">Gestão</span><span class="mtg cl ht">Recursos financeiros<div class="tb">Aliados podem co-financiar projetos à distância</div></span></div>
+          </div>
+          <button class="snbtn" onclick="openCt('Josemar Quadros','(71) 9 9959-1983')">🌱 Conectar</button>
+        </div>
+
+        <!-- Pessoa 4 — Láyọ -->
+        <div class="mc pessoa-card" data-arq="buscador" data-nome="Láyọ" data-casa="Golfinhos">
+          <div class="mav" style="background:var(--oc);color:var(--ou)">LY</div>
+          <div class="mi">
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+              <div class="mnm">Láyọ</div>
+              <span class="agent-badge ag-cultivador" style="font-size:10px;padding:2px 7px">🌱 Cultivadora</span>
+            </div>
+            <div class="mme">Casa Golfinhos · 4.5 anos</div>
+            <div style="font-size:11px;background:#E1F5EE;color:#085041;border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">✨ Buscador Regenerativo<div class="tb">Buscador Regenerativo — veio pelos valores, trabalha com arte e expressão, conecta Piracanga ao mundo</div></div>
+            <div style="font-size:12px;margin:4px 0">🍃🍃🍃🍃 <span style="font-size:11px;color:var(--ci)">Alta afinidade</span></div>
+            <div class="mtgs"><span class="mtg cl">Idiomas</span><span class="mtg co">Artes</span><span class="mtg cl">Canto</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=5;upSd();this.textContent='Enviado ✓';this.style.background='var(--ca)'">🌱 Conectar</button>
+        </div>
+
+        <!-- Pessoa 5 — Semente -->
+        <div class="mc pessoa-card" data-arq="raiz" data-nome="Novo Morador" data-casa="" style="border:1.5px solid #E8E0F4">
+          <div class="mav" style="background:var(--rxc);color:var(--rx)">NM</div>
+          <div class="mi">
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+              <div class="mnm">Novo Morador</div>
+              <span class="agent-badge ag-semente" style="font-size:10px;padding:2px 7px">🌰 Semente</span>
+            </div>
+            <div class="mme">Chegou há 2 semanas</div>
+            <div style="font-size:11px;background:var(--rxc);color:var(--rx);border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">🌰 Programa de Acolhimento<div class="tb">Semente — recém-chegado, buscando criar raízes. Como Guardião, você pode ser sua referência na vila.</div></div>
+            <div class="mtgs"><span class="mtg cl">Permacultura</span><span class="mtg cl">Bioconstrução</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=5;upSd();this.textContent='Acolhido ✓';this.style.background='var(--rx)'">🌰 Acolher</button>
+        </div>
+
+        <!-- Pessoa 6 — Prof. Remoto -->
+        <div class="mc pessoa-card" data-arq="remoto" data-nome="Pedro Terra" data-casa="Escola da Natureza" style="border:1.5px solid #DFF0F7">
+          <div class="mav" style="background:#DFF0F7;color:#0C447C">PT</div>
+          <div class="mi">
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
+              <div class="mnm">Pedro Terra</div>
+              <span class="agent-badge ag-remoto" style="font-size:10px;padding:2px 7px">💻 Prof. Remoto</span>
+            </div>
+            <div class="mme">Escola da Natureza · 1 ano</div>
+            <div style="font-size:11px;background:#DFF0F7;color:#0C447C;border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">💻 Profissional Remoto<div class="tb">Profissional Remoto — mora aqui, renda digital. Ativo na diversificação econômica da vila.</div></div>
+            <div class="mtgs"><span class="mtg cl">Programação</span><span class="mtg cl">Design</span><span class="mtg co">Tecnologia</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=5;upSd();this.textContent='Enviado ✓';this.style.background='var(--ca)'">🌱 Conectar</button>
+        </div>
+
+        <!-- No results -->
+        <div id="no-results" style="display:none;padding:32px 16px;text-align:center;color:var(--ci)">
+          <div style="font-size:32px;margin-bottom:8px">🌱</div>
+          <div style="font-size:14px">Nenhuma pessoa encontrada para essa busca.</div>
+          <div style="font-size:13px;margin-top:4px">Tente outro nome ou habilidade.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: ORGANIZAÇÕES ── -->
+    <div id="tab-content-orgs" style="display:none;padding:16px">
+      <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:12px">Organizações ativas na vila</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+
+        <div class="mc" style="border:1.5px solid var(--bo)">
+          <div class="mav" style="background:var(--vc);color:var(--v);font-size:14px">EN</div>
+          <div class="mi">
+            <div class="mnm">Escola da Natureza</div>
+            <div class="mme">Instituição · sem fins lucrativos</div>
+            <div style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0">🌿 Construtor de Comunidade</div>
+            <div class="mtgs"><span class="mtg co">Educação</span><span class="mtg co">Permacultura</span><span class="mtg co">Crianças</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=3;upSd();this.textContent='Seguindo ✓';this.style.background='var(--ca)'">Seguir</button>
+        </div>
+
+        <div class="mc" style="border:1.5px solid var(--bo)">
+          <div class="mav" style="background:var(--oc);color:var(--ou);font-size:14px">AM</div>
+          <div class="mi">
+            <div class="mnm">A.MOR</div>
+            <div class="mme">Governança comunitária · A.MOR</div>
+            <div style="font-size:11px;background:#FDF3D0;color:#7A5800;border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">🏛️ Governança<div class="tb">Representa institucionalmente os moradores de Piracanga. Acesso institucional na plataforma.</div></div>
+            <div class="mtgs"><span class="mtg co">Gestão</span><span class="mtg co">Governança</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=3;upSd();this.textContent='Seguindo ✓';this.style.background='var(--ca)'">Seguir</button>
+        </div>
+
+        <div class="mc" style="border:1.5px solid var(--bo)">
+          <div class="mav" style="background:var(--tc);color:var(--tr);font-size:14px">GT</div>
+          <div class="mi">
+            <div class="mnm">GT Dados & Biomas</div>
+            <div class="mme">Grupo de Trabalho · coletivo</div>
+            <div style="font-size:11px;background:var(--rxc);color:var(--rx);border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0" class="ht">🌀 GT / Coletivo<div class="tb">Grupo de Trabalho — acesso coletivo, publica como instituição. Conduz o Censo e a plataforma Biomas.</div></div>
+            <div class="mtgs"><span class="mtg co">Tecnologia</span><span class="mtg co">Dados</span><span class="mtg co">Gestão</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=3;upSd();this.textContent='Seguindo ✓';this.style.background='var(--ca)'">Participar</button>
+        </div>
+
+        <div class="mc" style="border:1.5px solid var(--bo)">
+          <div class="mav" style="background:var(--azc);color:var(--az);font-size:14px">SA</div>
+          <div class="mi">
+            <div class="mnm">Somos Água</div>
+            <div class="mme">Instituto local · sem fins lucrativos</div>
+            <div style="font-size:11px;background:var(--vc);color:var(--v);border-radius:var(--r3);padding:2px 9px;display:inline-block;margin:4px 0">🌿 Construtor de Comunidade</div>
+            <div class="mtgs"><span class="mtg co">Água</span><span class="mtg co">Meio ambiente</span></div>
+          </div>
+          <button class="snbtn" onclick="seedCount+=3;upSd();this.textContent='Seguindo ✓';this.style.background='var(--ca)'">Seguir</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── TAB: PROJETOS ── -->
+    <div id="tab-content-projetos" style="display:none;padding:16px">
+      <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:12px">Projetos abertos buscando colaboradores</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <div class="card" style="border-left:3px solid var(--v)">
+          <div class="cbd" style="padding-top:14px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+              <div style="font-size:15px;font-weight:500;color:var(--ca)">Farmácia Viva Piracanga</div>
+              <span class="cbdg bdp">🌻 Florescendo</span>
+            </div>
+            <div style="font-size:13px;color:var(--ca2);margin-bottom:8px">Mapeamento de plantas medicinais da ecovila para guia vivo acessível a todos.</div>
+            <div class="skr" style="margin-top:4px"><span class="skp m">📸 Fotografia</span><span class="skp m">🌿 Ervas</span><span class="skp">🎨 Design</span></div>
+            <div class="pbr" style="margin-top:8px"><div class="pf" style="width:65%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ci)"><span>65% · 7 colaboradoras</span><span>Samkhya Ananda</span></div>
+          </div>
+          <div class="cacs"><button class="abtn grn" onclick="toggleParticipate(this)">Participar →</button><button class="abtn" onclick="toggleCmt(this)">💬 Comentar</button></div>
+        </div>
+
+        <div class="card" style="border-left:3px solid var(--az)">
+          <div class="cbd" style="padding-top:14px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+              <div style="font-size:15px;font-weight:500;color:var(--ca)">Agrofloresta Comunitária</div>
+              <span class="cbdg bdp" style="background:var(--azc);color:var(--az)">🌱 Em broto</span>
+            </div>
+            <div style="font-size:13px;color:var(--ca2);margin-bottom:8px">Plantar 500 mudas nativas em áreas comuns até o fim de 2025.</div>
+            <div class="skr"><span class="skp m">🌱 Agricultura</span><span class="skp m">🏗️ Bioconstrução</span><span class="skp">📊 Gestão</span></div>
+            <div class="pbr" style="margin-top:8px"><div class="pf" style="width:18%;background:var(--az)"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ci)"><span>18% · 4 colaboradores</span><span>GT Natureza</span></div>
+          </div>
+          <div class="cacs"><button class="abtn grn" onclick="toggleParticipate(this)">Participar →</button><button class="abtn" onclick="toggleCmt(this)">💬 Comentar</button></div>
+        </div>
+
+        <div class="card" style="border-left:3px solid var(--ou)">
+          <div class="cbd" style="padding-top:14px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+              <div style="font-size:15px;font-weight:500;color:var(--ca)">Feira de Trocas Mensais</div>
+              <span class="cbdg bde">🌻 Florescendo</span>
+            </div>
+            <div style="font-size:13px;color:var(--ca2);margin-bottom:8px">Organizar uma feira mensal de trocas de produtos locais, serviços e saberes.</div>
+            <div class="skr"><span class="skp m">📊 Gestão</span><span class="skp m">🍳 Culinária</span><span class="skp">🎨 Artes</span></div>
+            <div class="pbr" style="margin-top:8px"><div class="pf" style="width:50%;background:var(--ou)"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ci)"><span>50% · 9 colaboradores</span><span>Roni Diniz</span></div>
+          </div>
+          <div class="cacs"><button class="abtn grn" onclick="toggleParticipate(this)">Participar →</button><button class="abtn" onclick="toggleCmt(this)">💬 Comentar</button></div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div><!-- /cnt -->
+  <div class="bnav">
+    <div class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></div>
+    <div class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></div>
+    <div class="bnc"><button class="fab" onclick="openSh()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    <div class="bni a" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></div>
+    <div class="bni ht" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span><div class="tb">Desafios baseados no Censo 2025 e no Bioma</div></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="screen" id="dashboard">
+  <div class="dhdr">
+    <button class="bkbtn" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:rgba(255,255,255,.55);margin-bottom:8px" onclick="goTo('feed')">← voltar</button>
+    <div style="font-family:var(--fd);font-size:26px;font-weight:300;color:#fff">Pulso da Vila</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">Vila Viva · Inteligência territorial de Piracanga · Censo 2025</div>
+  </div>
+  <div class="dbdy">
+    <!-- Agentes + Arquetipos -->
+    <div class="dcd">
+      <div class="dcdhd"><div class="dct">Composição da comunidade — perfis Vila Viva</div><div style="font-size:12px;color:var(--ci)">117 respondentes</div></div>
+      <div class="dcbd">
+        <div class="ag-breakdown">
+          <div class="ag-seg" style="background:var(--vc);color:var(--v)"><div class="ag-seg-n">57</div><div class="ag-seg-l">🌱 Cultivadores</div></div>
+          <div class="ag-seg" style="background:#DFF0F7;color:#0C447C"><div class="ag-seg-n">35</div><div class="ag-seg-l">💻 Prof. Remotos</div></div>
+          <div class="ag-seg" style="background:var(--oc);color:#7A5800"><div class="ag-seg-n">32</div><div class="ag-seg-l">🌍 Aliados</div></div>
+          <div class="ag-seg" style="background:#FDF3D0;color:#96720A"><div class="ag-seg-n">22</div><div class="ag-seg-l">🏡 Guardiões</div></div>
+          <div class="ag-seg" style="background:var(--ar2);color:var(--ca2)"><div class="ag-seg-n">60+</div><div class="ag-seg-l">⚒️ Serviçais</div></div>
+        </div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--ci);margin:12px 0 6px">6 arquétipos do território</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+          <span style="padding:4px 10px;border-radius:var(--r3);background:var(--vc);color:var(--v);font-size:11px;font-weight:500">🌿 Construtor de Comunidade</span>
+          <span style="padding:4px 10px;border-radius:var(--r3);background:#E1F5EE;color:#085041;font-size:11px;font-weight:500">✨ Buscador Regenerativo</span>
+          <span style="padding:4px 10px;border-radius:var(--r3);background:#FAEEDA;color:#7A4010;font-size:11px;font-weight:500">🌊 Trabalhador do Turismo</span>
+          <span style="padding:4px 10px;border-radius:var(--r3);background:#DFF0F7;color:#0C447C;font-size:11px;font-weight:500">💻 Profissional Remoto</span>
+          <span style="padding:4px 10px;border-radius:var(--r3);background:#FBEAF0;color:#72243E;font-size:11px;font-weight:500">🌱 Raiz Ameaçada</span>
+          <span style="padding:4px 10px;border-radius:var(--r3);background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:500">🏠 Dono Distante</span>
+        </div>
+        <div style="font-size:12px;color:var(--v);background:var(--vc);border-radius:var(--r3);padding:6px 12px">🎯 44% dos Aliados quer voluntariar mas não encontra caminho — oportunidade de engajamento</div>
+      </div>
+    </div>
+    <!-- Pulse -->
+    <div class="dcd">
+      <div class="dcdhd"><div class="dct">Atividade comunitária</div><div style="font-size:12px;color:var(--ci)">Últimas 4 semanas</div></div>
+      <div class="dcbd">
+        <div class="pch">
+          <div class="pb" style="height:35%"></div><div class="pb" style="height:45%"></div><div class="pb" style="height:30%"></div><div class="pb" style="height:60%"></div><div class="pb" style="height:50%"></div><div class="pb hl" style="height:80%"></div><div class="pb" style="height:55%"></div><div class="pb" style="height:70%"></div><div class="pb" style="height:65%"></div><div class="pb hl" style="height:90%"></div><div class="pb" style="height:60%"></div><div class="pb" style="height:75%"></div><div class="pb" style="height:55%"></div><div class="pb hl" style="height:95%"></div>
+        </div>
+        <div style="font-size:11px;color:var(--ci);text-align:right">▲ Pico: mutirão do plantio</div>
+      </div>
+    </div>
+    <!-- Projects -->
+    <div class="dcd">
+      <div class="dcdhd"><div class="dct">Projetos vivos</div></div>
+      <div class="dcbd">
+        <div class="psr">
+          <div class="ps"><div class="psv">4</div><div class="psl">🌱 Em broto</div></div>
+          <div class="ps"><div class="psv">7</div><div class="psl">🌿 Crescendo</div></div>
+          <div class="ps"><div class="psv">3</div><div class="psl">🌻 Florescendo</div></div>
+          <div class="ps"><div class="psv">12</div><div class="psl">🍃 Colhidos</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- NPS por agente -->
+    <div class="dcd">
+      <div class="dcdhd"><div class="dct">NPS por tipo de agente</div><div style="font-size:12px;color:var(--ci)">0–10</div></div>
+      <div class="dcbd">
+        <div class="mbr"><div class="mbl">🌱 Cultivadores</div><div class="mbt"><div class="mbf" style="width:89%;background:var(--v)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.9</div></div>
+        <div class="mbr"><div class="mbl">🌍 Aliados</div><div class="mbt"><div class="mbf" style="width:89%;background:var(--az)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.9</div></div>
+        <div class="mbr"><div class="mbl">🏡 Guardiões</div><div class="mbt"><div class="mbf" style="width:79%;background:var(--ou)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">7.9</div></div>
+        <div style="font-size:11px;color:var(--ci);margin-top:6px">Guardiões são mais críticos — mas também mais comprometidos com a governança</div>
+      </div>
+    </div>
+    <!-- Talentos -->
+    <div class="dcd">
+      <div class="dcdhd"><div class="dct">Habilidades mais declaradas</div><div style="font-size:12px;color:var(--ci)">117 respondentes</div></div>
+      <div class="dcbd">
+        <div class="mbr"><div class="mbl">📊 Gestão</div><div class="mbt"><div class="mbf" style="width:100%;background:var(--v)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">62</div></div>
+        <div class="mbr"><div class="mbl">🎨 Artes</div><div class="mbt"><div class="mbf" style="width:82%;background:var(--tr)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">51</div></div>
+        <div class="mbr"><div class="mbl">🌿 Terapias</div><div class="mbt"><div class="mbf" style="width:66%;background:var(--az)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">41</div></div>
+        <div class="mbr"><div class="mbl">🍳 Culinária</div><div class="mbt"><div class="mbf" style="width:60%;background:var(--ou)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">37</div></div>
+        <div class="mbr"><div class="mbl">💻 Tecnologia</div><div class="mbt"><div class="mbf" style="width:44%;background:var(--rx)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">27</div></div>
+      </div>
+    </div>
+    <!-- Saúde comunitária -->
+    <div class="dcd">
+      <div class="dcdhd"><div class="dct">Saúde comunitária — Censo 2025</div></div>
+      <div class="dcbd">
+        <div class="mbr"><div class="mbl">NPS Piracanga</div><div class="mbt"><div class="mbf" style="width:86%;background:var(--v)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.6</div></div>
+        <div class="mbr"><div class="mbl">Qualidade de vida</div><div class="mbt"><div class="mbf" style="width:80%;background:var(--v2)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.0</div></div>
+        <div class="mbr"><div class="mbl">Segurança</div><div class="mbt"><div class="mbf" style="width:91%;background:var(--v)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">91%</div></div>
+        <div class="mbr"><div class="mbl">Voluntariado ativo</div><div class="mbt"><div class="mbf" style="width:57%;background:var(--tr)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">57%</div></div>
+        <div class="mbr"><div class="mbl">Conhece acordos</div><div class="mbt"><div class="mbf" style="width:91%;background:var(--ou)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">9.1</div></div>
+        <div style="font-size:11px;color:var(--ci);margin-top:8px">📊 Baseado em 117 respostas do Censo Piracanga 2025</div>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></div>
+    <div class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></div>
+    <div class="bnc"><button class="fab" onclick="openSh()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    <div class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></div>
+    <div class="bni ht" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span><div class="tb">Desafios baseados no Censo 2025 e no Bioma</div></div>
+  </div>
+</div>
+
+<!-- DESAFIOS -->
+<div class="screen" id="desafios">
+  <div class="topbar">
+    <button onclick="goTo('feed')" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--ci)">← voltar</button>
+    <div class="sctop ht">🌱 <span id="sdd">342</span><div class="tb tr">Suas Sementes</div></div>
+  </div>
+  <div class="cnt" style="padding-bottom:80px">
+
+    <!-- Hero -->
+    <div style="background:linear-gradient(135deg,var(--v) 0%,#2A7A4F 100%);padding:20px 20px 24px;position:relative;overflow:hidden;flex-shrink:0">
+      <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:28px 28px"></div>
+      <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:6px">DESAFIOS DA VILA · CENSO 2025</div>
+      <div style="font-family:var(--fd);font-size:24px;font-weight:300;color:#fff;line-height:1.2;margin-bottom:8px">Transforme dados em ação</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.55">Cada desafio nasce de uma tensão real mapeada no Bioma de Piracanga. Complete, ganhe Sementes e fortaleça o território.</div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <div style="background:rgba(255,255,255,.12);border-radius:var(--r);padding:10px 14px;text-align:center;flex:1">
+          <div style="font-family:var(--fd);font-size:22px;color:#fff;font-weight:300">3</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px">desafios ativos</div>
+        </div>
+        <div style="background:rgba(255,255,255,.12);border-radius:var(--r);padding:10px 14px;text-align:center;flex:1">
+          <div style="font-family:var(--fd);font-size:22px;color:#fff;font-weight:300" id="part-total">43</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px">participantes</div>
+        </div>
+        <div style="background:rgba(255,255,255,.12);border-radius:var(--r);padding:10px 14px;text-align:center;flex:1">
+          <div style="font-family:var(--fd);font-size:22px;color:#fff;font-weight:300">🌿</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px">Lua Cheia</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div style="padding:12px 16px 6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none">
+      <button class="fch a" onclick="setDesafioFilter(this,'todos')">Todos</button>
+      <button class="fch" onclick="setDesafioFilter(this,'coletivo')">🌻 Coletivos</button>
+      <button class="fch" onclick="setDesafioFilter(this,'individual')">🌱 Individuais</button>
+      <button class="fch" onclick="setDesafioFilter(this,'censo')">📊 Do Censo</button>
+      <button class="fch" onclick="setDesafioFilter(this,'territorio')">🌿 Território</button>
+    </div>
+
+    <div style="padding:0 16px;display:flex;flex-direction:column;gap:16px;margin-top:4px">
+
+      <!-- ── DESAFIO 1: Censo real — 44% aliados sem caminho ── -->
+      <div class="desafio-card" data-tipo="coletivo censo" style="background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);overflow:hidden">
+        <div style="background:linear-gradient(90deg,var(--v),var(--v2));padding:12px 16px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:28px">🌍</div>
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.6)">Desafio Coletivo · Aliados</div>
+            <div style="font-family:var(--fd);font-size:17px;color:#fff;font-weight:300;line-height:1.25">Conectar os Aliados Distantes</div>
+          </div>
+          <div style="background:rgba(255,255,255,.15);border-radius:var(--r3);padding:4px 10px;font-size:12px;color:#fff;font-weight:500">+20 🌱</div>
+        </div>
+        <div style="padding:14px 16px">
+          <!-- Dado do censo -->
+          <div style="background:var(--vc);border-radius:var(--r);padding:10px 12px;margin-bottom:12px;border-left:3px solid var(--v)">
+            <div style="font-size:11px;font-weight:500;color:var(--v);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">📊 Dado real · Censo Piracanga 2025</div>
+            <div style="font-size:13px;color:var(--ca);line-height:1.5"><strong>44% dos Aliados</strong> (proprietários não-moradores) declararam que querem voluntariar, mas <strong>não encontram o caminho</strong>. São 14 pessoas com recursos, conexões e vontade — esperando uma ponte.</div>
+          </div>
+          <div style="font-size:14px;color:var(--ca);line-height:1.6;margin-bottom:12px">Cada morador convida um Aliado para criar perfil na Vila Viva e se conectar a um projeto real. A meta: <strong>10 Aliados ativos</strong> até o fim da Lua Cheia.</div>
+          <!-- Progress -->
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ci);margin-bottom:6px">
+            <span id="aliados-prog-txt">4 de 10 Aliados conectados</span>
+            <span style="color:var(--v);font-weight:500">40%</span>
+          </div>
+          <div style="height:8px;background:var(--ar2);border-radius:4px;overflow:hidden;margin-bottom:12px">
+            <div id="aliados-bar" style="height:100%;width:40%;background:var(--v);border-radius:4px;transition:width .5s ease"></div>
+          </div>
+          <!-- Participants -->
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+            <div style="display:flex">
+              <div style="width:26px;height:26px;border-radius:50%;background:var(--vc);border:2px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--v)">MR</div>
+              <div style="width:26px;height:26px;border-radius:50%;background:var(--tc);border:2px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--tr);margin-left:-6px">DA</div>
+              <div style="width:26px;height:26px;border-radius:50%;background:var(--oc);border:2px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--ou);margin-left:-6px">LY</div>
+              <div style="width:26px;height:26px;border-radius:50%;background:var(--ar2);border:2px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ci);margin-left:-6px">+9</div>
+            </div>
+            <div style="font-size:12px;color:var(--ci)">12 moradores já participam</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button id="btn-d1" onclick="participarDesafio(this,'d1','aliados-bar','aliados-prog-txt',40,10,'Você está conectando Aliados Distantes à vila! Convide um Aliado pelo WhatsApp ↓','20')"
+              style="flex:2;padding:11px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s">
+              Participar do desafio →
+            </button>
+            <button onclick="wapp('🌍 Tenho uma missão: conectar Aliados de Piracanga ao projeto Vila Viva! Você tem propriedade lá e quer contribuir? Crie seu perfil: https://vilaviva.piracanga.org')"
+              style="flex:1;padding:11px;background:#25D366;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px">
+              <svg class="waico"><use href="#wa"/></svg>Convidar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DESAFIO 2: Censo real — finanças e carreira ── -->
+      <div class="desafio-card" data-tipo="individual censo" style="background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);overflow:hidden">
+        <div style="background:linear-gradient(90deg,var(--ou),#D4A820);padding:12px 16px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:28px">💰</div>
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.6)">Desafio Individual · Economia</div>
+            <div style="font-family:var(--fd);font-size:17px;color:#fff;font-weight:300;line-height:1.25">Fortalecer a economia local</div>
+          </div>
+          <div style="background:rgba(255,255,255,.15);border-radius:var(--r3);padding:4px 10px;font-size:12px;color:#fff;font-weight:500">+15 🌱</div>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="background:#FDF3D0;border-radius:var(--r);padding:10px 12px;margin-bottom:12px;border-left:3px solid var(--ou)">
+            <div style="font-size:11px;font-weight:500;color:#7A5800;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">📊 Dado real · Censo Piracanga 2025</div>
+            <div style="font-size:13px;color:var(--ca);line-height:1.5"><strong>54 moradores</strong> apontaram <strong>finanças</strong> como principal área de melhoria de vida. <strong>39 apontaram carreira</strong>. A economia local pode ser a resposta — mas os talentos estão dispersos e invisíveis.</div>
+          </div>
+          <div style="font-size:14px;color:var(--ca);line-height:1.6;margin-bottom:12px">Esta semana: registre no seu perfil <strong>um serviço ou produto</strong> que você oferece ou poderia oferecer para outros moradores. Economia circular começa com visibilidade.</div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ci);margin-bottom:6px">
+            <span id="eco-prog-txt">18 de 40 serviços cadastrados</span>
+            <span style="color:var(--ou);font-weight:500">45%</span>
+          </div>
+          <div style="height:8px;background:var(--ar2);border-radius:4px;overflow:hidden;margin-bottom:14px">
+            <div id="eco-bar" style="height:100%;width:45%;background:var(--ou);border-radius:4px;transition:width .5s ease"></div>
+          </div>
+          <button id="btn-d2" onclick="participarDesafio(this,'d2','eco-bar','eco-prog-txt',45,40,'Seu serviço foi registrado! Outros moradores já podem te encontrar no Jardim de Conexões.','15')"
+            style="width:100%;padding:11px;background:var(--ou);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer">
+            Cadastrar meu serviço →
+          </button>
+        </div>
+      </div>
+
+      <!-- ── DESAFIO 3: Censo real — voz e participação ── -->
+      <div class="desafio-card" data-tipo="coletivo censo territorio" style="background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);overflow:hidden">
+        <div style="background:linear-gradient(90deg,var(--az),#3A8BAA);padding:12px 16px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:28px">🏛️</div>
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.6)">Desafio Coletivo · Governança</div>
+            <div style="font-family:var(--fd);font-size:17px;color:#fff;font-weight:300;line-height:1.25">Ampliar vozes na governança</div>
+          </div>
+          <div style="background:rgba(255,255,255,.15);border-radius:var(--r3);padding:4px 10px;font-size:12px;color:#fff;font-weight:500">+25 🌱</div>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="background:var(--azc);border-radius:var(--r);padding:10px 12px;margin-bottom:12px;border-left:3px solid var(--az)">
+            <div style="font-size:11px;font-weight:500;color:var(--az);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">📊 Dado real · Censo Piracanga 2025</div>
+            <div style="font-size:13px;color:var(--ca);line-height:1.5"><strong>19 moradores</strong> dizem que <strong>não têm voz</strong> nas decisões que impactam Piracanga. <strong>20 não sabem</strong>. Juntos, são 34% da comunidade que se sente à margem das decisões coletivas.</div>
+          </div>
+          <div style="font-size:14px;color:var(--ca);line-height:1.6;margin-bottom:12px">Participe de <strong>uma reunião da A.MOR ou de um GT</strong> este mês e registre aqui. O desafio termina quando 30 moradores reportarem participação ativa em alguma instância de governança.</div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ci);margin-bottom:6px">
+            <span id="gov-prog-txt">11 de 30 participações registradas</span>
+            <span style="color:var(--az);font-weight:500">37%</span>
+          </div>
+          <div style="height:8px;background:var(--ar2);border-radius:4px;overflow:hidden;margin-bottom:14px">
+            <div id="gov-bar" style="height:100%;width:37%;background:var(--az);border-radius:4px;transition:width .5s ease"></div>
+          </div>
+          <button id="btn-d3" onclick="participarDesafio(this,'d3','gov-bar','gov-prog-txt',37,30,'Sua participação foi registrada! A A.MOR será notificada. Juntos somos mais fortes.','25')"
+            style="width:100%;padding:11px;background:var(--az);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer">
+            Registrar minha participação →
+          </button>
+        </div>
+      </div>
+
+      <!-- ── DESAFIO 4: Território — plantio nativo ── -->
+      <div class="desafio-card" data-tipo="coletivo territorio" style="background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);overflow:hidden">
+        <div style="background:linear-gradient(90deg,#3B7A30,#5AA048);padding:12px 16px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:28px">🌳</div>
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.6)">Desafio Território · Bioma</div>
+            <div style="font-family:var(--fd);font-size:17px;color:#fff;font-weight:300;line-height:1.25">500 mudas — desafio do solstício</div>
+          </div>
+          <div style="background:rgba(255,255,255,.15);border-radius:var(--r3);padding:4px 10px;font-size:12px;color:#fff;font-weight:500">+30 🌱</div>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="background:#E6F3E6;border-radius:var(--r);padding:10px 12px;margin-bottom:12px;border-left:3px solid #3B7A30">
+            <div style="font-size:11px;font-weight:500;color:#3B7A30;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">🌿 Painel Biomas · Inteligência Territorial</div>
+            <div style="font-size:13px;color:var(--ca);line-height:1.5">O Bioma de Piracanga tem <strong>Alta Mata Atlântica com risco de fragmentação</strong> nas bordas das ecovilas. O GT Natureza definiu a meta de <strong>500 mudas nativas</strong> plantadas em corredores ecológicos até o Solstício de Junho.</div>
+          </div>
+          <div style="font-size:14px;color:var(--ca);line-height:1.6;margin-bottom:12px">Plante ao menos <strong>1 muda nativa</strong> em qualquer área comum ou borda da sua propriedade e registre com foto. Cada muda conta — e cada muda tem um nome plantado aqui.</div>
+          <!-- Visual counter -->
+          <div style="background:var(--ar2);border-radius:var(--r2);padding:14px;margin-bottom:12px;text-align:center">
+            <div style="font-family:var(--fd);font-size:42px;color:#3B7A30;font-weight:300" id="mudas-count">247</div>
+            <div style="font-size:12px;color:var(--ci)">mudas plantadas · meta: 500</div>
+            <div style="height:10px;background:var(--br);border-radius:5px;overflow:hidden;margin-top:10px">
+              <div style="height:100%;width:49.4%;background:linear-gradient(90deg,#3B7A30,#5AA048);border-radius:5px;transition:width .6s ease" id="mudas-bar"></div>
+            </div>
+            <div style="font-size:11px;color:#3B7A30;margin-top:5px;font-weight:500">49% · Solstício: 21 Jun 2026</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button id="btn-d4" onclick="participarDesafio(this,'d4','mudas-bar','',49,500,'Sua muda foi registrada! O Bioma de Piracanga agradece. 🌳 Um novo ser vivo começa hoje por você.','30')"
+              style="flex:2;padding:11px;background:#3B7A30;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer">
+              Registrar muda plantada 🌱
+            </button>
+            <button onclick="wapp('🌳 Estou participando do desafio 500 mudas nativas em Piracanga! Junte-se: https://vilaviva.piracanga.org/desafios')"
+              style="flex:1;padding:11px;background:#25D366;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px">
+              <svg class="waico"><use href="#wa"/></svg>Compartilhar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DESAFIO 5: Censo — saúde emocional ── -->
+      <div class="desafio-card" data-tipo="individual censo" style="background:var(--br);border-radius:var(--r2);border:1px solid var(--bo);overflow:hidden">
+        <div style="background:linear-gradient(90deg,var(--rx),#8B6AB8);padding:12px 16px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:28px">🧘</div>
+          <div style="flex:1">
+            <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.6)">Desafio Individual · Bem-estar</div>
+            <div style="font-family:var(--fd);font-size:17px;color:#fff;font-weight:300;line-height:1.25">Cuidado coletivo da saúde emocional</div>
+          </div>
+          <div style="background:rgba(255,255,255,.15);border-radius:var(--r3);padding:4px 10px;font-size:12px;color:#fff;font-weight:500">+10 🌱</div>
+        </div>
+        <div style="padding:14px 16px">
+          <div style="background:var(--rxc);border-radius:var(--r);padding:10px 12px;margin-bottom:12px;border-left:3px solid var(--rx)">
+            <div style="font-size:11px;font-weight:500;color:var(--rx);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">📊 Dado real · Censo Piracanga 2025</div>
+            <div style="font-size:13px;color:var(--ca);line-height:1.5"><strong>42 moradores</strong> apontaram <strong>saúde emocional</strong> como área prioritária de melhoria — o segundo item mais citado depois de finanças. <strong>47 citaram saúde física</strong>. A vila cuida do ambiente — agora precisa cuidar das pessoas.</div>
+          </div>
+          <div style="font-size:14px;color:var(--ca);line-height:1.6;margin-bottom:12px">Esta semana: <strong>participe de uma roda de conversa, círculo de escuta ou prática coletiva</strong> (yoga, meditação, dança). Registre aqui depois. O desafio é simples — aparecer.</div>
+          <button id="btn-d5" onclick="participarDesafio(this,'d5','','',0,0,'Sua presença foi registrada. Cuidar-se em comunidade é o maior ato regenerativo.','10')"
+            style="width:100%;padding:11px;background:var(--rx);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer">
+            Registrar minha presença →
+          </button>
+        </div>
+      </div>
+
+      <!-- Próximo desafio teaser -->
+      <div style="background:var(--ar2);border-radius:var(--r2);padding:16px;border:1.5px dashed var(--bo);text-align:center">
+        <div style="font-size:22px;margin-bottom:6px">🌙</div>
+        <div style="font-size:14px;font-weight:500;color:var(--ca);margin-bottom:4px">Próximo desafio — Lua Nova</div>
+        <div style="font-size:13px;color:var(--ci);line-height:1.5;margin-bottom:10px">Baseado na resposta de 47 moradores sobre saúde física, um desafio de movimento coletivo está sendo elaborado pelo GT Bem-estar.</div>
+        <button onclick="seedCount+=2;upSd();this.textContent='✓ Você será notificado/a';this.style.background='var(--v)';this.style.color='#fff';this.style.border='none'" style="padding:8px 18px;border-radius:var(--r3);border:1.5px solid var(--bo);background:var(--br);font-family:var(--fb);font-size:13px;color:var(--ca2);cursor:pointer">Quero ser avisado/a →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bnav">
+    <div class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></div>
+    <div class="bni" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span></div>
+    <div class="bnc"><button class="fab" onclick="openSh()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    <div class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></div>
+    <div class="bni a" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span></div>
+  </div>
+</div>
+
+<!-- NOTIFICAÇÕES -->
+<div class="screen" id="notifs">
+  <div class="nhdr"><button class="bkbtn" onclick="goTo('feed')" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--ci);margin-bottom:8px">← voltar</button><div style="font-family:var(--fd);font-size:26px;font-weight:300;color:var(--ca)">Conexões & Avisos</div>
+    <div style="font-size:12px;color:var(--ci);margin-top:2px">Vila Viva · notificações por tipo de agente e arquétipo</div></div>
+  <div class="nls">
+    <div class="nit"><div class="nic nr">🌱</div><div class="nif"><div class="ntx"><strong>Láyọ</strong> (🌱 Cultivadora) te enviou uma semente de conexão ✨ Quer trocar sobre Artes e Expressão</div><div class="ntm">há 1h</div><button class="nbtn" onclick="seedCount+=5;upSd();this.textContent='Aceito ✓'">Aceitar conexão</button></div></div>
+    <div class="nit"><div class="nic no">🔥</div><div class="nif"><div class="ntx"><strong>Marcelo</strong> (🌱 Cultivador) convidou você para a Roda de Música — hoje 17h na Pedra do Mirante</div><div class="ntm">há 2h</div><button class="nbtn" onclick="openCt('Marcelo Rothen','(73) 9 8888-5678')">Confirmar e contatar</button></div></div>
+    <div class="nit"><div class="nic ng">🌍</div><div class="nif"><div class="ntx"><strong>Josemar</strong> (🌍 Aliado) quer apoiar seu projeto remotamente com recursos e conexões externas</div><div class="ntm">há 3h</div><button class="nbtn" onclick="openCt('Josemar Quadros','(71) 9 9959-1983')">Conectar com Josemar</button></div></div>
+    <div class="nit"><div class="nic ng">🌻</div><div class="nif"><div class="ntx">🎉 Badge desbloqueado! <strong>Plantadores de Sombra</strong> — você participou do plantio coletivo de 200 mudas</div><div class="ntm">há 4h</div><button class="nbtn" onclick="showBadge('Plantadores de Sombra','200 mudas plantadas em comunidade!','🌳')">Ver badge 🌳</button></div></div>
+    <div class="nit"><div class="nic nr">🌰</div><div class="nif"><div class="ntx">Um novo <strong>Semente</strong> chegou — você foi sugerido/a como acolhedor/a pelo Programa de Acolhimento</div><div class="ntm">ontem</div><button class="nbtn" onclick="goTo('match')">Ver perfil do Semente</button></div></div>
+    <div class="nit"><div class="nic ng">🌳</div><div class="nif"><div class="ntx">Você subiu de nível! Bem-vinda ao nível <strong>Guardiã da Terra</strong> 🌿</div><div class="ntm">há 2 dias</div></div></div>
+  </div>
+  <div class="bnav">
+    <div class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></div>
+    <div class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></div>
+    <div class="bnc"><button class="fab" onclick="openSh()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    <div class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></div>
+    <div class="bni a" onclick="goTo('notifs')"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Avisos</span></div>
+  </div>
+</div>
+
+<!-- BOTTOM SHEET CONTRIBUIR -->
+<div class="bso" id="bso" onclick="closeShByOverlay(event)"></div>
+<div class="bsh" id="bsh">
+  <div class="bshd"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca)">O que você quer plantar hoje?</div>
+    <button onclick="closeSh()" style="background:var(--ar);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ci);display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
+  </div>
+  <div class="bsop">
+    <div class="bso2 ht" onclick="closeShAct(2,'Sua história foi para o feed da comunidade!','✍️')"><div class="bsoi">✍️</div><div class="bsol">Nova história</div><div class="bsos">Compartilhe o que está vivendo</div><div class="tb">Publique uma história, reflexão ou atualização. +2 Sementes 🌱</div></div>
+    <div class="bso2 ht" onclick="closeShAct(3,'Seu pedido foi para o feed — alguém com a habilidade vai ver!','🙌')"><div class="bsoi">🙌</div><div class="bsol">Pedido de ajuda</div><div class="bsos">Alguém pode ter o que você precisa</div><div class="tb">Descreva o que precisa e as habilidades necessárias. A plataforma sugere quem pode ajudar. +3 Sementes 🌱</div></div>
+    <div class="bso2 ht" onclick="closeShAct(8,'Seu projeto está no feed — pessoas já estão vendo!','🌿')"><div class="bsoi">🌿</div><div class="bsol">Projeto aberto</div><div class="bsos">Crie e convide colaboradores</div><div class="tb">Abra um projeto com as habilidades que precisa. Colaboradores te encontram pelo Jardim de Conexões. +8 Sementes 🌱</div></div>
+    <div class="bso2 ht" onclick="closeShAct(5,'Você convocou um encontro! A comunidade está sendo notificada.','🔥')"><div class="bsoi">🔥</div><div class="bsol">Convocar encontro</div><div class="bsos">Reúna a comunidade</div><div class="tb">Crie um evento presencial — mutirão, roda, oficina. Moradores com interesse serão notificados. +5 Sementes 🌱</div></div>
+    <div class="bso2 ht" onclick="closeShAct(10,'Sua conquista foi compartilhada — isso inspira todos! ','🌻')"><div class="bsoi">🌻</div><div class="bsol">Registrar conquista</div><div class="bsos">Celebre algo realizado</div><div class="tb">Registre um projeto concluído, meta atingida ou aprendizagem. +10 Sementes 🌱</div></div>
+    <div class="bso2 ht" onclick="closeShAct(5,'Seu evento foi criado e aparece no feed e calendário!','📅')"><div class="bsoi">📅</div><div class="bsol">Criar evento</div><div class="bsos">Aparece no feed e calendário</div><div class="tb">Evento com data, local e capacidade. Moradores interessados recebem notificação. +5 Sementes 🌱</div></div>
+    <div class="bso2 ht" onclick="openCadVaga()"><div class="bsoi">💼</div><div class="bsol">Cadastrar vaga</div><div class="bsos">Voluntariado ou remunerado</div><div class="tb">Publique uma oportunidade na seção Vagas — voluntariado ou trabalho remunerado. +5 Sementes 🌱</div></div>
+    <div class="bso2 ht" onclick="closeSh();goTo('desafios')"><div class="bsoi">⭐</div><div class="bsol">Ver desafios</div><div class="bsos">Baseados no Censo 2025</div><div class="tb">5 desafios ativos baseados em dados reais do território. Complete e ganhe Sementes.</div></div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="ctmo" id="ctmo">
+  <div class="ctin" style="position:relative">
+    <button onclick="document.getElementById('ctmo').classList.remove('op')" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ci);display:flex;align-items:center;justify-content:center">×</button>
+    <div class="cthd"></div>
+    <div style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin-bottom:6px" id="ct-title">Conectar com</div>
+    <div style="font-size:13px;color:var(--ci);margin-bottom:20px;line-height:1.5">Sua intenção de participar foi registrada na plataforma e o organizador será notificado. Para combinar os detalhes, entre em contato pelo WhatsApp:</div>
+    <div class="ctib"><strong id="ct-name"></strong><span id="ct-phone"></span></div>
+    <a id="ct-link" href="#" class="wabtn" target="_blank"><svg class="waico"><use href="#wa"/></svg>Abrir conversa no WhatsApp</a>
+    <button class="cnlbtn" onclick="document.getElementById('ctmo').classList.remove('op')">Fechar</button>
+  </div>
+</div>
+
+<!-- EDIT PROFILE -->
+<div class="edov" id="edov">
+  <div class="edsh">
+    <div class="edshh"></div>
+    <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin-bottom:20px">Editar meu perfil</div>
+    <div class="edf"><div class="edl">Nome</div><input class="edi" value="Mónica Reis"></div>
+    <div class="edf"><div class="edl">Casa em Piracanga</div><input class="edi" value="Terra Maré"></div>
+    <div class="edf"><div class="edl">Tagline</div><input class="edi" value="Arquiteta · Tecelã · Mãe de Piracanga"></div>
+    <div class="edf"><div class="edl">Tempo em Piracanga</div><input class="edi" value="14 anos"></div>
+    <div class="edf"><div class="edl">Meu tipo de agente</div>
+      <select class="edi">
+        <optgroup label="Pessoas físicas">
+          <option selected>🌱 Cultivador/a — morador/a não-proprietário/a</option>
+          <option>🏡 Guardião/ã — proprietário/a morador/a</option>
+          <option>🌍 Aliado/a — proprietário/a não-morador/a</option>
+          <option>💻 Prof. Remoto/a — renda digital, mora aqui</option>
+          <option>🌰 Semente — chegando a criar raízes</option>
+          <option>⚒️ Trabalhador da Região — trabalha aqui, mora no entorno</option>
+          <option>🦋 Polinizador/a — visitante frequente</option>
+          <option>🤝 Embaixador/a — amigo/a e parceiro/a da vila</option>
+        </optgroup>
+        <optgroup label="Organizações e coletivos">
+          <option>🏢 Org. Local — empreendimento com fins lucrativos</option>
+          <option>🌿 Org. Comunitária — instituto sem fins lucrativos</option>
+          <option>🌀 GT / Coletivo — grupo de trabalho</option>
+          <option>🏛️ Governança — A.MOR ou conselho</option>
+        </optgroup>
+        <optgroup label="Visitantes e externos">
+          <option>🌍 Aliado Externo — proprietário/a rural da bacia</option>
+          <option>🤝 Org. Parceira — apoio externo / pesquisa</option>
+          <option>🔍 Observador — gov. ou inst. pública (leitura)</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="edf"><div class="edl">Intenção desta estação</div><textarea class="edi" rows="3">Quero fortalecer o senso de comunidade e conectar pessoas com talentos complementares.</textarea></div>
+    <div class="edf"><div class="edl">WhatsApp (para conexões)</div><input class="edi" type="tel" placeholder="(73) 9 XXXX-XXXX"></div>
+    <div class="edf"><div class="edl">Habilidades (clique para editar)</div>
+      <div class="sgr" style="margin-top:6px">
+        <span class="stag s" onclick="toggleSkill(this)">🎨 Artes</span><span class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</span><span class="stag s" onclick="toggleSkill(this)">🌿 Terapias</span><span class="stag s" onclick="toggleSkill(this)">📊 Gestão</span><span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span><span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span><span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span><span class="stag" onclick="toggleSkill(this)">🎵 Música</span>
+      </div>
+    </div>
+    <div class="edf"><div class="edl">Alterar senha</div><input class="edi" type="password" placeholder="Nova senha (deixe em branco para manter)"></div>
+    <button class="edsv" onclick="document.getElementById('edov').classList.remove('op');showBadge('Perfil Atualizado','Seu perfil vivo foi atualizado — a comunidade pode te conhecer melhor agora 🌿','✏️')">Salvar alterações</button>
+    <button class="edcl" onclick="document.getElementById('edov').classList.remove('op')">Cancelar</button>
+  </div>
+</div>
+
+<!-- BADGE OVERLAY -->
+<div class="bdov" id="bdov" onclick="closeBadgeOverlay(event)">
+  <div class="bdmo" style="position:relative">
+    <button onclick="document.getElementById('bdov').classList.remove('sh')" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--ci);display:flex;align-items:center;justify-content:center;line-height:1">×</button>
+    <span class="bdic" id="bdic">🌳</span>
+    <div class="bdse">🌱 +15 sementes conquistadas!</div>
+    <div class="bdmt" id="bdmt">Badge conquistado!</div>
+    <div class="bdmd" id="bdmd">Descrição</div>
+    <div class="bdsrow">
+      <button class="bdwbtn" id="bdwbtn"><svg class="waico"><use href="#wa"/></svg>Compartilhar</button>
+      <button class="bdbtn" onclick="document.getElementById('bdov').classList.remove('sh')">Ver no perfil</button>
+    </div>
+    <div style="font-size:11px;color:var(--ci);margin-top:8px">Toque fora ou no × para fechar</div>
+  </div>
+</div>
+
+
+<!-- MODAL: CADASTRAR VAGA -->
+<div class="edov" id="cadvaga-ov">
+  <div class="edsh" style="max-height:92vh;overflow-y:auto">
+    <div class="edshh"></div>
+    <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin-bottom:4px">Cadastrar vaga</div>
+    <div style="font-size:13px;color:var(--ci);margin-bottom:20px">Publique uma oportunidade de voluntariado ou trabalho remunerado na vila</div>
+
+    <!-- Tipo de vaga (prominent toggle) -->
+    <div style="display:flex;gap:0;border-radius:var(--r);overflow:hidden;border:1.5px solid var(--bo);margin-bottom:18px">
+      <button id="vaga-tipo-vol" onclick="setVagaTipo('vol')"
+        style="flex:1;padding:12px 8px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fb);border:none;background:var(--v);color:#fff;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px">
+        🤲 Voluntariado
+        <span style="font-size:11px;opacity:.75;font-weight:400">doo seu tempo</span>
+      </button>
+      <button id="vaga-tipo-rem" onclick="setVagaTipo('rem')"
+        style="flex:1;padding:12px 8px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fb);border:none;background:var(--ar);color:var(--ci);transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px">
+        💰 Remunerado
+        <span style="font-size:11px;font-weight:400">paga com dinheiro</span>
+      </button>
+    </div>
+
+    <div class="edf"><div class="edl">Título da vaga *</div><input class="edi" placeholder="Ex: Cozinheiro/a para a feira de domingo"></div>
+    <div class="edf"><div class="edl">Organização ou responsável</div><input class="edi" placeholder="Ex: A.MOR, Escola da Natureza, nome próprio"></div>
+    <div class="edf"><div class="edl">Descrição da vaga *</div><textarea class="edi" rows="3" placeholder="O que a pessoa vai fazer, requisitos, e o que oferece em troca..."></textarea></div>
+    <div class="edf"><div class="edl">Dedicação necessária</div><input class="edi" placeholder="Ex: 2–3h/semana, sazonais, aos domingos..."></div>
+
+    <div id="remuneracao-field" style="display:none" class="edf"><div class="edl">Remuneração</div><input class="edi" placeholder="Ex: R$ 100–150/dia, a combinar, produto por serviço..."></div>
+
+    <div class="edf"><div class="edl">Habilidades desejadas</div>
+      <div class="sgr" style="margin-top:6px">
+        <span class="stag" onclick="toggleSkill(this)">🎨 Artes</span>
+        <span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span>
+        <span class="stag" onclick="toggleSkill(this)">🌿 Terapias</span>
+        <span class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</span>
+        <span class="stag" onclick="toggleSkill(this)">📊 Gestão</span>
+        <span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span>
+        <span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span>
+        <span class="stag" onclick="toggleSkill(this)">👶 Crianças</span>
+        <span class="stag" onclick="toggleSkill(this)">🧘 Yoga</span>
+        <span class="stag" onclick="toggleSkill(this)">🗣️ Idiomas</span>
+        <span class="stag" onclick="toggleSkill(this)">🎵 Música</span>
+      </div>
+    </div>
+
+    <div class="edf"><div class="edl">Contato para candidatos</div><input class="edi" type="tel" placeholder="WhatsApp ou e-mail"></div>
+
+    <button class="edsv" onclick="submitCadVaga()">Publicar vaga →</button>
+    <button class="edcl" onclick="document.getElementById('cadvaga-ov').classList.remove('op')">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL: CADASTRAR PROJETO/INICIATIVA no perfil -->
+<div class="edov" id="cadprojeto-ov">
+  <div class="edsh" style="max-height:92vh;overflow-y:auto">
+    <div class="edshh"></div>
+    <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin-bottom:4px">Projeto ou iniciativa</div>
+    <div style="font-size:13px;color:var(--ci);margin-bottom:20px">Registre algo que você participou ou lidera na vila</div>
+
+    <div class="edf"><div class="edl">Nome do projeto *</div><input class="edi" placeholder="Ex: Farmácia Viva, Mutirão da Escola..."></div>
+    <div class="edf"><div class="edl">Período</div>
+      <div style="display:flex;gap:8px">
+        <input class="edi" placeholder="Início · Ex: 2022" style="flex:1">
+        <input class="edi" placeholder="Fim (ou 'presente')" style="flex:1">
+      </div>
+    </div>
+    <div class="edf"><div class="edl">Local ou ecovila</div><input class="edi" placeholder="Ex: Ecovila 1, Centro Holístico..."></div>
+    <div class="edf"><div class="edl">Seu papel no projeto *</div>
+      <select class="edi">
+        <option>Participante / colaborador</option>
+        <option>Organizador / coordenador</option>
+        <option>Fundador / criador</option>
+        <option>Voluntário</option>
+        <option>Facilitador</option>
+      </select>
+    </div>
+    <div class="edf"><div class="edl">Status atual</div>
+      <select class="edi">
+        <option>🌳 Colhido (concluído)</option>
+        <option>🌿 Em andamento</option>
+        <option>🌱 Em broto (iniciando)</option>
+      </select>
+    </div>
+    <div class="edf"><div class="edl">Descrição breve *</div><textarea class="edi" rows="3" placeholder="O que foi o projeto, qual foi sua contribuição e o impacto na comunidade..."></textarea></div>
+    <div class="edf"><div class="edl">Habilidades que aplicou</div>
+      <div class="sgr" style="margin-top:6px">
+        <span class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</span>
+        <span class="stag" onclick="toggleSkill(this)">🎨 Artes</span>
+        <span class="stag" onclick="toggleSkill(this)">📊 Gestão</span>
+        <span class="stag" onclick="toggleSkill(this)">🌿 Terapias</span>
+        <span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span>
+        <span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span>
+        <span class="stag" onclick="toggleSkill(this)">📚 Educação</span>
+        <span class="stag" onclick="toggleSkill(this)">🤝 Facilitação</span>
+      </div>
+    </div>
+    <button class="edsv" onclick="submitCadProjeto()">Salvar no meu perfil →</button>
+    <button class="edcl" onclick="document.getElementById('cadprojeto-ov').classList.remove('op')">Cancelar</button>
+  </div>
+</div>
+
+<!-- MODAL: EDITAR SEÇÃO DO PERFIL (sobre/formação/exp) -->
+<div class="edov" id="editsec-ov">
+  <div class="edsh" style="max-height:88vh;overflow-y:auto">
+    <div class="edshh"></div>
+    <div style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin-bottom:16px" id="editsec-title">Editar</div>
+    <div id="editsec-body"><!-- content injected by JS --></div>
+    <button class="edsv" onclick="saveEditSection()">Salvar</button>
+    <button class="edcl" onclick="document.getElementById('editsec-ov').classList.remove('op')">Cancelar</button>
+  </div>
+</div>
+
+<script>
+let seedCount=342,obStep=1,currentAgent='cultivador';
+const agents={
+  // Moradores — acesso completo
+  cultivador:{icon:'🌱',name:'Cultivador/a',tipo:'Morador/a não-proprietário/a',cls:'ag-cultivador',arq:'Construtor de Comunidade / Raiz Ameaçada',acesso:'Completo'},
+  guardiao:{icon:'🏡',name:'Guardião/ã',tipo:'Proprietário/a morador/a',cls:'ag-guardiao',arq:'Construtor de Comunidade',acesso:'Completo'},
+  aliado:{icon:'🌍',name:'Aliado/a',tipo:'Proprietário/a não-morador/a',cls:'ag-aliado',arq:'Dono Distante / Construtor',acesso:'Completo'},
+  remoto:{icon:'💻',name:'Prof. Remoto/a',tipo:'Profissional com renda digital',cls:'ag-remoto',arq:'Profissional Remoto / Buscador Regenerativo',acesso:'Completo'},
+  semente:{icon:'🌰',name:'Semente',tipo:'Demorador/a — criando raízes',cls:'ag-semente',arq:'—',acesso:'Completo'},
+  trab_regiao:{icon:'⚒️',name:'Trabalhador da Região',tipo:'Trabalhador/a da região (Caubi, Pula Macaco...)',cls:'ag-trab_regiao',arq:'Raiz Ameaçada / Trabalhador do Turismo',acesso:'Completo'},
+  // Visitantes e externos pessoas físicas
+  polinizador:{icon:'🦋',name:'Polinizador/a',tipo:'Turista/visitante frequente',cls:'ag-polinizador',arq:'Buscador Regenerativo',acesso:'Parcial'},
+  aliado_ext:{icon:'🌍',name:'Aliado Externo',tipo:'Proprietário/a rural da bacia hidrográfica',cls:'ag-aliado',arq:'Dono Distante',acesso:'Parcial'},
+  // Organizações
+  org_local:{icon:'🏢',name:'Org. Local',tipo:'Empreendimento local (fins lucrativos)',cls:'ag-aliado',arq:'Trabalhador do Turismo',acesso:'Coletivo'},
+  org_comunit:{icon:'🌿',name:'Org. Comunitária',tipo:'Instituto local sem fins lucrativos',cls:'ag-cultivador',arq:'Construtor de Comunidade',acesso:'Coletivo'},
+  gt:{icon:'🌀',name:'GT / Coletivo',tipo:'Grupo de Trabalho comunitário',cls:'ag-cultivador',arq:'Construtor de Comunidade',acesso:'Coletivo'},
+  governanca:{icon:'🏛️',name:'Governança',tipo:'A.MOR e conselho territorial',cls:'ag-guardiao',arq:'Construtor de Comunidade',acesso:'Institucional'},
+  // Externos e observadores
+  embaixador:{icon:'🤝',name:'Embaixador/a',tipo:'Org. externas de apoio / BIOMAS / pesquisa',cls:'ag-embaixador',arq:'—',acesso:'Parcial'},
+  observador:{icon:'🔍',name:'Observador',tipo:'Governo / inst. públicas / ambientais',cls:'ag-trab_regiao',arq:'—',acesso:'Somente leitura'}
+};
+
+setTimeout(()=>goTo('login'),2600);
+
+function goTo(s){
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+  document.getElementById(s).classList.add('active');
+  upSd();
+}
+function setTab(t){
+  document.getElementById('tab-e').classList.toggle('a',t==='e');
+  document.getElementById('tab-c').classList.toggle('a',t==='c');
+  document.getElementById('fe').style.display=t==='e'?'block':'none';
+  document.getElementById('fc').style.display=t==='c'?'block':'none';
+}
+function selectAgent(el,agentKey){
+  document.querySelectorAll('.agent-sel-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  currentAgent=agentKey;
+  document.getElementById('aliado-extra').style.display=agentKey==='aliado'?'block':'none';
+  document.getElementById('semente-extra').style.display=agentKey==='semente'?'block':'none';
+}
+function nextOb(){
+  const titles=['','Quem sou eu na vila','Meu tipo de agente na comunidade','O que eu trago para a vila','O que eu busco aqui'];
+  if(obStep===1){obStep=2;document.getElementById('os1').style.display='none';document.getElementById('os2').style.display='block';document.getElementById('opd'+'2'||'op2').classList.add('a');}
+  else if(obStep===2){obStep=3;document.getElementById('os2').style.display='none';document.getElementById('os3').style.display='block';document.getElementById('op3').classList.add('a');}
+  else if(obStep===3){obStep=4;document.getElementById('os3').style.display='none';document.getElementById('os4').style.display='block';document.getElementById('op4').classList.add('a');document.getElementById('onbtn').textContent='Entrar na Vila 🌿';}
+  else{const ag=agents[currentAgent]||agents['cultivador'];
+    showBadge('Bem-vindo/a à Vila Viva!',ag.icon+' '+ag.name+' — '+ag.tipo+'. Arquétipo: '+ag.arq+'. Acesso: '+ag.acesso+'.','🌱');setTimeout(()=>{document.getElementById('bdov').classList.remove('sh');goTo('feed');},3200);}
+  const n=Math.min(obStep,4);
+  document.getElementById('osn').textContent=n;
+  if(titles[n])document.getElementById('oti').textContent=titles[n];
+}
+function toggleSkill(el){el.classList.toggle('s');}
+function setF(el){
+  const par=el.closest('.ffs,.mapf');
+  if(par){par.querySelectorAll('.fch').forEach(c=>c.classList.remove('a'));el.classList.add('a');}
+  const afr=document.getElementById('agent-filter-row');
+  if(afr)afr.style.display=(el.textContent.includes('agente')?'block':'none');
+}
+function openSh(){document.getElementById('bso').classList.add('sh');document.getElementById('bsh').style.display='block';}
+function closeShByOverlay(e){if(e.target===document.getElementById('bso'))closeSh();}
+function closeSh(){document.getElementById('bso').classList.remove('sh');document.getElementById('bsh').style.display='none';}
+function closeShAct(pts,msg,icon){closeSh();seedCount+=pts;upSd();showBadge('Contribuição registrada!',msg,icon);}
+function showBadge(t,d,ic){
+  document.getElementById('bdmt').textContent=t;
+  document.getElementById('bdmd').textContent=d;
+  document.getElementById('bdic').textContent=ic;
+  const msg=encodeURIComponent('🎉 Ganhei o badge "'+t+'" no Biomas de Piracanga! '+d+' https://vilaviva.piracanga.org');
+  document.getElementById('bdwbtn').onclick=()=>{window.open('https://wa.me/?text='+msg,'_blank');document.getElementById('bdov').classList.remove('sh');};
+  document.getElementById('bdov').classList.add('sh');
+  seedCount+=15;upSd();
+}
+function toggleCmt(btn){
+  const cs=btn.closest('.card').querySelector('.cmsec');
+  if(cs){cs.classList.toggle('op');btn.textContent=cs.classList.contains('op')?'💬 Fechar':'💬 Comentar';}
+}
+function addCmt(btn,id){
+  const cs=document.getElementById(id);
+  const inp=cs.querySelector('.cminp');
+  if(!inp.value.trim())return;
+  const d=document.createElement('div');d.className='cmit';
+  d.innerHTML='<div class="cmsm">MR</div><div class="cmbd"><div class="cmat">Mónica Reis</div><div class="cmtx">'+inp.value+'</div></div>';
+  cs.appendChild(d);inp.value='';seedCount+=2;upSd();
+}
+function togRct(btn,pts){
+  btn.classList.toggle('rc');
+  const c=btn.querySelector('.rc');
+  c.textContent=parseInt(c.textContent)+(btn.classList.contains('rc')?1:-1);
+  if(btn.classList.contains('rc')){seedCount+=pts;upSd();}
+}
+function openCt(name,phone){
+  document.getElementById('ct-title').textContent='Conectar com '+name.split(' ')[0];
+  document.getElementById('ct-name').textContent=name;
+  document.getElementById('ct-phone').textContent='  '+phone;
+  const msg=encodeURIComponent('Olá '+name.split(' ')[0]+'! Vi seu post no Biomas de Piracanga e gostaria de conversar 🌿');
+  const num='55'+phone.replace(/\D/g,'');
+  document.getElementById('ct-link').href='https://wa.me/'+num+'?text='+msg;
+  document.getElementById('ctmo').classList.add('op');
+  seedCount+=3;upSd();
+}
+function openEdit(){document.getElementById('edov').classList.add('op');}
+function showMp(name,meta,skills){
+  document.getElementById('mpn').textContent=name;
+  document.getElementById('mpm').textContent=meta;
+  const sk=document.getElementById('mpsk');
+  sk.innerHTML=skills.split('·').map(s=>'<span class="skp m">'+s.trim()+'</span>').join('');
+  document.getElementById('mpp').classList.add('vis');
+}
+function wapp(t){window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');}
+function cpylink(btn){const o=btn.textContent;btn.textContent='✓ Copiado!';setTimeout(()=>btn.textContent=o,2000);}
+function upSd(){document.querySelectorAll('#sdm,#sdv,#sdd,#seed-display').forEach(el=>el.textContent=seedCount);}
+
+// ── Desafios ──
+const desafioState={};
+function participarDesafio(btn,id,barId,txtId,curPct,total,msg,pts){
+  const done=desafioState[id];
+  if(!done){
+    desafioState[id]=true;
+    btn.textContent='Participando ✓  (desfazer)';
+    btn.style.opacity='.85';
+    // update bar
+    if(barId){
+      const bar=document.getElementById(barId);
+      if(bar){const np=Math.min(curPct+Math.round(100/total),99);bar.style.width=np+'%';}
+    }
+    if(txtId){
+      const txt=document.getElementById(txtId);
+      if(txt){const parts=txt.textContent.split(' de ');if(parts.length===2){txt.textContent=(parseInt(parts[0])+1)+' de '+parts[1];}}
+    }
+    // update total participants counter
+    const pt=document.getElementById('part-total');if(pt)pt.textContent=parseInt(pt.textContent)+1;
+    seedCount+=parseInt(pts);upSd();
+    showBadge('Desafio aceito!',msg,'⭐');
+  } else {
+    desafioState[id]=false;
+    btn.textContent=btn.dataset.orig||'Participar →';
+    btn.style.opacity='1';
+    seedCount-=parseInt(pts);upSd();
+  }
+  if(!btn.dataset.orig) btn.dataset.orig=btn.textContent;
+}
+
+function setDesafioFilter(btn,tipo){
+  document.querySelectorAll('#desafios .fch').forEach(b=>b.classList.remove('a'));
+  btn.classList.add('a');
+  document.querySelectorAll('.desafio-card').forEach(c=>{
+    if(tipo==='todos'){c.style.display='block';}
+    else{c.style.display=c.dataset.tipo.includes(tipo)?'block':'none';}
+  });
+}
+
+// ── Open/close cadastrar vaga ──
+function openCadVaga(){closeSh();document.getElementById('cadvaga-ov').classList.add('op');}
+function setVagaTipo(t){
+  const vb=document.getElementById('vaga-tipo-vol'),rb=document.getElementById('vaga-tipo-rem');
+  const rf=document.getElementById('remuneracao-field');
+  if(t==='vol'){
+    vb.style.background='var(--v)';vb.style.color='#fff';
+    rb.style.background='var(--ar)';rb.style.color='var(--ci)';
+    rf.style.display='none';
+  } else {
+    rb.style.background='var(--ou)';rb.style.color='#fff';
+    vb.style.background='var(--ar)';vb.style.color='var(--ci)';
+    rf.style.display='block';
+  }
+}
+function submitCadVaga(){
+  document.getElementById('cadvaga-ov').classList.remove('op');
+  seedCount+=5;upSd();
+  showBadge('Vaga publicada!','Sua vaga aparece na seção Vagas da Vila Viva. Obrigada pela contribuição!','💼');
+}
+
+// ── Open/close cadastrar projeto no perfil ──
+function openCadProjeto(){document.getElementById('cadprojeto-ov').classList.add('op');}
+function submitCadProjeto(){
+  document.getElementById('cadprojeto-ov').classList.remove('op');
+  seedCount+=10;upSd();
+  // Inject a new project card into the profile list
+  const list=document.getElementById('projetos-perfil');
+  const addBtn=document.getElementById('btn-add-projeto');
+  const card=document.createElement('div');
+  card.className='proj-card';
+  card.style.cssText='background:var(--ar);border-radius:14px;padding:14px;border:1.5px solid var(--v);animation:fu .3s ease-out';
+  card.innerHTML='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px"><div style="font-size:14px;font-weight:500;color:var(--ca)">Novo projeto registrado</div><span style="font-size:10px;background:#FAEEDA;color:#8B4A1A;border-radius:999px;padding:2px 8px;font-weight:500;white-space:nowrap">🌿 Em andamento</span></div><div style="font-size:12px;color:var(--ci);margin-bottom:6px">Recém adicionado · Vila Viva</div><div style="font-size:13px;color:var(--ca2);line-height:1.5">Aparece no seu perfil público e no Jardim de Conexões.</div>';
+  list.insertBefore(card, addBtn);
+  showBadge('Projeto registrado!','Seu projeto agora aparece no seu perfil e no Jardim de Conexões. +10 Sementes 🌿','🌿');
+}
+
+// ── Edit profile section (bio/formação/exp) ──
+const sectionContent={
+  sobre:{title:'Editar — Sobre mim',body:'<div class="edf"><div class="edl">Bio</div><textarea class="edi" rows="4">Arquiteta de formação, apaixonada por bioconstrução e educação pela natureza. Chegou em Piracanga em 2011 e nunca mais saiu.</textarea></div>'},
+  formacao:{title:'Adicionar formação',body:'<div class="edf"><div class="edl">Curso ou formação</div><input class="edi" placeholder="Ex: Permacultura, Yoga, Bioconstrução..."></div><div class="edf"><div class="edl">Instituição</div><input class="edi" placeholder="Nome da escola, curso ou autodidata"></div><div class="edf"><div class="edl">Período</div><input class="edi" placeholder="Ex: 2018 · Certificação"></div>'},
+  exp:{title:'Adicionar experiência',body:'<div class="edf"><div class="edl">Cargo ou função</div><input class="edi" placeholder="Ex: Educadora, Facilitadora, Arquiteta..."></div><div class="edf"><div class="edl">Local / projeto</div><input class="edi" placeholder="Ex: Escola da Natureza, Projeto X..."></div><div class="edf"><div class="edl">Período</div><input class="edi" placeholder="Ex: 2013–2018 · Voluntária"></div><div class="edf"><div class="edl">Descrição breve</div><textarea class="edi" rows="2" placeholder="O que você fez e qual foi o impacto..."></textarea></div>'}
+};
+function openEditSection(sec){
+  const c=sectionContent[sec]||{title:'Editar',body:''};
+  document.getElementById('editsec-title').textContent=c.title;
+  document.getElementById('editsec-body').innerHTML=c.body;
+  document.getElementById('editsec-ov').classList.add('op');
+}
+function saveEditSection(){
+  document.getElementById('editsec-ov').classList.remove('op');
+  showBadge('Perfil atualizado!','Seu perfil fica mais rico a cada informação. Outros moradores te conhecem melhor.','✏️');
+}
+
+// ── Badge overlay click-outside close ──
+function closeBadgeOverlay(e){if(e.target===document.getElementById('bdov'))document.getElementById('bdov').classList.remove('sh');}
+
+// ── Toggle PARTICIPAR with undo ──
+function toggleParticipate(btn){
+  const joined=btn.dataset.joined==='1';
+  if(!joined){
+    btn.dataset.joined='1';
+    btn.dataset.orig=btn.textContent;
+    btn.textContent='Participando ✓  (desfazer)';
+    btn.style.background='var(--ca)';btn.style.borderColor='var(--ca)';
+    seedCount+=8;upSd();
+  } else {
+    btn.dataset.joined='0';
+    btn.textContent=btn.dataset.orig||'Participar →';
+    btn.style.background='';btn.style.borderColor='';
+    seedCount-=8;upSd();
+  }
+}
+
+// ── Toggle EVENTO with undo + contact ──
+function toggleEvento(btn,name,phone){
+  const going=btn.dataset.going==='1';
+  if(!going){
+    btn.dataset.going='1';
+    btn.textContent='Vou estar lá 🔥  (desfazer)';
+    btn.style.background='var(--tr)';btn.style.borderColor='var(--tr)';
+    seedCount+=5;upSd();
+    openCt(name,phone);
+  } else {
+    btn.dataset.going='0';
+    btn.textContent='Vou estar lá 🔥';
+    btn.style.background='';btn.style.borderColor='';
+    seedCount-=5;upSd();
+  }
+}
+
+// ── Toggle AJUDAR with undo + contact ──
+function toggleAjudar(btn,name,phone){
+  const offered=btn.dataset.offered==='1';
+  if(!offered){
+    btn.dataset.offered='1';
+    btn.textContent='Oferecido ✓  (desfazer)';
+    btn.style.background='var(--v)';btn.style.borderColor='var(--v)';
+    btn.classList.remove('pri');
+    seedCount+=3;upSd();
+    openCt(name,phone);
+  } else {
+    btn.dataset.offered='0';
+    btn.textContent='Quero ajudar →';
+    btn.style.background='';btn.style.borderColor='';
+    btn.classList.add('pri');
+    seedCount-=3;upSd();
+  }
+}
+
+// ── Match tab navigation ──
+function setMatchTab(tab){
+  ['pessoas','orgs','projetos'].forEach(t=>{
+    document.getElementById('tab-content-'+t).style.display=t===tab?'block':'none';
+    document.getElementById('tab-'+t).classList.toggle('a',t===tab);
+  });
+  // Clear search when switching tabs
+  const s=document.getElementById('match-search');if(s)s.value='';
+  filterMatch('');
+}
+
+// ── Vagas subtab ──
+function setVagasScreenTab(t,btn){
+  document.getElementById('vsc-vol').style.display=t==='vol'?'flex':'none';
+  document.getElementById('vsc-rem').style.display=t==='rem'?'flex':'none';
+  const vv=document.getElementById('vst-vol'), vr=document.getElementById('vst-rem');
+  if(t==='vol'){
+    vv.style.background='var(--v)';vv.style.color='#fff';vv.style.borderColor='var(--v)';
+    vr.style.background='var(--ar)';vr.style.color='var(--ci)';vr.style.borderColor='var(--bo)';
+  } else {
+    vr.style.background='var(--ou)';vr.style.color='#fff';vr.style.borderColor='var(--ou)';
+    vv.style.background='var(--ar)';vv.style.color='var(--ci)';vv.style.borderColor='var(--bo)';
+  }
+}
+function setVagaTab(type,btn){
+  document.getElementById('vagas-voluntario').style.display=type==='voluntario'?'block':'none';
+  document.getElementById('vagas-remunerado').style.display=type==='remunerado'?'block':'none';
+  document.querySelectorAll('#tab-content-vagas .fch').forEach(b=>b.classList.remove('a'));
+  btn.classList.add('a');
+}
+
+// ── Search filter for Pessoas tab ──
+function filterMatch(query){
+  const q=query.toLowerCase().trim();
+  const cards=document.querySelectorAll('.pessoa-card');
+  let visible=0;
+  cards.forEach(c=>{
+    const nome=(c.dataset.nome||'').toLowerCase();
+    const casa=(c.dataset.casa||'').toLowerCase();
+    const text=c.textContent.toLowerCase();
+    const show=!q||nome.includes(q)||casa.includes(q)||text.includes(q);
+    c.style.display=show?'flex':'none';
+    if(show)visible++;
+  });
+  const nr=document.getElementById('no-results');
+  if(nr)nr.style.display=(visible===0&&q)?'block':'none';
+}
+
+// ── Arquétipo filter ──
+function filterArq(btn,arq){
+  document.querySelectorAll('.arq-filter').forEach(b=>b.classList.remove('a'));
+  btn.classList.add('a');
+  document.querySelectorAll('.pessoa-card').forEach(c=>{
+    c.style.display=(arq==='todos'||c.dataset.arq===arq)?'flex':'none';
+  });
+  const nr=document.getElementById('no-results');
+  if(nr){
+    const v=[...document.querySelectorAll('.pessoa-card')].filter(c=>c.style.display!=='none').length;
+    nr.style.display=v===0?'block':'none';
+  }
+}
+</script>
+</body>
+</html>
