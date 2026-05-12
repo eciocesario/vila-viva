@@ -422,15 +422,15 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
   <div class="lbd">
     <div class="ltabs"><div class="ltab a" id="tab-e" onclick="setTab('e')">Entrar</div><div class="ltab" id="tab-c" onclick="setTab('c')">Criar perfil</div></div>
     <div id="fe">
-      <div class="lf"><div class="ll">Nome ou e-mail</div><input class="li" placeholder="monica@piracanga.org" type="text"></div>
-      <div class="lf"><div class="ll">Senha</div><input class="li" placeholder="••••••••" type="password"></div>
+      <div class="lf"><label class="ll" for="login-email">Nome ou e-mail</label><input id="login-email" class="li" placeholder="monica@piracanga.org" type="text" autocomplete="username"></div>
+      <div class="lf"><label class="ll" for="login-pwd">Senha</label><input id="login-pwd" class="li" placeholder="••••••••" type="password" autocomplete="current-password"></div>
       <button class="lbtn" onclick="goTo('feed')">Entrar na Vila →</button>
       <div style="text-align:center;margin-top:10px"><a href="#" style="font-size:13px;color:var(--ci)">Esqueci minha senha</a></div>
     </div>
     <div id="fc" style="display:none">
-      <div class="lf"><div class="ll">Nome completo</div><input class="li" placeholder="Seu nome na vila"></div>
-      <div class="lf"><div class="ll">E-mail</div><input class="li" placeholder="seu@email.com" type="email"></div>
-      <div class="lf"><div class="ll">Criar senha</div><input class="li" placeholder="Mínimo 8 caracteres" type="password"></div>
+      <div class="lf"><label class="ll" for="reg-nome">Nome completo</label><input id="reg-nome" class="li" placeholder="Seu nome na vila" autocomplete="name"></div>
+      <div class="lf"><label class="ll" for="reg-email">E-mail</label><input id="reg-email" class="li" placeholder="seu@email.com" type="email" autocomplete="email"></div>
+      <div class="lf"><label class="ll" for="reg-pwd">Criar senha</label><input id="reg-pwd" class="li" placeholder="Mínimo 8 caracteres" type="password" autocomplete="new-password"></div>
       <button class="lbtn" onclick="goTo('onboarding')">Criar perfil e entrar →</button>
     </div>
     <div class="ldiv">ou</div>
@@ -450,12 +450,12 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <!-- Step 1: Identity -->
     <div id="os1">
       <div class="ose"><div class="pretag">✦ Dados pré-preenchidos do Censo 2025</div>
-        <div class="olab">Seu nome</div><input class="oin" type="text" value="Mónica Reis">
+        <label class="olab" for="ob-nome">Seu nome</label><input id="ob-nome" class="oin" type="text" value="Mónica Reis">
       </div>
-      <div class="ose"><div class="olab">Casa em Piracanga</div>
-        <select class="oin osel"><option>Terra Maré</option><option>Escola da Natureza</option><option>Acolhimento</option><option>Raiz</option><option>Semente</option><option>Girassol</option><option>Dos Anjos</option><option>Golfinhos</option><option>Shambala</option><option>Templo do Ser</option><option>Olho D'água</option><option>Outra...</option></select>
+      <div class="ose"><label class="olab" for="ob-casa">Casa em Piracanga</label>
+        <select id="ob-casa" class="oin osel"><option>Terra Maré</option><option>Escola da Natureza</option><option>Acolhimento</option><option>Raiz</option><option>Semente</option><option>Girassol</option><option>Dos Anjos</option><option>Golfinhos</option><option>Shambala</option><option>Templo do Ser</option><option>Olho D'água</option><option>Outra...</option></select>
       </div>
-      <div class="ose"><div class="olab">Tempo em Piracanga</div><input class="oin" type="text" value="14 anos"></div>
+      <div class="ose"><label class="olab" for="ob-tempo">Tempo em Piracanga</label><input id="ob-tempo" class="oin" type="text" value="14 anos"></div>
     </div>
     <!-- Step 2: Agent type -->
     <div id="os2" style="display:none">
@@ -589,8 +589,8 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
         </div>
       </div>
       <div class="ose">
-        <div class="olab">Minha intenção para esta estação</div>
-        <textarea class="oin" rows="3">Quero fortalecer o senso de comunidade e conectar pessoas com talentos complementares.</textarea>
+        <label class="olab" for="ob-intencao">Minha intenção para esta estação</label>
+        <textarea id="ob-intencao" class="oin" rows="3">Quero fortalecer o senso de comunidade e conectar pessoas com talentos complementares.</textarea>
       </div>
     </div>
   </div>
@@ -1853,12 +1853,12 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
   <div class="edsh">
     <div class="edshh" aria-hidden="true"></div>
     <h2 id="edov-title" style="font-family:var(--fd);font-size:22px;font-weight:300;color:var(--ca);margin:0 0 20px 0">Editar meu perfil</h2>
-    <div class="edf"><div class="edl">Nome</div><input class="edi" value="Mónica Reis"></div>
-    <div class="edf"><div class="edl">Casa em Piracanga</div><input class="edi" value="Terra Maré"></div>
-    <div class="edf"><div class="edl">Tagline</div><input class="edi" value="Arquiteta · Tecelã · Mãe de Piracanga"></div>
-    <div class="edf"><div class="edl">Tempo em Piracanga</div><input class="edi" value="14 anos"></div>
-    <div class="edf"><div class="edl">Meu tipo de agente</div>
-      <select class="edi">
+    <div class="edf"><label class="edl" for="ed-nome">Nome</label><input id="ed-nome" class="edi" value="Mónica Reis" autocomplete="name"></div>
+    <div class="edf"><label class="edl" for="ed-casa">Casa em Piracanga</label><input id="ed-casa" class="edi" value="Terra Maré"></div>
+    <div class="edf"><label class="edl" for="ed-tagline">Tagline</label><input id="ed-tagline" class="edi" value="Arquiteta · Tecelã · Mãe de Piracanga"></div>
+    <div class="edf"><label class="edl" for="ed-tempo">Tempo em Piracanga</label><input id="ed-tempo" class="edi" value="14 anos"></div>
+    <div class="edf"><label class="edl" for="ed-agente">Meu tipo de agente</label>
+      <select id="ed-agente" class="edi">
         <optgroup label="Pessoas físicas">
           <option selected>🌱 Cultivador/a — morador/a não-proprietário/a</option>
           <option>🏡 Guardião/ã — proprietário/a morador/a</option>
@@ -1882,14 +1882,14 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
         </optgroup>
       </select>
     </div>
-    <div class="edf"><div class="edl">Intenção desta estação</div><textarea class="edi" rows="3">Quero fortalecer o senso de comunidade e conectar pessoas com talentos complementares.</textarea></div>
-    <div class="edf"><div class="edl">WhatsApp (para conexões)</div><input class="edi" type="tel" placeholder="(73) 9 XXXX-XXXX"></div>
-    <div class="edf"><div class="edl">Habilidades (clique para editar)</div>
-      <div class="sgr" style="margin-top:6px">
+    <div class="edf"><label class="edl" for="ed-intencao">Intenção desta estação</label><textarea id="ed-intencao" class="edi" rows="3">Quero fortalecer o senso de comunidade e conectar pessoas com talentos complementares.</textarea></div>
+    <div class="edf"><label class="edl" for="ed-whatsapp">WhatsApp (para conexões)</label><input id="ed-whatsapp" class="edi" type="tel" placeholder="(73) 9 XXXX-XXXX" autocomplete="tel"></div>
+    <div class="edf"><div class="edl" id="ed-skills-lbl">Habilidades (clique para editar)</div>
+      <div class="sgr" role="group" aria-labelledby="ed-skills-lbl" style="margin-top:6px">
         <span class="stag s" onclick="toggleSkill(this)">🎨 Artes</span><span class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</span><span class="stag s" onclick="toggleSkill(this)">🌿 Terapias</span><span class="stag s" onclick="toggleSkill(this)">📊 Gestão</span><span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span><span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span><span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span><span class="stag" onclick="toggleSkill(this)">🎵 Música</span>
       </div>
     </div>
-    <div class="edf"><div class="edl">Alterar senha</div><input class="edi" type="password" placeholder="Nova senha (deixe em branco para manter)"></div>
+    <div class="edf"><label class="edl" for="ed-pwd">Alterar senha</label><input id="ed-pwd" class="edi" type="password" placeholder="Nova senha (deixe em branco para manter)" autocomplete="new-password"></div>
     <button class="edsv" onclick="document.getElementById('edov').classList.remove('op');showBadge('Perfil Atualizado','Seu perfil vivo foi atualizado — a comunidade pode te conhecer melhor agora 🌿','✏️')">Salvar alterações</button>
     <button class="edcl" onclick="document.getElementById('edov').classList.remove('op')">Cancelar</button>
   </div>
