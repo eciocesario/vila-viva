@@ -40,11 +40,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
 /* TOOLTIPS */
 .ht{position:relative}
-.tb{display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--ca);color:#fff;font-size:12px;line-height:1.5;padding:9px 12px;border-radius:10px;width:210px;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.25);font-family:var(--fb)}
+.tb{display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--ca);color:#fff;font-size:12px;line-height:1.5;padding:9px 12px;border-radius:10px;width:max-content;max-width:min(210px,calc(100vw - 32px));z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.25);font-family:var(--fb)}
 .tb::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ca)}
 .tb.tl{left:0;transform:none}.tb.tl::after{left:16px;transform:none}
 .tb.tr{left:auto;right:0;transform:none}.tb.tr::after{left:auto;right:16px;transform:none}
-.ht:hover .tb,.ht:focus .tb{display:block}
+.ht:hover .tb,.ht:focus-within .tb,.tb.touch-open{display:block}
 
 /* AGENT SYSTEM */
 .agent-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--r3);font-size:12px;font-weight:500;cursor:default}
@@ -2050,6 +2050,25 @@ setTimeout(()=>goTo('login'),2600);
 
 // A11y: marcar SVGs decorativos para leitores de tela
 document.querySelectorAll('.bni svg, .fab svg, .tic svg, .tav svg, .nic svg, .cav svg, .waico, .slf, .msvg').forEach(el=>el.setAttribute('aria-hidden','true'));
+
+// Tooltips: espelhar texto para title= como fallback nativo (touch + SR)
+document.querySelectorAll('.ht').forEach(el=>{
+  const tb=el.querySelector(':scope > .tb');
+  if(tb && !el.hasAttribute('title')){
+    const txt=tb.textContent.trim();
+    if(txt) el.setAttribute('title',txt);
+  }
+});
+
+// Tooltips: suporte a touch — abre tooltip em tap de .ht que nao seja botao/link
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.tb.touch-open').forEach(tb=>tb.classList.remove('touch-open'));
+  const ht=e.target.closest('.ht');
+  if(ht && !ht.matches('button,a,input,select,textarea,[role="button"]')){
+    const tb=ht.querySelector(':scope > .tb');
+    if(tb){tb.classList.add('touch-open');setTimeout(()=>tb.classList.remove('touch-open'),3000);}
+  }
+});
 
 function goTo(s){
   document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
