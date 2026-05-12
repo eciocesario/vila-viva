@@ -5,6 +5,8 @@
 **Plano:** `docs/superpowers/plans/2026-05-12-vila-viva-revisao-plano.md`
 **Branch:** `master` (repo `vila-viva` — inicializado nesta rodada)
 
+**Status:** Código entregue + revisado. **Validação manual pendente** (ver seção [Validações pendentes](#validações-pendentes-a-executar-manualmente) abaixo). A rodada só é considerada totalmente fechada quando o usuário executar essas validações; se alguma falhar, abrir Onda 2 imediatamente com os achados.
+
 ## Resumo
 
 Aplicada a Onda 1 da revisão de `index.html`: todos os achados de severidade Alta da auditoria foram corrigidos in-place, mantendo o single-file. 8 commits granulares (baseline + 7 fixes temáticos), 134 inserções e 104 deleções em `index.html`. Sem mudanças de UX, sem reescrita estrutural — apenas correções de viewport, contraste, semântica acessível, foco visível, dialog semantics nos overlays, labels associados, navegação por teclado na bottom nav, tooltips com fallback touch e clamp de overflow, e dois bugs visuais específicos de responsividade.
