@@ -2,21 +2,24 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Vila Viva — Rede Social Comunitária de Piracanga</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --v:#1A5C38;--v2:#2E8B57;--v3:#4FAF7A;--vc:#E6F3EC;--vm:#C8EDD8;
   --tr:#B85C2A;--tc:#F5E8DF;--ar:#F7F2EA;--ar2:#EDE6D6;
-  --ca:#1E2B20;--ca2:#3A4D3C;--ci:#7A8C7C;--ci2:#A8B8A9;
+  --ca:#1E2B20;--ca2:#3A4D3C;--ci:#5A6E5C;--ci2:#A8B8A9;
   --br:#FAFDF8;--ou:#C49A2A;--oc:#FDF3D0;--az:#2A6B8A;--azc:#DFF0F7;
   --rx:#6B4FA0;--rxc:#EDE7F8;--bo:rgba(30,43,32,.10);
   --r:14px;--r2:20px;--r3:999px;
   --fd:'Fraunces',serif;--fb:'DM Sans',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar);color:var(--ca);-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--v);outline-offset:2px;border-radius:inherit}
+button:focus-visible,a:focus-visible{outline:2px solid var(--v);outline-offset:2px}
+.lhd :focus-visible,.ohd :focus-visible,.phero :focus-visible,.dhdr :focus-visible,.qhdr :focus-visible{outline-color:#fff}
+html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--ar);color:var(--ca);-webkit-font-smoothing:antialiased}
 .screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;background:var(--ar);display:none;flex-direction:column}
 .screen.active{display:flex;animation:fu .3s ease-out}
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -69,7 +72,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar)
 .ltab.a{background:var(--v);color:#fff}
 .lf{margin-bottom:16px}
 .ll{font-size:12px;font-weight:500;color:var(--ci);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
-.li{width:100%;padding:13px 14px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:14px;color:var(--ca);outline:none}
+.li{width:100%;padding:13px 14px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:16px;color:var(--ca);outline:none}
 .li:focus{border-color:var(--v)}
 .lbtn{width:100%;padding:15px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:16px;font-weight:500;cursor:pointer;margin-top:4px}
 .ldiv{text-align:center;font-size:13px;color:var(--ci);margin:20px 0;position:relative}
@@ -89,7 +92,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar)
 .obd{padding:24px 24px 100px;flex:1}
 .ose{margin-bottom:24px}
 .olab{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:10px}
-.oin{width:100%;padding:13px 16px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:15px;color:var(--ca);outline:none;transition:border-color .2s}
+.oin{width:100%;padding:13px 16px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:16px;color:var(--ca);outline:none;transition:border-color .2s}
 .oin:focus{border-color:var(--v)}
 .osel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A8C7C' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
 .sgr{display:flex;flex-wrap:wrap;gap:8px}
@@ -204,7 +207,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar)
 .cmsec.op{display:block}
 .cminr{display:flex;gap:8px;align-items:center;margin-bottom:10px}
 .cmsm{width:30px;height:30px;border-radius:50%;background:var(--vc);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--v);flex-shrink:0}
-.cminp{flex:1;padding:8px 12px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:13px;color:var(--ca);outline:none}
+.cminp{flex:1;padding:8px 12px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:16px;color:var(--ca);outline:none}
 .cminp:focus{border-color:var(--v)}
 .cmsd{padding:8px 14px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:13px;cursor:pointer}
 .cmit{display:flex;gap:8px;margin-bottom:10px}
@@ -280,7 +283,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar)
 .edshh{width:36px;height:4px;background:var(--bo);border-radius:2px;margin:0 auto 16px}
 .edf{margin-bottom:16px}
 .edl{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:6px}
-.edi{width:100%;padding:12px 14px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:14px;color:var(--ca);outline:none}
+.edi{width:100%;padding:12px 14px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r);font-family:var(--fb);font-size:16px;color:var(--ca);outline:none}
 .edi:focus{border-color:var(--v)}
 .edsv{width:100%;padding:14px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:15px;font-weight:500;cursor:pointer;margin-top:8px}
 .edcl{width:100%;padding:12px;background:transparent;border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:14px;color:var(--ci);cursor:pointer;margin-top:8px}
@@ -386,6 +389,11 @@ html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar)
 
 /* WA ICON SVG */
 .waico{width:18px;height:18px;flex-shrink:0}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
 <body>
@@ -1205,7 +1213,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--fb);background:var(--ar)
     <div style="position:relative;margin-bottom:0">
       <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--ci);fill:none;stroke-width:1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input id="match-search" type="text" placeholder="Buscar por nome, habilidade ou casa..." oninput="filterMatch(this.value)"
-        style="width:100%;padding:10px 12px 10px 36px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:14px;color:var(--ca);outline:none">
+        style="width:100%;padding:10px 12px 10px 36px;background:var(--ar);border:1.5px solid var(--bo);border-radius:var(--r3);font-family:var(--fb);font-size:16px;color:var(--ca);outline:none">
     </div>
   </div>
   <!-- Tab navigation -->
