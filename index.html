@@ -2135,7 +2135,7 @@ function nextOb(){
   else if(obStep===2){obStep=3;document.getElementById('os2').style.display='none';document.getElementById('os3').style.display='block';document.getElementById('op3').classList.add('a');}
   else if(obStep===3){obStep=4;document.getElementById('os3').style.display='none';document.getElementById('os4').style.display='block';document.getElementById('op4').classList.add('a');document.getElementById('onbtn').textContent='Entrar na Vila 🌿';}
   else{const ag=agents[currentAgent]||agents['cultivador'];
-    showBadge('Bem-vindo/a à Vila Viva!',ag.icon+' '+ag.name+' — '+ag.tipo+'. Arquétipo: '+ag.arq+'. Acesso: '+ag.acesso+'.','🌱');setTimeout(()=>{closeDialog('bdov');document.getElementById('bdov').classList.remove('sh');goTo('feed');},3200);}
+    showBadge('Bem-vindo/a à Vila Viva!',ag.icon+' '+ag.name+' — '+ag.tipo+'. Arquétipo: '+ag.arq+'. Acesso: '+ag.acesso+'.','🌱');setTimeout(()=>{document.getElementById('bdov').classList.remove('sh');goTo('feed');const _st=_dialogState.get(document.getElementById('bdov'));if(_st){document.getElementById('bdov').removeEventListener('keydown',_st.onKey);_dialogState.delete(document.getElementById('bdov'));}},3200);}
   const n=Math.min(obStep,4);
   document.getElementById('osn').textContent=n;
   if(titles[n])document.getElementById('oti').textContent=titles[n];
@@ -2300,7 +2300,7 @@ function saveEditSection(){
 }
 
 // ── Badge overlay click-outside close ──
-function closeBadgeOverlay(e){if(e&&e.target.id!=='bdov')return;closeDialog('bdov');document.getElementById('bdov').classList.remove('sh');}
+function closeBadgeOverlay(e){if(e.target.id!=='bdov')return;closeDialog('bdov');document.getElementById('bdov').classList.remove('sh');}
 
 // ── Toggle PARTICIPAR with undo ──
 function toggleParticipate(btn){
