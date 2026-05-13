@@ -96,7 +96,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .oin:focus{border-color:var(--v)}
 .osel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A8C7C' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
 .sgr{display:flex;flex-wrap:wrap;gap:8px}
-.stag{padding:8px 14px;border-radius:var(--r3);font-size:13px;border:1.5px solid var(--bo);background:var(--ar);color:var(--ca2);cursor:pointer;transition:all .15s;user-select:none}
+.stag{display:inline-flex;align-items:center;padding:8px 14px;border-radius:var(--r3);font-size:13px;font-family:inherit;border:1.5px solid var(--bo);background:var(--ar);color:var(--ca2);cursor:pointer;transition:all .15s;user-select:none}
 .stag.s{background:var(--vc);border-color:var(--v);color:var(--v);font-weight:500}
 .obtn{position:fixed;bottom:24px;left:24px;right:24px;padding:16px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:16px;font-weight:500;cursor:pointer}
 .pretag{display:inline-block;padding:3px 10px;background:var(--vc);color:var(--v);border-radius:var(--r3);font-size:12px;font-weight:500;margin-bottom:12px}
@@ -140,7 +140,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .cbng{font-size:13px;color:rgba(255,255,255,.65)}
 .cbnname{font-family:var(--fd);font-size:20px;color:#fff;font-weight:300;margin:2px 0 12px}
 .csts{display:flex;gap:8px;flex-wrap:wrap}
-.cst{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border-radius:var(--r3);padding:5px 10px;font-size:12px;color:rgba(255,255,255,.85);cursor:default}
+.cst{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border-radius:var(--r3);padding:5px 10px;font-size:12px;font-family:inherit;color:rgba(255,255,255,.85);border:none;cursor:default}
 
 /* STORIES */
 .strw{padding:16px 0 4px}
@@ -263,7 +263,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .ssv{font-size:20px;font-weight:500;color:var(--ca)}
 .ssl{font-size:11px;color:var(--ci)}
 .bdgr{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.bdgi{display:flex;flex-direction:column;align-items:center;gap:4px}
+.bdgi{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer}
 .bdgic{width:52px;height:52px;border-radius:50%;background:var(--ar2);display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--bo);cursor:pointer;transition:transform .15s;position:relative}
 .bdgic:hover{transform:scale(1.1)}
 .bdgic.ea{background:var(--vc);border-color:var(--v)}
@@ -364,7 +364,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .bshd{width:36px;height:4px;border-radius:2px;background:var(--bo);margin:0 auto 20px}
 .bsti{font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin-bottom:16px;text-align:center}
 .bsop{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.bso2{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:var(--ar);border-radius:var(--r2);cursor:pointer;transition:all .15s;border:1.5px solid transparent;position:relative}
+.bso2{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:var(--ar);border-radius:var(--r2);cursor:pointer;transition:all .15s;border:1.5px solid transparent;position:relative;font:inherit;color:inherit;text-align:center}
 .bso2:active{transform:scale(.96)}
 .bso2:hover{border-color:var(--v);background:var(--vc)}
 .bsoi{font-size:24px}.bsol{font-size:12px;font-weight:500;color:var(--ca);text-align:center}
@@ -554,11 +554,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
         <div class="ose">
           <div class="olab">Como você quer apoiar de longe?</div>
           <div class="sgr">
-            <span class="stag s" onclick="toggleSkill(this)">💰 Apoio financeiro a projetos</span>
-            <span class="stag" onclick="toggleSkill(this)">🔗 Conexões externas</span>
-            <span class="stag s" onclick="toggleSkill(this)">🏠 Minha casa para mutirões</span>
-            <span class="stag" onclick="toggleSkill(this)">📢 Divulgação externa</span>
-            <span class="stag" onclick="toggleSkill(this)">🎓 Mentoria remota</span>
+            <button type="button" class="stag s" onclick="toggleSkill(this)">💰 Apoio financeiro a projetos</button>
+            <button type="button" class="stag" onclick="toggleSkill(this)">🔗 Conexões externas</button>
+            <button type="button" class="stag s" onclick="toggleSkill(this)">🏠 Minha casa para mutirões</button>
+            <button type="button" class="stag" onclick="toggleSkill(this)">📢 Divulgação externa</button>
+            <button type="button" class="stag" onclick="toggleSkill(this)">🎓 Mentoria remota</button>
           </div>
         </div>
       </div>
@@ -577,7 +577,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
         <h2 class="olab" style="margin:0 0 10px 0">Seus talentos — máx. 6</h2>
         <div style="font-size:13px;color:var(--ci);margin-bottom:12px">Talentos que você pode oferecer à comunidade, mesmo que informalmente.</div>
         <div class="sgr" id="skgr">
-          <span class="stag s" onclick="toggleSkill(this)">🎨 Artes</span><span class="stag" onclick="toggleSkill(this)">✂️ Costura</span><span class="stag" onclick="toggleSkill(this)">🪚 Marcenaria</span><span class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</span><span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span><span class="stag s" onclick="toggleSkill(this)">🌿 Terapias</span><span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span><span class="stag s" onclick="toggleSkill(this)">📊 Gestão</span><span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span><span class="stag" onclick="toggleSkill(this)">🌐 Tec. Social</span><span class="stag" onclick="toggleSkill(this)">🗣️ Idiomas</span><span class="stag" onclick="toggleSkill(this)">🧘 Yoga</span><span class="stag" onclick="toggleSkill(this)">🎵 Música</span><span class="stag" onclick="toggleSkill(this)">📸 Foto/Vídeo</span><span class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</span><span class="stag" onclick="toggleSkill(this)">🧠 Psicologia</span><span class="stag" onclick="toggleSkill(this)">✍️ Escrita</span><span class="stag" onclick="toggleSkill(this)">⚽ Esportes</span><span class="stag" onclick="toggleSkill(this)">🎓 Educação</span><span class="stag" onclick="toggleSkill(this)">🌺 Espiritualidade</span>
+          <button type="button" class="stag s" onclick="toggleSkill(this)">🎨 Artes</button><button type="button" class="stag" onclick="toggleSkill(this)">✂️ Costura</button><button type="button" class="stag" onclick="toggleSkill(this)">🪚 Marcenaria</button><button type="button" class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</button><button type="button" class="stag" onclick="toggleSkill(this)">🍳 Culinária</button><button type="button" class="stag s" onclick="toggleSkill(this)">🌿 Terapias</button><button type="button" class="stag" onclick="toggleSkill(this)">🌱 Agricultura</button><button type="button" class="stag s" onclick="toggleSkill(this)">📊 Gestão</button><button type="button" class="stag" onclick="toggleSkill(this)">💻 Tecnologia</button><button type="button" class="stag" onclick="toggleSkill(this)">🌐 Tec. Social</button><button type="button" class="stag" onclick="toggleSkill(this)">🗣️ Idiomas</button><button type="button" class="stag" onclick="toggleSkill(this)">🧘 Yoga</button><button type="button" class="stag" onclick="toggleSkill(this)">🎵 Música</button><button type="button" class="stag" onclick="toggleSkill(this)">📸 Foto/Vídeo</button><button type="button" class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</button><button type="button" class="stag" onclick="toggleSkill(this)">🧠 Psicologia</button><button type="button" class="stag" onclick="toggleSkill(this)">✍️ Escrita</button><button type="button" class="stag" onclick="toggleSkill(this)">⚽ Esportes</button><button type="button" class="stag" onclick="toggleSkill(this)">🎓 Educação</button><button type="button" class="stag" onclick="toggleSkill(this)">🌺 Espiritualidade</button>
         </div>
       </div>
     </div>
@@ -586,7 +586,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       <div class="ose">
         <h2 class="olab" style="margin:0 0 10px 0">O que você quer explorar aqui</h2>
         <div class="sgr">
-          <span class="stag s" onclick="toggleSkill(this)">🌾 Agrofloresta</span><span class="stag" onclick="toggleSkill(this)">🔨 Bioconstrução</span><span class="stag s" onclick="toggleSkill(this)">🤝 Projetos coletivos</span><span class="stag" onclick="toggleSkill(this)">📚 Aprender & ensinar</span><span class="stag" onclick="toggleSkill(this)">🎉 Celebrar e rituais</span><span class="stag" onclick="toggleSkill(this)">💰 Economia local</span><span class="stag s" onclick="toggleSkill(this)">👨‍👩‍👧 Famílias & crianças</span><span class="stag" onclick="toggleSkill(this)">🌊 Natureza & trilhas</span>
+          <button type="button" class="stag s" onclick="toggleSkill(this)">🌾 Agrofloresta</button><button type="button" class="stag" onclick="toggleSkill(this)">🔨 Bioconstrução</button><button type="button" class="stag s" onclick="toggleSkill(this)">🤝 Projetos coletivos</button><button type="button" class="stag" onclick="toggleSkill(this)">📚 Aprender & ensinar</button><button type="button" class="stag" onclick="toggleSkill(this)">🎉 Celebrar e rituais</button><button type="button" class="stag" onclick="toggleSkill(this)">💰 Economia local</button><button type="button" class="stag s" onclick="toggleSkill(this)">👨‍👩‍👧 Famílias & crianças</button><button type="button" class="stag" onclick="toggleSkill(this)">🌊 Natureza & trilhas</button>
         </div>
       </div>
       <div class="ose">
@@ -621,7 +621,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
         <div class="cst ht">🔥 2 eventos hoje<div class="tb">Encontros presenciais marcados para hoje na vila</div></div>
         <div class="cst ht">🙌 4 pedidos<div class="tb">Pedidos de ajuda abertos que combinam com seu perfil</div></div>
         <div class="cst ht">🌻 3 projetos<div class="tb">Projetos florescendo que precisam de colaboradores</div></div>
-        <div class="cst ht" onclick="goTo('desafios')" style="cursor:pointer;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3)">⭐ 5 desafios ativos<div class="tb">Desafios do território baseados no Censo 2025 e no Bioma</div></div>
+        <button type="button" class="cst ht" onclick="goTo('desafios')" style="cursor:pointer;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-size:12px">⭐ 5 desafios ativos<div class="tb">Desafios do território baseados no Censo 2025 e no Bioma</div></button>
       </div>
     </div>
     <div class="strw">
@@ -1041,10 +1041,10 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <div class="psc">
       <h2 class="pst" style="margin:0 0 12px 0">Conquistas</h2>
       <div class="bdgr">
-        <div class="bdgi ht" onclick="showBadge('Raiz Profunda','10+ anos em Piracanga. Você é pilar desta comunidade.','🌳')"><div class="bdgic ea">🌳</div><div class="bdgn">Raiz Profunda</div><div class="tb">10+ anos de Piracanga. Clique para celebrar.</div></div>
-        <div class="bdgi ht" onclick="showBadge('Tecelã','Participou de 5+ projetos diferentes na vila!','🌀')"><div class="bdgic te">🌀</div><div class="bdgn">Tecelã</div><div class="tb">Participou de 5+ projetos diferentes</div></div>
-        <div class="bdgi ht" onclick="showBadge('Guardiã do Fogo','Organizou um encontro presencial que reuniu a comunidade.','🔥')"><div class="bdgic oe">🔥</div><div class="bdgn">Guardiã do Fogo</div><div class="tb">Organizou um evento presencial na vila</div></div>
-        <div class="bdgi ht" onclick="showBadge('Fonte de Saber','Compartilhou conhecimento com a comunidade.','💧')"><div class="bdgic ea">💧</div><div class="bdgn">Fonte de Saber</div><div class="tb">Compartilhou conhecimento com outros moradores</div></div>
+        <button type="button" class="bdgi ht" onclick="showBadge('Raiz Profunda','10+ anos em Piracanga. Você é pilar desta comunidade.','🌳')"><div class="bdgic ea">🌳</div><div class="bdgn">Raiz Profunda</div><div class="tb">10+ anos de Piracanga. Clique para celebrar.</div></button>
+        <button type="button" class="bdgi ht" onclick="showBadge('Tecelã','Participou de 5+ projetos diferentes na vila!','🌀')"><div class="bdgic te">🌀</div><div class="bdgn">Tecelã</div><div class="tb">Participou de 5+ projetos diferentes</div></button>
+        <button type="button" class="bdgi ht" onclick="showBadge('Guardiã do Fogo','Organizou um encontro presencial que reuniu a comunidade.','🔥')"><div class="bdgic oe">🔥</div><div class="bdgn">Guardiã do Fogo</div><div class="tb">Organizou um evento presencial na vila</div></button>
+        <button type="button" class="bdgi ht" onclick="showBadge('Fonte de Saber','Compartilhou conhecimento com a comunidade.','💧')"><div class="bdgic ea">💧</div><div class="bdgn">Fonte de Saber</div><div class="tb">Compartilhou conhecimento com outros moradores</div></button>
         <div class="bdgi ht"><div class="bdgic ea">🌻</div><div class="bdgn">Plantadora</div><div class="tb">Participou do desafio coletivo de plantio</div></div>
         <div class="bdgi ht"><div class="bdgic lk">🦋</div><div class="bdgn">Polinizadora</div><div class="tb">🔒 Conecte duas pessoas que depois colaboraram para desbloquear</div></div>
         <div class="bdgi ht"><div class="bdgic lk">⭐</div><div class="bdgn">Solstício</div><div class="tb">🔒 Participe do desafio especial do solstício de junho</div></div>
@@ -1825,14 +1825,14 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <button onclick="closeSh()" aria-label="Fechar" style="background:var(--ar);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ci);display:flex;align-items:center;justify-content:center;flex-shrink:0">×</button>
   </div>
   <div class="bsop">
-    <div class="bso2 ht" onclick="closeShAct(2,'Sua história foi para o feed da comunidade!','✍️')"><div class="bsoi">✍️</div><div class="bsol">Nova história</div><div class="bsos">Compartilhe o que está vivendo</div><div class="tb">Publique uma história, reflexão ou atualização. +2 Sementes 🌱</div></div>
-    <div class="bso2 ht" onclick="closeShAct(3,'Seu pedido foi para o feed — alguém com a habilidade vai ver!','🙌')"><div class="bsoi">🙌</div><div class="bsol">Pedido de ajuda</div><div class="bsos">Alguém pode ter o que você precisa</div><div class="tb">Descreva o que precisa e as habilidades necessárias. A plataforma sugere quem pode ajudar. +3 Sementes 🌱</div></div>
-    <div class="bso2 ht" onclick="closeShAct(8,'Seu projeto está no feed — pessoas já estão vendo!','🌿')"><div class="bsoi">🌿</div><div class="bsol">Projeto aberto</div><div class="bsos">Crie e convide colaboradores</div><div class="tb">Abra um projeto com as habilidades que precisa. Colaboradores te encontram pelo Jardim de Conexões. +8 Sementes 🌱</div></div>
-    <div class="bso2 ht" onclick="closeShAct(5,'Você convocou um encontro! A comunidade está sendo notificada.','🔥')"><div class="bsoi">🔥</div><div class="bsol">Convocar encontro</div><div class="bsos">Reúna a comunidade</div><div class="tb">Crie um evento presencial — mutirão, roda, oficina. Moradores com interesse serão notificados. +5 Sementes 🌱</div></div>
-    <div class="bso2 ht" onclick="closeShAct(10,'Sua conquista foi compartilhada — isso inspira todos! ','🌻')"><div class="bsoi">🌻</div><div class="bsol">Registrar conquista</div><div class="bsos">Celebre algo realizado</div><div class="tb">Registre um projeto concluído, meta atingida ou aprendizagem. +10 Sementes 🌱</div></div>
-    <div class="bso2 ht" onclick="closeShAct(5,'Seu evento foi criado e aparece no feed e calendário!','📅')"><div class="bsoi">📅</div><div class="bsol">Criar evento</div><div class="bsos">Aparece no feed e calendário</div><div class="tb">Evento com data, local e capacidade. Moradores interessados recebem notificação. +5 Sementes 🌱</div></div>
-    <div class="bso2 ht" onclick="openCadVaga()"><div class="bsoi">💼</div><div class="bsol">Cadastrar vaga</div><div class="bsos">Voluntariado ou remunerado</div><div class="tb">Publique uma oportunidade na seção Vagas — voluntariado ou trabalho remunerado. +5 Sementes 🌱</div></div>
-    <div class="bso2 ht" onclick="closeSh();goTo('desafios')"><div class="bsoi">⭐</div><div class="bsol">Ver desafios</div><div class="bsos">Baseados no Censo 2025</div><div class="tb">5 desafios ativos baseados em dados reais do território. Complete e ganhe Sementes.</div></div>
+    <button type="button" class="bso2 ht" onclick="closeShAct(2,'Sua história foi para o feed da comunidade!','✍️')"><div class="bsoi">✍️</div><div class="bsol">Nova história</div><div class="bsos">Compartilhe o que está vivendo</div><div class="tb">Publique uma história, reflexão ou atualização. +2 Sementes 🌱</div></button>
+    <button type="button" class="bso2 ht" onclick="closeShAct(3,'Seu pedido foi para o feed — alguém com a habilidade vai ver!','🙌')"><div class="bsoi">🙌</div><div class="bsol">Pedido de ajuda</div><div class="bsos">Alguém pode ter o que você precisa</div><div class="tb">Descreva o que precisa e as habilidades necessárias. A plataforma sugere quem pode ajudar. +3 Sementes 🌱</div></button>
+    <button type="button" class="bso2 ht" onclick="closeShAct(8,'Seu projeto está no feed — pessoas já estão vendo!','🌿')"><div class="bsoi">🌿</div><div class="bsol">Projeto aberto</div><div class="bsos">Crie e convide colaboradores</div><div class="tb">Abra um projeto com as habilidades que precisa. Colaboradores te encontram pelo Jardim de Conexões. +8 Sementes 🌱</div></button>
+    <button type="button" class="bso2 ht" onclick="closeShAct(5,'Você convocou um encontro! A comunidade está sendo notificada.','🔥')"><div class="bsoi">🔥</div><div class="bsol">Convocar encontro</div><div class="bsos">Reúna a comunidade</div><div class="tb">Crie um evento presencial — mutirão, roda, oficina. Moradores com interesse serão notificados. +5 Sementes 🌱</div></button>
+    <button type="button" class="bso2 ht" onclick="closeShAct(10,'Sua conquista foi compartilhada — isso inspira todos! ','🌻')"><div class="bsoi">🌻</div><div class="bsol">Registrar conquista</div><div class="bsos">Celebre algo realizado</div><div class="tb">Registre um projeto concluído, meta atingida ou aprendizagem. +10 Sementes 🌱</div></button>
+    <button type="button" class="bso2 ht" onclick="closeShAct(5,'Seu evento foi criado e aparece no feed e calendário!','📅')"><div class="bsoi">📅</div><div class="bsol">Criar evento</div><div class="bsos">Aparece no feed e calendário</div><div class="tb">Evento com data, local e capacidade. Moradores interessados recebem notificação. +5 Sementes 🌱</div></button>
+    <button type="button" class="bso2 ht" onclick="openCadVaga()"><div class="bsoi">💼</div><div class="bsol">Cadastrar vaga</div><div class="bsos">Voluntariado ou remunerado</div><div class="tb">Publique uma oportunidade na seção Vagas — voluntariado ou trabalho remunerado. +5 Sementes 🌱</div></button>
+    <button type="button" class="bso2 ht" onclick="closeSh();goTo('desafios')"><div class="bsoi">⭐</div><div class="bsol">Ver desafios</div><div class="bsos">Baseados no Censo 2025</div><div class="tb">5 desafios ativos baseados em dados reais do território. Complete e ganhe Sementes.</div></button>
   </div>
 </div>
 
@@ -1887,7 +1887,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <div class="edf"><label class="edl" for="ed-whatsapp">WhatsApp (para conexões)</label><input id="ed-whatsapp" class="edi" type="tel" placeholder="(73) 9 XXXX-XXXX" autocomplete="tel"></div>
     <div class="edf"><div class="edl" id="ed-skills-lbl">Habilidades (clique para editar)</div>
       <div class="sgr" role="group" aria-labelledby="ed-skills-lbl" style="margin-top:6px">
-        <span class="stag s" onclick="toggleSkill(this)">🎨 Artes</span><span class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</span><span class="stag s" onclick="toggleSkill(this)">🌿 Terapias</span><span class="stag s" onclick="toggleSkill(this)">📊 Gestão</span><span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span><span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span><span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span><span class="stag" onclick="toggleSkill(this)">🎵 Música</span>
+        <button type="button" class="stag s" onclick="toggleSkill(this)">🎨 Artes</button><button type="button" class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</button><button type="button" class="stag s" onclick="toggleSkill(this)">🌿 Terapias</button><button type="button" class="stag s" onclick="toggleSkill(this)">📊 Gestão</button><button type="button" class="stag" onclick="toggleSkill(this)">🍳 Culinária</button><button type="button" class="stag" onclick="toggleSkill(this)">💻 Tecnologia</button><button type="button" class="stag" onclick="toggleSkill(this)">🌱 Agricultura</button><button type="button" class="stag" onclick="toggleSkill(this)">🎵 Música</button>
       </div>
     </div>
     <div class="edf"><label class="edl" for="ed-pwd">Alterar senha</label><input id="ed-pwd" class="edi" type="password" placeholder="Nova senha (deixe em branco para manter)" autocomplete="new-password"></div>
@@ -1943,17 +1943,17 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
     <div class="edf"><div class="edl">Habilidades desejadas</div>
       <div class="sgr" style="margin-top:6px">
-        <span class="stag" onclick="toggleSkill(this)">🎨 Artes</span>
-        <span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span>
-        <span class="stag" onclick="toggleSkill(this)">🌿 Terapias</span>
-        <span class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</span>
-        <span class="stag" onclick="toggleSkill(this)">📊 Gestão</span>
-        <span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span>
-        <span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span>
-        <span class="stag" onclick="toggleSkill(this)">👶 Crianças</span>
-        <span class="stag" onclick="toggleSkill(this)">🧘 Yoga</span>
-        <span class="stag" onclick="toggleSkill(this)">🗣️ Idiomas</span>
-        <span class="stag" onclick="toggleSkill(this)">🎵 Música</span>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🎨 Artes</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🍳 Culinária</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🌿 Terapias</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">📊 Gestão</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">💻 Tecnologia</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🌱 Agricultura</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">👶 Crianças</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🧘 Yoga</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🗣️ Idiomas</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🎵 Música</button>
       </div>
     </div>
 
@@ -1998,14 +1998,14 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <div class="edf"><div class="edl">Descrição breve *</div><textarea class="edi" rows="3" placeholder="O que foi o projeto, qual foi sua contribuição e o impacto na comunidade..."></textarea></div>
     <div class="edf"><div class="edl">Habilidades que aplicou</div>
       <div class="sgr" style="margin-top:6px">
-        <span class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</span>
-        <span class="stag" onclick="toggleSkill(this)">🎨 Artes</span>
-        <span class="stag" onclick="toggleSkill(this)">📊 Gestão</span>
-        <span class="stag" onclick="toggleSkill(this)">🌿 Terapias</span>
-        <span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span>
-        <span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span>
-        <span class="stag" onclick="toggleSkill(this)">📚 Educação</span>
-        <span class="stag" onclick="toggleSkill(this)">🤝 Facilitação</span>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🎨 Artes</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">📊 Gestão</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🌿 Terapias</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🌱 Agricultura</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">💻 Tecnologia</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">📚 Educação</button>
+        <button type="button" class="stag" onclick="toggleSkill(this)">🤝 Facilitação</button>
       </div>
     </div>
     <button class="edsv" onclick="submitCadProjeto()">Salvar no meu perfil →</button>
