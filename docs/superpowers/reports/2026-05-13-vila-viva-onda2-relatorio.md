@@ -4,11 +4,11 @@
 **Spec:** `docs/superpowers/specs/2026-05-13-vila-viva-onda2-design.md`
 **Plano:** `docs/superpowers/plans/2026-05-13-vila-viva-onda2-plano.md`
 **Branch:** `master`
-**Status:** Código entregue · validação visual manual pendente · aguarda code-review final
+**Status:** Código entregue, final review aplicado · validação visual manual pendente
 
 ## Resumo
 
-Onda 2 de `index.html` aplicada em 4 commits granulares ao longo de 3 tasks de implementação (T1 a11y core, T2 responsividade/UX, T3 padronização/bugs) e 1 task de fechamento (T4). 10 itens previstos no plano entregues + 1 achado de contraste do plano de Onda 1 resolvido. Cada task passou por dois subagents de revisão (spec compliance + code quality); T1 recebeu 2 fixes (foco em `nextOb`, guard em `closeBadgeOverlay`), T2 e T3 aprovadas sem alterações. Sem mudança estrutural: continua single-file, sem dependências externas novas, sem alteração de UX visível ao usuário leigo. Métricas chave: 9 `<h1>` (era 0), 23 `<h2>` no markup (era 7), 49 `aria-hidden="true"` no markup (era ~21, automação JS continua cobrindo o resto), 28 bnav padronizadas, contraste `--ci` agora passa AA sobre `--ar` (5.38:1) e sobre `--ar2` (4.82:1).
+Onda 2 de `index.html` aplicada em 5 commits granulares: T1 a11y core (49a00e5), T1 review-fix (479f185), T2 responsividade/UX (b7bcccc), T3 padronização/bugs (7bd7406), e final-review fix (aa6e9c2). 10 itens previstos no plano entregues + 1 achado de contraste do plano da Onda 1 resolvido. Cada task passou por dois subagents de revisão (spec compliance + code quality); um final review encontrou 2 regressões pequenas de UX corrigidas em commit dedicado. Sem mudança estrutural: continua single-file, sem dependências externas, sem alteração de UX visível ao usuário leigo. Métricas chave: 9 `<h1>` (era 0), 23 `<h2>` no markup (era 7), 49 `aria-hidden="true"` no markup (era ~21, automação JS continua cobrindo o resto), 28 buttons `.bni` distribuídos em 7 bnav agora estruturalmente uniformes com indicador "tab ativa" em todas as 7 telas, contraste `--ci` agora passa AA sobre `--ar` (5.38:1) e sobre `--ar2` (4.82:1).
 
 ## Itens entregues
 
@@ -22,7 +22,7 @@ Onda 2 de `index.html` aplicada em 4 commits granulares ao longo de 3 tasks de i
 | S17 | Botão "Convidar" wrap + `min-width:0` + `font-size 12px` | ✓ | b7bcccc |
 | S11 | Opacidade botões `.phero` `.15`→`.25` | ✓ | b7bcccc |
 | S18 | Cor "voltar" `.dhdr` `.55`→`.85` | ✓ | b7bcccc |
-| C4 | Bnav padronizada (5 alterações: vagas/match/dashboard/desafios/notifs) | ✓ | 7bd7406 |
+| C4 | Bnav padronizada (5 alterações iniciais + 4 ajustes pós-review para uniformidade total) | ✓ | 7bd7406 + aa6e9c2 |
 | S5 | `data-agent="org_parceira"` novo, sem duplicação com embaixador | ✓ | 7bd7406 |
 | Contraste --ar2 | `--ci` atualizado para `#566A58` (5.38 sobre `--ar`, 4.82 sobre `--ar2`) | ✓ | 7bd7406 |
 | C5 | `aria-hidden` no markup em SVGs decorativos (`.bni` × 28 + `.slf`) | ✓ | 7bd7406 |
@@ -33,7 +33,7 @@ Onda 2 de `index.html` aplicada em 4 commits granulares ao longo de 3 tasks de i
 
 | Métrica | Onda 1 | Onda 2 |
 |---|---|---|
-| Commits | 12 | +4 |
+| Commits | 12 | +5 (+ 1 docs) |
 | `<h1>` no arquivo | 0 | 9 |
 | `<h2>` no arquivo | 7 (modais) | 23 (7 modais + 16 subseções) |
 | `aria-label=` no markup | ~13 (referência indireta) | 13 |
@@ -41,7 +41,8 @@ Onda 2 de `index.html` aplicada em 4 commits granulares ao longo de 3 tasks de i
 | `role="dialog"` | 7 | 7 |
 | `<label class=` associados | 17 | 17 |
 | `class="bni"` (bnav buttons) | 28 | 28 |
-| Bnav idênticas Vila/Vagas/+/Conexões/Eu | 2/7 | 7/7 |
+| Bnav com sequência Vila/Vagas/+/Conexões/Eu | 2/7 | 7/7 |
+| Bnav com indicador "tab ativa" (`bni a`) | 4/7 (feed com `ht` inconsistente) | 7/7 (consistente, sem `ht` no item ativo) |
 | `<span>Eu</span>` (bnav uniformidade) | <7 | 7 |
 | `<span>Desafios</span>` em bnav (anomalia) | >0 | 0 |
 | `<span>Avisos</span>` em bnav (anomalia) | >0 | 0 |
@@ -60,6 +61,7 @@ Nota sobre `aria-label`: a contagem 13 no markup reflete os labels explícitos r
 - [x] Singularidade de agente: `data-agent="embaixador"` = 1, `data-agent="org_parceira"` = 1 (sem duplicação)
 - [x] Contraste WCAG calculado pelo spec-reviewer: `--ci` `#566A58` dá 5.38:1 sobre `--ar` `#F7F2EA` e 4.82:1 sobre `--ar2` `#EDE6D6` (ambos ≥ 4.5, AA aprovado)
 - [x] Inventário de `aria-hidden="true"` no markup subiu de ~21 para 49 (cobertura ampliada nas bnav e splash)
+- [x] Final code review de toda a Onda 2 (cross-task coherence, regressões, consistência) com 2 fixes aplicados em aa6e9c2
 - [ ] **Pendente — usuário:** validação visual em 3 viewports (375/390/430) percorrendo as 9 telas
 - [ ] **Pendente — usuário:** tour manual dos 7 modais (Tab cíclico, Shift+Tab, ESC, restore foco) em browser real
 - [ ] **Pendente — usuário:** Lighthouse Acessibilidade ≥ 90 em login e feed (mobile)
@@ -74,6 +76,10 @@ Nenhum bloqueante. 3 ajustes/adaptações aplicados:
 2. **T2 adaptação:** botão da tela `#desafios` que a spec descreveu como "Compartilhar desafio" é na verdade "Participar do desafio →". O fix (flex-wrap + min-width:0 + font-size menor no "Convidar") foi aplicado ao único row que casa estruturalmente no markup atual. Sem prejuízo ao escopo do item S17.
 
 3. **T3 schema:** entrada `org_parceira` no objeto JS `agents` segue o schema real do arquivo (`icon`/`name`/`tipo`/`cls`/`arq`/`acesso`), não o sugerido na spec (`nome`/`emoji`/`desc`/`cor`). Reusa `cls:'ag-embaixador'` para badge visual consistente; `acesso:'Parcial'` coerente com o nível do Embaixador. Decisão registrada para evitar reescrita de CSS de badges.
+
+4. **Final review-fix (commit aa6e9c2):** o final reviewer identificou duas inconsistências de UX:
+   - A padronização C4 (commit 7bd7406) removeu o autorreferente "Desafios a"/"Avisos a" das bnav de dashboard/desafios/notifs, deixando essas 3 telas sem indicador visual de "tab ativa". Solução: marcar o botão "Vila" como `bni a` nessas 3 bnav (sinaliza "← voltar leva ao feed").
+   - O item Vila ativo do feed retinha `ht`+tooltip enquanto os outros itens `bni a` haviam perdido. Solução: remover `ht` e `<div class="tb">` do Vila ativo do feed.
 
 ## Backlog (inalterado vs spec seção 6)
 
