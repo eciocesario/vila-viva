@@ -145,7 +145,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 /* STORIES */
 .strw{padding:16px 0 4px}
 .strt{padding:0 16px 10px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--ci)}
-.strsc{display:flex;gap:12px;padding:0 16px;overflow-x:auto;scrollbar-width:none}
+.strsc{display:flex;gap:12px;padding:0 16px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)}
 .strsc::-webkit-scrollbar{display:none}
 .sri{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
 .srr{width:58px;height:58px;border-radius:50%;padding:2.5px}
@@ -155,7 +155,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .srn{font-size:11px;color:var(--ca2);max-width:60px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* FILTERS */
-.ffs{display:flex;gap:8px;padding:8px 16px;overflow-x:auto;scrollbar-width:none}
+.ffs{display:flex;gap:8px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)}
 .ffs::-webkit-scrollbar{display:none}
 .fch{flex-shrink:0;padding:7px 14px;border-radius:var(--r3);font-size:13px;border:1.5px solid var(--bo);background:var(--br);color:var(--ca2);cursor:pointer;white-space:nowrap;transition:all .15s;position:relative}
 .fch.a{background:var(--vc);border-color:var(--v);color:var(--v);font-weight:500}
@@ -292,7 +292,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 /* MAP */
 .mapc{flex:1;position:relative;background:#E8F0E0;overflow:hidden;min-height:300px}
 .msvg{width:100%;height:100%}
-.mapf{padding:12px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.mapf{padding:12px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)}
 .mapf::-webkit-scrollbar{display:none}
 .mleg{position:absolute;bottom:88px;left:16px;background:rgba(250,253,248,.95);border-radius:var(--r);padding:10px 12px;backdrop-filter:blur(8px);border:1px solid var(--bo)}
 .mli{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ca2);padding:2px 0}
@@ -426,7 +426,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       <div class="lf"><label class="ll" for="login-email">Nome ou e-mail</label><input id="login-email" class="li" placeholder="monica@piracanga.org" type="text" autocomplete="username"></div>
       <div class="lf"><label class="ll" for="login-pwd">Senha</label><input id="login-pwd" class="li" placeholder="••••••••" type="password" autocomplete="current-password"></div>
       <button class="lbtn" onclick="goTo('feed')">Entrar na Vila →</button>
-      <div style="text-align:center;margin-top:10px"><a href="#" style="font-size:13px;color:var(--ci)">Esqueci minha senha</a></div>
+      <div style="text-align:center;margin-top:10px"><button type="button" onclick="alert('Recuperação de senha em breve — use suas credenciais atuais.')" style="font-size:13px;color:var(--ci);background:none;border:none;text-decoration:underline;cursor:pointer;font:inherit;padding:0">Esqueci minha senha</button></div>
     </div>
     <div id="fc" style="display:none">
       <div class="lf"><label class="ll" for="reg-nome">Nome completo</label><input id="reg-nome" class="li" placeholder="Seu nome na vila" autocomplete="name"></div>
@@ -643,7 +643,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       <div class="fch ht" onclick="setF(this)">Por agente<div class="tb">Filtrar por tipo de morador: Cultivadores, Guardiões, Aliados...</div></div>
     </div>
     <!-- Agent filter sub-row (shown when "Por agente" selected) -->
-    <div id="agent-filter-row" style="display:none;padding:4px 16px 8px;overflow-x:auto;white-space:nowrap;scrollbar-width:none">
+    <div id="agent-filter-row" style="display:none;padding:4px 16px 8px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)">
       <span class="agent-badge ag-cultivador" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🌱 Cultivadores</span>
       <span class="agent-badge ag-guardiao" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🏡 Guardiões</span>
       <span class="agent-badge ag-aliado" style="margin-right:6px;cursor:pointer" onclick="setF(this)">🌍 Aliados</span>
@@ -1218,7 +1218,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
   </div>
   <!-- Tab navigation -->
-  <div style="display:flex;gap:0;border-bottom:1px solid var(--bo);background:var(--br);overflow-x:auto;scrollbar-width:none;flex-shrink:0">
+  <div style="display:flex;gap:0;border-bottom:1px solid var(--bo);background:var(--br);overflow-x:auto;scrollbar-width:none;flex-shrink:0;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)">
     <button class="match-tab a" id="tab-pessoas" onclick="setMatchTab('pessoas')">👥 Pessoas</button>
     <button class="match-tab" id="tab-orgs" onclick="setMatchTab('orgs')">🏢 Organizações</button>
     <button class="match-tab" id="tab-projetos" onclick="setMatchTab('projetos')">🌿 Projetos</button>
@@ -1239,7 +1239,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       </div>
 
       <!-- Filtros por arquétipo -->
-      <div style="padding:10px 16px 6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none">
+      <div style="padding:10px 16px 6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)">
         <span style="font-size:11px;color:var(--ci);margin-right:8px;font-weight:500">Arquétipo:</span>
         <button class="arq-filter a" onclick="filterArq(this,'todos')">Todos</button>
         <button class="arq-filter" onclick="filterArq(this,'construtor')" style="background:#E6F3EC;color:#1A5C38;border-color:#1A5C38">🌿 Construtor</button>
@@ -1595,7 +1595,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
 
     <!-- Filters -->
-    <div style="padding:12px 16px 6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none">
+    <div style="padding:12px 16px 6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)">
       <button class="fch a" onclick="setDesafioFilter(this,'todos')">Todos</button>
       <button class="fch" onclick="setDesafioFilter(this,'coletivo')">🌻 Coletivos</button>
       <button class="fch" onclick="setDesafioFilter(this,'individual')">🌱 Individuais</button>
