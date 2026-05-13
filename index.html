@@ -9,7 +9,7 @@
 :root{
   --v:#1A5C38;--v2:#2E8B57;--v3:#4FAF7A;--vc:#E6F3EC;--vm:#C8EDD8;
   --tr:#B85C2A;--tc:#F5E8DF;--ar:#F7F2EA;--ar2:#EDE6D6;
-  --ca:#1E2B20;--ca2:#3A4D3C;--ci:#5A6E5C;--ci2:#A8B8A9;
+  --ca:#1E2B20;--ca2:#3A4D3C;--ci:#566A58;--ci2:#A8B8A9;
   --br:#FAFDF8;--ou:#C49A2A;--oc:#FDF3D0;--az:#2A6B8A;--azc:#DFF0F7;
   --rx:#6B4FA0;--rxc:#EDE7F8;--bo:rgba(30,43,32,.10);
   --r:14px;--r2:20px;--r3:999px;
@@ -406,7 +406,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <div class="screen active" id="splash">
   <div class="sbg"></div>
   <div class="sc">
-    <svg class="slf" viewBox="0 0 72 72" fill="none"><path d="M36 8C36 8 12 20 12 40C12 56 24 64 36 64C48 64 60 56 60 40C60 20 36 8 36 8Z" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/><line x1="36" y1="8" x2="36" y2="64" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="3 3"/></svg>
+    <svg aria-hidden="true" class="slf" viewBox="0 0 72 72" fill="none"><path d="M36 8C36 8 12 20 12 40C12 56 24 64 36 64C48 64 60 56 60 40C60 20 36 8 36 8Z" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/><line x1="36" y1="8" x2="36" y2="64" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-dasharray="3 3"/></svg>
     <div class="slo">Vila Viva</div>
     <div class="sta">Rede Social Comunitária de Piracanga</div>
     <div class="sds"><div class="sd"></div><div class="sd"></div><div class="sd"></div></div>
@@ -537,7 +537,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
             <div class="asc-name">Aliado Externo</div>
             <div class="asc-desc">Proprietário/a rural da bacia hidrográfica</div>
           </div>
-          <div class="agent-sel-card" onclick="selectAgent(this,'embaixador')" data-agent="embaixador" style="flex:1;min-width:140px">
+          <div class="agent-sel-card" onclick="selectAgent(this,'org_parceira')" data-agent="org_parceira" style="flex:1;min-width:140px">
             <div class="asc-icon">🤝</div>
             <div class="asc-name">Org. Parceira</div>
             <div class="asc-desc">Organização externa de apoio / pesquisa</div>
@@ -783,11 +783,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div><!-- /cards -->
   </div><!-- /cnt -->
   <div class="bnav">
-    <button type="button" class="bni a ht" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span><div class="tb">Feed principal da comunidade</div></button>
-    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
+    <button type="button" class="bni a ht" onclick="goTo('feed')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span><div class="tb">Feed principal da comunidade</div></button>
+    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
     <div class="bnc"><button class="fab ht" onclick="openSh()" aria-label="Contribuir — abrir menu de ações"><svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><div class="tb" aria-hidden="true" style="bottom:calc(100% + 16px)">Contribuir — histórias, pedidos, projetos, eventos ou conquistas</div></button></div>
-    <button type="button" class="bni ht" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span><div class="tb">Jardim de Conexões — matching por afinidade e tipo de agente</div></button>
-    <button type="button" class="bni ht" onclick="goTo('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span><div class="tb">Seu perfil — agente, badges, sementes e jornada</div></button>
+    <button type="button" class="bni ht" onclick="goTo('match')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span><div class="tb">Jardim de Conexões — matching por afinidade e tipo de agente</div></button>
+    <button type="button" class="bni ht" onclick="goTo('perfil')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span><div class="tb">Seu perfil — agente, badges, sementes e jornada</div></button>
   </div>
 </div>
 
@@ -964,11 +964,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
   </div>
   <div class="bnav">
-    <button type="button" class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
-    <button type="button" class="bni a" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span></button>
+    <button type="button" class="bni" onclick="goTo('feed')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
+    <button type="button" class="bni a" onclick="goTo('vagas')"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span></button>
     <div class="bnc"><button class="fab" onclick="openSh()" aria-label="Contribuir — abrir menu de ações"><svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
-    <button type="button" class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
-    <button type="button" class="bni ht" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span><div class="tb">Desafios baseados no Censo 2025 e no Bioma</div></button>
+    <button type="button" class="bni" onclick="goTo('match')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
+    <button type="button" class="bni" onclick="goTo('perfil')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></button>
   </div>
 </div>
 
@@ -1196,11 +1196,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
   </div>
   <div class="bnav">
-    <button type="button" class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
-    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
+    <button type="button" class="bni" onclick="goTo('feed')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
+    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
     <div class="bnc"><button class="fab" onclick="openSh()" aria-label="Contribuir — abrir menu de ações"><svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
-    <button type="button" class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
-    <button type="button" class="bni a" onclick="goTo('perfil')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></button>
+    <button type="button" class="bni" onclick="goTo('match')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
+    <button type="button" class="bni a" onclick="goTo('perfil')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></button>
   </div>
 </div>
 
@@ -1460,11 +1460,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
   </div><!-- /cnt -->
   <div class="bnav">
-    <button type="button" class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
-    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
+    <button type="button" class="bni" onclick="goTo('feed')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
+    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
     <div class="bnc"><button class="fab" onclick="openSh()" aria-label="Contribuir — abrir menu de ações"><svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
-    <button type="button" class="bni a" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
-    <button type="button" class="bni ht" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span><div class="tb">Desafios baseados no Censo 2025 e no Bioma</div></button>
+    <button type="button" class="bni a" onclick="goTo('match')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
+    <button type="button" class="bni" onclick="goTo('perfil')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></button>
   </div>
 </div>
 
@@ -1556,11 +1556,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
   </div>
   <div class="bnav">
-    <button type="button" class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
-    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
+    <button type="button" class="bni" onclick="goTo('feed')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
+    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
     <div class="bnc"><button class="fab" onclick="openSh()" aria-label="Contribuir — abrir menu de ações"><svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
-    <button type="button" class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
-    <button type="button" class="bni ht" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span><div class="tb">Desafios baseados no Censo 2025 e no Bioma</div></button>
+    <button type="button" class="bni" onclick="goTo('match')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
+    <button type="button" class="bni" onclick="goTo('perfil')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></button>
   </div>
 </div>
 
@@ -1787,11 +1787,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
   <!-- Bottom nav -->
   <div class="bnav">
-    <button type="button" class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
-    <button type="button" class="bni" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span></button>
+    <button type="button" class="bni" onclick="goTo('feed')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
+    <button type="button" class="bni" onclick="goTo('vagas')"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span></button>
     <div class="bnc"><button class="fab" onclick="openSh()" aria-label="Contribuir — abrir menu de ações"><svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
-    <button type="button" class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
-    <button type="button" class="bni a" onclick="goTo('desafios')"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Desafios</span></button>
+    <button type="button" class="bni" onclick="goTo('match')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
+    <button type="button" class="bni" onclick="goTo('perfil')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></button>
   </div>
 </div>
 
@@ -1808,11 +1808,11 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <div class="nit"><div class="nic ng">🌳</div><div class="nif"><div class="ntx">Você subiu de nível! Bem-vinda ao nível <strong>Guardiã da Terra</strong> 🌿</div><div class="ntm">há 2 dias</div></div></div>
   </div>
   <div class="bnav">
-    <button type="button" class="bni" onclick="goTo('feed')"><svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
-    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
+    <button type="button" class="bni" onclick="goTo('feed')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Vila</span></button>
+    <button type="button" class="bni ht" onclick="goTo('vagas')"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg><span>Vagas</span><div class="tb">Vagas — voluntariado e emprego remunerado na vila</div></button>
     <div class="bnc"><button class="fab" onclick="openSh()" aria-label="Contribuir — abrir menu de ações"><svg aria-hidden="true" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
-    <button type="button" class="bni" onclick="goTo('match')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
-    <button type="button" class="bni a" onclick="goTo('notifs')"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Avisos</span></button>
+    <button type="button" class="bni" onclick="goTo('match')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Conexões</span></button>
+    <button type="button" class="bni" onclick="goTo('perfil')"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Eu</span></button>
   </div>
 </div>
 
@@ -2044,6 +2044,7 @@ const agents={
   governanca:{icon:'🏛️',name:'Governança',tipo:'A.MOR e conselho territorial',cls:'ag-guardiao',arq:'Construtor de Comunidade',acesso:'Institucional'},
   // Externos e observadores
   embaixador:{icon:'🤝',name:'Embaixador/a',tipo:'Org. externas de apoio / BIOMAS / pesquisa',cls:'ag-embaixador',arq:'—',acesso:'Parcial'},
+  org_parceira:{icon:'🤝',name:'Org. Parceira',tipo:'Organização externa de apoio / pesquisa',cls:'ag-embaixador',arq:'—',acesso:'Parcial'},
   observador:{icon:'🔍',name:'Observador',tipo:'Governo / inst. públicas / ambientais',cls:'ag-trab_regiao',arq:'—',acesso:'Somente leitura'}
 };
 
