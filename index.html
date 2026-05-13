@@ -101,12 +101,12 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .obtn{position:fixed;bottom:24px;left:24px;right:24px;padding:16px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:16px;font-weight:500;cursor:pointer}
 .pretag{display:inline-block;padding:3px 10px;background:var(--vc);color:var(--v);border-radius:var(--r3);font-size:12px;font-weight:500;margin-bottom:12px}
 /* Agent selector cards */
-.agent-selector-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.agent-sel-card{padding:14px;border-radius:var(--r2);border:2px solid var(--bo);background:var(--ar);cursor:pointer;transition:all .15s;text-align:left}
+.agent-selector-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.agent-sel-card{padding:14px;border-radius:var(--r2);border:2px solid var(--bo);background:var(--ar);cursor:pointer;transition:all .15s;text-align:left;min-width:0}
 .agent-sel-card.sel{border-color:var(--v);background:var(--vc)}
 .agent-sel-card:active{transform:scale(.97)}
 .asc-icon{font-size:24px;margin-bottom:6px}
-.asc-name{font-size:13px;font-weight:500;color:var(--ca);margin-bottom:3px}
+.asc-name{font-size:13px;font-weight:500;color:var(--ca);margin-bottom:3px;word-wrap:break-word;overflow-wrap:break-word}
 .asc-desc{font-size:11px;color:var(--ci);line-height:1.4}
 
 /* TOPBAR */
@@ -116,8 +116,9 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .pud{width:8px;height:8px;border-radius:50%;background:var(--v3);position:relative}
 .pud::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:var(--v3);opacity:.3;animation:pda 2s ease-in-out infinite}
 @keyframes pda{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.8);opacity:0}}
-.tic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ar);cursor:pointer}
-.tav{width:32px;height:32px;border-radius:50%;background:var(--vc);border:2px solid var(--v);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--v);cursor:pointer}
+.tic{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ar);cursor:pointer}
+.tav{width:32px;height:32px;border-radius:50%;background:var(--vc);border:2px solid var(--v);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--v);cursor:pointer;position:relative}
+.tav::before{content:'';position:absolute;inset:-6px;border-radius:50%}
 .notif-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:var(--tr);border:2px solid var(--br)}
 
 /* BOTTOM NAV */
@@ -976,8 +977,8 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
   <div class="phero">
     <div class="hpat"></div>
     <div style="position:absolute;top:16px;right:16px;display:flex;gap:8px">
-      <button onclick="goTo('feed')" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:var(--r3);padding:6px 12px;font-family:var(--fb);font-size:12px;cursor:pointer">← Vila</button>
-      <button onclick="openEdit()" class="ht" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:var(--r3);padding:6px 12px;font-family:var(--fb);font-size:12px;cursor:pointer">✏️ Editar<div class="tb tr">Edite nome, agente, habilidades, intenção e senha</div></button>
+      <button onclick="goTo('feed')" style="background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:var(--r3);padding:6px 12px;font-family:var(--fb);font-size:12px;cursor:pointer">← Vila</button>
+      <button onclick="openEdit()" class="ht" style="background:rgba(255,255,255,.25);border:none;color:#fff;border-radius:var(--r3);padding:6px 12px;font-family:var(--fb);font-size:12px;cursor:pointer">✏️ Editar<div class="tb tr">Edite nome, agente, habilidades, intenção e senha</div></button>
     </div>
     <div class="hav">MR</div>
     <h1 class="hnm" style="margin:0">Mónica Reis</h1>
@@ -1470,7 +1471,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <!-- DASHBOARD -->
 <div class="screen" id="dashboard">
   <div class="dhdr">
-    <button class="bkbtn" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:rgba(255,255,255,.55);margin-bottom:8px" onclick="goTo('feed')">← voltar</button>
+    <button class="bkbtn" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:rgba(255,255,255,.85);margin-bottom:8px" onclick="goTo('feed')">← voltar</button>
     <h1 style="font-family:var(--fd);font-size:26px;font-weight:300;color:#fff;margin:0">Pulso da Vila</h1>
     <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">Vila Viva · Inteligência territorial de Piracanga · Censo 2025</div>
   </div>
@@ -1639,13 +1640,13 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
             </div>
             <div style="font-size:12px;color:var(--ci)">12 moradores já participam</div>
           </div>
-          <div style="display:flex;gap:8px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button id="btn-d1" onclick="participarDesafio(this,'d1','aliados-bar','aliados-prog-txt',40,10,'Você está conectando Aliados Distantes à vila! Convide um Aliado pelo WhatsApp ↓','20')"
-              style="flex:2;padding:11px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s">
+              style="flex:2;min-width:0;padding:11px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s">
               Participar do desafio →
             </button>
             <button onclick="wapp('🌍 Tenho uma missão: conectar Aliados de Piracanga ao projeto Vila Viva! Você tem propriedade lá e quer contribuir? Crie seu perfil: https://vilaviva.piracanga.org')"
-              style="flex:1;padding:11px;background:#25D366;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px">
+              style="flex:1;min-width:0;padding:11px;background:#25D366;color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px">
               <svg class="waico"><use href="#wa"/></svg>Convidar
             </button>
           </div>
