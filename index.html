@@ -96,7 +96,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .oin:focus{border-color:var(--v)}
 .osel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A8C7C' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
 .sgr{display:flex;flex-wrap:wrap;gap:8px}
-.stag{display:inline-flex;align-items:center;padding:8px 14px;border-radius:var(--r3);font-size:13px;font-family:inherit;border:1.5px solid var(--bo);background:var(--ar);color:var(--ca2);cursor:pointer;transition:all .15s;user-select:none}
+.stag{display:inline-flex;align-items:center;padding:8px 14px;border-radius:var(--r3);font-size:13px;font-family:inherit;text-align:start;border:1.5px solid var(--bo);background:var(--ar);color:var(--ca2);cursor:pointer;transition:all .15s;user-select:none}
 .stag.s{background:var(--vc);border-color:var(--v);color:var(--v);font-weight:500}
 .obtn{position:fixed;bottom:24px;left:24px;right:24px;padding:16px;background:var(--v);color:#fff;border:none;border-radius:var(--r3);font-family:var(--fb);font-size:16px;font-weight:500;cursor:pointer}
 .pretag{display:inline-block;padding:3px 10px;background:var(--vc);color:var(--v);border-radius:var(--r3);font-size:12px;font-weight:500;margin-bottom:12px}
@@ -118,7 +118,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 @keyframes pda{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.8);opacity:0}}
 .tic{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ar);cursor:pointer}
 .tav{width:32px;height:32px;border-radius:50%;background:var(--vc);border:2px solid var(--v);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--v);cursor:pointer;position:relative}
-.tav::before{content:'';position:absolute;inset:-6px;border-radius:50%}
+.tav::before{content:'';position:absolute;inset:-6px;border-radius:50%;pointer-events:none}
 .notif-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:var(--tr);border:2px solid var(--br)}
 
 /* BOTTOM NAV */
@@ -264,7 +264,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .ssl{font-size:11px;color:var(--ci)}
 .bdgr{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .bdgi{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer}
-.bdgic{width:52px;height:52px;border-radius:50%;background:var(--ar2);display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--bo);cursor:pointer;transition:transform .15s;position:relative}
+.bdgic{width:52px;height:52px;border-radius:50%;background:var(--ar2);display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid var(--bo);transition:transform .15s;position:relative}
 .bdgic:hover{transform:scale(1.1)}
 .bdgic.ea{background:var(--vc);border-color:var(--v)}
 .bdgic.te{background:var(--tc);border-color:var(--tr)}
@@ -621,7 +621,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
         <div class="cst ht">🔥 2 eventos hoje<div class="tb">Encontros presenciais marcados para hoje na vila</div></div>
         <div class="cst ht">🙌 4 pedidos<div class="tb">Pedidos de ajuda abertos que combinam com seu perfil</div></div>
         <div class="cst ht">🌻 3 projetos<div class="tb">Projetos florescendo que precisam de colaboradores</div></div>
-        <button type="button" class="cst ht" onclick="goTo('desafios')" style="cursor:pointer;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-size:12px">⭐ 5 desafios ativos<div class="tb">Desafios do território baseados no Censo 2025 e no Bioma</div></button>
+        <button type="button" class="cst ht" onclick="goTo('desafios')" style="cursor:pointer;background:rgba(255,255,255,.18)">⭐ 5 desafios ativos<div class="tb">Desafios do território baseados no Censo 2025 e no Bioma</div></button>
       </div>
     </div>
     <div class="strw">
@@ -794,7 +794,6 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <!-- MAPA -->
 <div class="screen" id="vagas">
   <div class="topbar">
-    <div class="tlog">Vagas</div>
     <div style="display:flex;align-items:center;gap:8px">
       <div class="sctop ht">🌱 <span id="sdv">342</span><div class="tb tr">Suas Sementes acumuladas</div></div>
     </div>
@@ -1581,15 +1580,15 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       <div style="display:flex;gap:10px;margin-top:14px">
         <div style="background:rgba(255,255,255,.12);border-radius:var(--r);padding:10px 14px;text-align:center;flex:1">
           <div style="font-family:var(--fd);font-size:22px;color:#fff;font-weight:300">3</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px">desafios ativos</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">desafios ativos</div>
         </div>
         <div style="background:rgba(255,255,255,.12);border-radius:var(--r);padding:10px 14px;text-align:center;flex:1">
           <div style="font-family:var(--fd);font-size:22px;color:#fff;font-weight:300" id="part-total">43</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px">participantes</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">participantes</div>
         </div>
         <div style="background:rgba(255,255,255,.12);border-radius:var(--r);padding:10px 14px;text-align:center;flex:1">
           <div style="font-family:var(--fd);font-size:22px;color:#fff;font-weight:300">🌿</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px">Lua Cheia</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Lua Cheia</div>
         </div>
       </div>
     </div>
@@ -1925,7 +1924,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       <button id="vaga-tipo-vol" onclick="setVagaTipo('vol')"
         style="flex:1;padding:12px 8px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fb);border:none;background:var(--v);color:#fff;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px">
         🤲 Voluntariado
-        <span style="font-size:11px;opacity:.75;font-weight:400">doo seu tempo</span>
+        <span style="font-size:11px;opacity:.75;font-weight:400">doe seu tempo</span>
       </button>
       <button id="vaga-tipo-rem" onclick="setVagaTipo('rem')"
         style="flex:1;padding:12px 8px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--fb);border:none;background:var(--ar);color:var(--ci);transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px">
