@@ -416,7 +416,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <div class="screen" id="login">
   <div class="lhd">
     <div style="font-size:44px;margin-bottom:12px">🌿</div>
-    <div style="font-family:var(--fd);font-size:32px;font-weight:300;color:#fff;margin-bottom:6px">Vila Viva</div>
+    <h1 style="font-family:var(--fd);font-size:32px;font-weight:300;color:#fff;margin:0 0 6px 0">Vila Viva</h1>
     <div style="font-size:14px;color:rgba(255,255,255,.6)">Entrar ou criar seu perfil na vila</div>
   </div>
   <div class="lbd">
@@ -443,7 +443,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <div class="screen" id="onboarding">
   <div class="ohd">
     <div class="osl">Passo <span id="osn">1</span> de 4</div>
-    <div class="oti" id="oti">Quem sou eu na vila</div>
+    <h1 class="oti" id="oti" style="margin:0">Quem sou eu na vila</h1>
     <div class="opr"><div class="opd a" id="op1"></div><div class="opd" id="op2"></div><div class="opd" id="op3"></div><div class="opd" id="op4"></div></div>
   </div>
   <div class="obd">
@@ -460,7 +460,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <!-- Step 2: Agent type -->
     <div id="os2" style="display:none">
       <div class="ose">
-        <div class="olab">Qual é a sua relação com Piracanga?</div>
+        <h2 class="olab" style="margin:0 0 10px 0">Qual é a sua relação com Piracanga?</h2>
         <div style="font-size:13px;color:var(--ci);margin-bottom:14px;line-height:1.5">Isso define como você aparece no mapa, no feed e nas conexões com outros moradores.</div>
         <div style="font-size:12px;color:var(--ci);background:var(--ar2);border-radius:var(--r);padding:10px 12px;margin-bottom:14px;line-height:1.5">Sua relação define seu arquétipo na plataforma, seu feed e como você aparece no Jardim de Conexões.</div>
         <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ci);margin-bottom:8px">Pessoas físicas</div>
@@ -573,7 +573,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <!-- Step 3: Talentos -->
     <div id="os3" style="display:none">
       <div class="ose">
-        <div class="olab">Seus talentos — máx. 6</div>
+        <h2 class="olab" style="margin:0 0 10px 0">Seus talentos — máx. 6</h2>
         <div style="font-size:13px;color:var(--ci);margin-bottom:12px">Talentos que você pode oferecer à comunidade, mesmo que informalmente.</div>
         <div class="sgr" id="skgr">
           <span class="stag s" onclick="toggleSkill(this)">🎨 Artes</span><span class="stag" onclick="toggleSkill(this)">✂️ Costura</span><span class="stag" onclick="toggleSkill(this)">🪚 Marcenaria</span><span class="stag s" onclick="toggleSkill(this)">🤲 Cuidado</span><span class="stag" onclick="toggleSkill(this)">🍳 Culinária</span><span class="stag s" onclick="toggleSkill(this)">🌿 Terapias</span><span class="stag" onclick="toggleSkill(this)">🌱 Agricultura</span><span class="stag s" onclick="toggleSkill(this)">📊 Gestão</span><span class="stag" onclick="toggleSkill(this)">💻 Tecnologia</span><span class="stag" onclick="toggleSkill(this)">🌐 Tec. Social</span><span class="stag" onclick="toggleSkill(this)">🗣️ Idiomas</span><span class="stag" onclick="toggleSkill(this)">🧘 Yoga</span><span class="stag" onclick="toggleSkill(this)">🎵 Música</span><span class="stag" onclick="toggleSkill(this)">📸 Foto/Vídeo</span><span class="stag" onclick="toggleSkill(this)">🏗️ Bioconstrução</span><span class="stag" onclick="toggleSkill(this)">🧠 Psicologia</span><span class="stag" onclick="toggleSkill(this)">✍️ Escrita</span><span class="stag" onclick="toggleSkill(this)">⚽ Esportes</span><span class="stag" onclick="toggleSkill(this)">🎓 Educação</span><span class="stag" onclick="toggleSkill(this)">🌺 Espiritualidade</span>
@@ -583,7 +583,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <!-- Step 4: Intenção -->
     <div id="os4" style="display:none">
       <div class="ose">
-        <div class="olab">O que você quer explorar aqui</div>
+        <h2 class="olab" style="margin:0 0 10px 0">O que você quer explorar aqui</h2>
         <div class="sgr">
           <span class="stag s" onclick="toggleSkill(this)">🌾 Agrofloresta</span><span class="stag" onclick="toggleSkill(this)">🔨 Bioconstrução</span><span class="stag s" onclick="toggleSkill(this)">🤝 Projetos coletivos</span><span class="stag" onclick="toggleSkill(this)">📚 Aprender & ensinar</span><span class="stag" onclick="toggleSkill(this)">🎉 Celebrar e rituais</span><span class="stag" onclick="toggleSkill(this)">💰 Economia local</span><span class="stag s" onclick="toggleSkill(this)">👨‍👩‍👧 Famílias & crianças</span><span class="stag" onclick="toggleSkill(this)">🌊 Natureza & trilhas</span>
         </div>
@@ -600,7 +600,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <!-- FEED -->
 <div class="screen" id="feed">
   <div class="topbar">
-    <div class="tlog">Vila Viva</div>
+    <h1 class="tlog" style="margin:0">Vila Viva</h1>
     <div class="trig">
       <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ci);white-space:nowrap;flex-shrink:0"><div class="pud" aria-hidden="true"></div>18 online</div>
       <button type="button" class="tic ht" onclick="goTo('notifs')" aria-label="Notificações" style="cursor:pointer;position:relative;border:none;padding:0">
@@ -801,7 +801,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
   <div class="cnt">
     <!-- Header -->
     <div style="padding:16px 16px 8px;background:var(--v);margin-bottom:0">
-      <div style="font-family:var(--fd);font-size:22px;font-weight:300;color:#fff">Vagas na Vila</div>
+      <h1 style="font-family:var(--fd);font-size:22px;font-weight:300;color:#fff;margin:0">Vagas na Vila</h1>
       <div style="font-size:13px;color:rgba(255,255,255,.65);margin-top:3px">Voluntariado e emprego remunerado em Piracanga</div>
     </div>
     <!-- Sub-tabs: visually prominent -->
@@ -980,7 +980,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       <button onclick="openEdit()" class="ht" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:var(--r3);padding:6px 12px;font-family:var(--fb);font-size:12px;cursor:pointer">✏️ Editar<div class="tb tr">Edite nome, agente, habilidades, intenção e senha</div></button>
     </div>
     <div class="hav">MR</div>
-    <div class="hnm">Mónica Reis</div>
+    <h1 class="hnm" style="margin:0">Mónica Reis</h1>
     <div class="htg">Arquiteta · Tecelã · Mãe de Piracanga</div>
     <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px">🌱 14 anos em Piracanga · Casa Terra Maré</div>
   </div>
@@ -988,7 +988,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
     <!-- AGENT CARD -->
     <div class="psc">
-      <div class="pst">Meu papel na comunidade</div>
+      <h2 class="pst" style="margin:0 0 12px 0">Meu papel na comunidade</h2>
       <div class="agent-profile-card">
         <div class="apc-top">
           <div class="apc-icon">🌱</div>
@@ -1023,7 +1023,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
     <!-- SEMENTES -->
     <div class="psc">
-      <div class="pst">Sementes & Raízes <span class="ht" style="cursor:help;border-bottom:1px dashed var(--ci2)">(?)<div class="tb">Sementes = pontos por ações rápidas. Raízes = reputação profunda, dada por outros moradores.</div></span></div>
+      <h2 class="pst" style="margin:0 0 12px 0">Sementes & Raízes <span class="ht" style="cursor:help;border-bottom:1px dashed var(--ci2)">(?)<div class="tb">Sementes = pontos por ações rápidas. Raízes = reputação profunda, dada por outros moradores.</div></span></h2>
       <div class="scard">
         <div style="display:flex;align-items:center;gap:8px"><div style="font-size:28px">🌳</div><div><div class="slv">Guardiã da Terra</div><div class="ssb">Nível 7 de 8 · próximo: Raiz Viva</div></div></div>
         <div style="height:6px;background:var(--ar2);border-radius:3px;overflow:hidden;margin-top:10px"><div style="height:100%;width:72%;border-radius:3px;background:var(--v)"></div></div>
@@ -1038,7 +1038,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
     <!-- BADGES -->
     <div class="psc">
-      <div class="pst">Conquistas</div>
+      <h2 class="pst" style="margin:0 0 12px 0">Conquistas</h2>
       <div class="bdgr">
         <div class="bdgi ht" onclick="showBadge('Raiz Profunda','10+ anos em Piracanga. Você é pilar desta comunidade.','🌳')"><div class="bdgic ea">🌳</div><div class="bdgn">Raiz Profunda</div><div class="tb">10+ anos de Piracanga. Clique para celebrar.</div></div>
         <div class="bdgi ht" onclick="showBadge('Tecelã','Participou de 5+ projetos diferentes na vila!','🌀')"><div class="bdgic te">🌀</div><div class="bdgn">Tecelã</div><div class="tb">Participou de 5+ projetos diferentes</div></div>
@@ -1054,7 +1054,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <!-- SOBRE MIM -->
     <div class="psc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div class="pst" style="margin-bottom:0">Sobre mim</div>
+        <h2 class="pst" style="margin:0">Sobre mim</h2>
         <button onclick="openEditSection('sobre')" style="font-size:12px;color:var(--v);background:var(--vc);border:none;border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);font-weight:500">✏️ Editar</button>
       </div>
       <!-- Bio -->
@@ -1117,7 +1117,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <!-- PROJETOS & INICIATIVAS NA VILA -->
     <div class="psc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div class="pst" style="margin-bottom:0">Projetos & Iniciativas na Vila</div>
+        <h2 class="pst" style="margin:0">Projetos & Iniciativas na Vila</h2>
         <button onclick="openCadProjeto()" style="font-size:12px;color:var(--v);background:var(--vc);border:none;border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);font-weight:500">+ Cadastrar</button>
       </div>
       <div id="projetos-perfil" style="display:flex;flex-direction:column;gap:10px">
@@ -1163,7 +1163,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <!-- SKILLS -->
     <div class="psc">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div class="pst" style="margin-bottom:0">Jardim de Habilidades <span class="ht" style="cursor:help;border-bottom:1px dashed var(--ci2)">(?)<div class="tb">Suas habilidades aparecem no Jardim de Conexões para que outros moradores te encontrem.</div></span></div>
+        <h2 class="pst" style="margin:0">Jardim de Habilidades <span class="ht" style="cursor:help;border-bottom:1px dashed var(--ci2)">(?)<div class="tb">Suas habilidades aparecem no Jardim de Conexões para que outros moradores te encontrem.</div></span></h2>
         <button onclick="openEdit()" style="font-size:12px;color:var(--v);background:var(--vc);border:none;border-radius:var(--r3);padding:5px 12px;cursor:pointer;font-family:var(--fb);font-weight:500">✏️ Editar</button>
       </div>
       <div class="skr">
@@ -1179,7 +1179,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
     <!-- TIMELINE -->
     <div class="psc">
-      <div class="pst">Jornada em Piracanga</div>
+      <h2 class="pst" style="margin:0 0 12px 0">Jornada em Piracanga</h2>
       <div class="tl">
         <div class="tli"><div class="tld" style="background:var(--ou)"></div><div class="tldt">2011</div><div class="tltx">🏡 Chegada — Casa Terra Maré · tornou-se Cultivadora</div></div>
         <div class="tli"><div class="tld"></div><div class="tldt">2013</div><div class="tltx">🌿 Bioconstrução da Escola da Natureza</div></div>
@@ -1207,7 +1207,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <div class="screen" id="match">
   <div class="mhdr" style="padding-bottom:0">
     <button class="bkbtn" onclick="goTo('feed')" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--ci);margin-bottom:8px">← voltar</button>
-    <div style="font-family:var(--fd);font-size:26px;font-weight:300;color:var(--ca)">Jardim de Conexões</div>
+    <h1 style="font-family:var(--fd);font-size:26px;font-weight:300;color:var(--ca);margin:0">Jardim de Conexões</h1>
     <div style="font-size:13px;color:var(--ci);margin-top:2px;margin-bottom:12px">Pessoas, organizações, projetos e oportunidades da vila</div>
     <!-- Search bar -->
     <div style="position:relative;margin-bottom:0">
@@ -1471,13 +1471,13 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <div class="screen" id="dashboard">
   <div class="dhdr">
     <button class="bkbtn" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:rgba(255,255,255,.55);margin-bottom:8px" onclick="goTo('feed')">← voltar</button>
-    <div style="font-family:var(--fd);font-size:26px;font-weight:300;color:#fff">Pulso da Vila</div>
+    <h1 style="font-family:var(--fd);font-size:26px;font-weight:300;color:#fff;margin:0">Pulso da Vila</h1>
     <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">Vila Viva · Inteligência territorial de Piracanga · Censo 2025</div>
   </div>
   <div class="dbdy">
     <!-- Agentes + Arquetipos -->
     <div class="dcd">
-      <div class="dcdhd"><div class="dct">Composição da comunidade — perfis Vila Viva</div><div style="font-size:12px;color:var(--ci)">117 respondentes</div></div>
+      <div class="dcdhd"><h2 class="dct" style="margin:0">Composição da comunidade — perfis Vila Viva</h2><div style="font-size:12px;color:var(--ci)">117 respondentes</div></div>
       <div class="dcbd">
         <div class="ag-breakdown">
           <div class="ag-seg" style="background:var(--vc);color:var(--v)"><div class="ag-seg-n">57</div><div class="ag-seg-l">🌱 Cultivadores</div></div>
@@ -1500,7 +1500,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
     <!-- Pulse -->
     <div class="dcd">
-      <div class="dcdhd"><div class="dct">Atividade comunitária</div><div style="font-size:12px;color:var(--ci)">Últimas 4 semanas</div></div>
+      <div class="dcdhd"><h2 class="dct" style="margin:0">Atividade comunitária</h2><div style="font-size:12px;color:var(--ci)">Últimas 4 semanas</div></div>
       <div class="dcbd">
         <div class="pch">
           <div class="pb" style="height:35%"></div><div class="pb" style="height:45%"></div><div class="pb" style="height:30%"></div><div class="pb" style="height:60%"></div><div class="pb" style="height:50%"></div><div class="pb hl" style="height:80%"></div><div class="pb" style="height:55%"></div><div class="pb" style="height:70%"></div><div class="pb" style="height:65%"></div><div class="pb hl" style="height:90%"></div><div class="pb" style="height:60%"></div><div class="pb" style="height:75%"></div><div class="pb" style="height:55%"></div><div class="pb hl" style="height:95%"></div>
@@ -1510,7 +1510,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
     <!-- Projects -->
     <div class="dcd">
-      <div class="dcdhd"><div class="dct">Projetos vivos</div></div>
+      <div class="dcdhd"><h2 class="dct" style="margin:0">Projetos vivos</h2></div>
       <div class="dcbd">
         <div class="psr">
           <div class="ps"><div class="psv">4</div><div class="psl">🌱 Em broto</div></div>
@@ -1522,7 +1522,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
     <!-- NPS por agente -->
     <div class="dcd">
-      <div class="dcdhd"><div class="dct">NPS por tipo de agente</div><div style="font-size:12px;color:var(--ci)">0–10</div></div>
+      <div class="dcdhd"><h2 class="dct" style="margin:0">NPS por tipo de agente</h2><div style="font-size:12px;color:var(--ci)">0–10</div></div>
       <div class="dcbd">
         <div class="mbr"><div class="mbl">🌱 Cultivadores</div><div class="mbt"><div class="mbf" style="width:89%;background:var(--v)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.9</div></div>
         <div class="mbr"><div class="mbl">🌍 Aliados</div><div class="mbt"><div class="mbf" style="width:89%;background:var(--az)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.9</div></div>
@@ -1532,7 +1532,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
     <!-- Talentos -->
     <div class="dcd">
-      <div class="dcdhd"><div class="dct">Habilidades mais declaradas</div><div style="font-size:12px;color:var(--ci)">117 respondentes</div></div>
+      <div class="dcdhd"><h2 class="dct" style="margin:0">Habilidades mais declaradas</h2><div style="font-size:12px;color:var(--ci)">117 respondentes</div></div>
       <div class="dcbd">
         <div class="mbr"><div class="mbl">📊 Gestão</div><div class="mbt"><div class="mbf" style="width:100%;background:var(--v)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">62</div></div>
         <div class="mbr"><div class="mbl">🎨 Artes</div><div class="mbt"><div class="mbf" style="width:82%;background:var(--tr)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">51</div></div>
@@ -1543,7 +1543,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     </div>
     <!-- Saúde comunitária -->
     <div class="dcd">
-      <div class="dcdhd"><div class="dct">Saúde comunitária — Censo 2025</div></div>
+      <div class="dcdhd"><h2 class="dct" style="margin:0">Saúde comunitária — Censo 2025</h2></div>
       <div class="dcbd">
         <div class="mbr"><div class="mbl">NPS Piracanga</div><div class="mbt"><div class="mbf" style="width:86%;background:var(--v)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.6</div></div>
         <div class="mbr"><div class="mbl">Qualidade de vida</div><div class="mbt"><div class="mbf" style="width:80%;background:var(--v2)"></div></div><div style="font-size:11px;color:var(--ci);width:28px;text-align:right">8.0</div></div>
@@ -1575,7 +1575,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <div style="background:linear-gradient(135deg,var(--v) 0%,#2A7A4F 100%);padding:20px 20px 24px;position:relative;overflow:hidden;flex-shrink:0">
       <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:28px 28px"></div>
       <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:6px">DESAFIOS DA VILA · CENSO 2025</div>
-      <div style="font-family:var(--fd);font-size:24px;font-weight:300;color:#fff;line-height:1.2;margin-bottom:8px">Transforme dados em ação</div>
+      <h1 style="font-family:var(--fd);font-size:24px;font-weight:300;color:#fff;line-height:1.2;margin:0 0 8px 0">Transforme dados em ação</h1>
       <div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.55">Cada desafio nasce de uma tensão real mapeada no Bioma de Piracanga. Complete, ganhe Sementes e fortaleça o território.</div>
       <div style="display:flex;gap:10px;margin-top:14px">
         <div style="background:rgba(255,255,255,.12);border-radius:var(--r);padding:10px 14px;text-align:center;flex:1">
@@ -1796,7 +1796,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 
 <!-- NOTIFICAÇÕES -->
 <div class="screen" id="notifs">
-  <div class="nhdr"><button class="bkbtn" onclick="goTo('feed')" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--ci);margin-bottom:8px">← voltar</button><div style="font-family:var(--fd);font-size:26px;font-weight:300;color:var(--ca)">Conexões & Avisos</div>
+  <div class="nhdr"><button class="bkbtn" onclick="goTo('feed')" style="background:none;border:none;cursor:pointer;font-family:var(--fb);font-size:14px;color:var(--ci);margin-bottom:8px">← voltar</button><h1 style="font-family:var(--fd);font-size:26px;font-weight:300;color:var(--ca);margin:0">Conexões & Avisos</h1>
     <div style="font-size:12px;color:var(--ci);margin-top:2px">Vila Viva · notificações por tipo de agente e arquétipo</div></div>
   <div class="nls">
     <div class="nit"><div class="nic nr">🌱</div><div class="nif"><div class="ntx"><strong>Láyọ</strong> (🌱 Cultivadora) te enviou uma semente de conexão ✨ Quer trocar sobre Artes e Expressão</div><div class="ntm">há 1h</div><button class="nbtn" onclick="seedCount+=5;upSd();this.textContent='Aceito ✓'">Aceitar conexão</button></div></div>
@@ -1838,13 +1838,13 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 <!-- CONTACT MODAL -->
 <div class="ctmo" id="ctmo" role="dialog" aria-modal="true" aria-labelledby="ct-title">
   <div class="ctin" style="position:relative">
-    <button onclick="document.getElementById('ctmo').classList.remove('op')" aria-label="Fechar" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ci);display:flex;align-items:center;justify-content:center">×</button>
+    <button onclick="closeDialog('ctmo');document.getElementById('ctmo').classList.remove('op')" aria-label="Fechar" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--ci);display:flex;align-items:center;justify-content:center">×</button>
     <div class="cthd" aria-hidden="true"></div>
     <h2 style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin:0 0 6px 0" id="ct-title">Conectar com</h2>
     <div style="font-size:13px;color:var(--ci);margin-bottom:20px;line-height:1.5">Sua intenção de participar foi registrada na plataforma e o organizador será notificado. Para combinar os detalhes, entre em contato pelo WhatsApp:</div>
     <div class="ctib"><strong id="ct-name"></strong><span id="ct-phone"></span></div>
     <a id="ct-link" href="#" class="wabtn" target="_blank"><svg class="waico"><use href="#wa"/></svg>Abrir conversa no WhatsApp</a>
-    <button class="cnlbtn" onclick="document.getElementById('ctmo').classList.remove('op')">Fechar</button>
+    <button class="cnlbtn" onclick="closeDialog('ctmo');document.getElementById('ctmo').classList.remove('op')">Fechar</button>
   </div>
 </div>
 
@@ -1890,22 +1890,22 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       </div>
     </div>
     <div class="edf"><label class="edl" for="ed-pwd">Alterar senha</label><input id="ed-pwd" class="edi" type="password" placeholder="Nova senha (deixe em branco para manter)" autocomplete="new-password"></div>
-    <button class="edsv" onclick="document.getElementById('edov').classList.remove('op');showBadge('Perfil Atualizado','Seu perfil vivo foi atualizado — a comunidade pode te conhecer melhor agora 🌿','✏️')">Salvar alterações</button>
-    <button class="edcl" onclick="document.getElementById('edov').classList.remove('op')">Cancelar</button>
+    <button class="edsv" onclick="closeDialog('edov');document.getElementById('edov').classList.remove('op');showBadge('Perfil Atualizado','Seu perfil vivo foi atualizado — a comunidade pode te conhecer melhor agora 🌿','✏️')">Salvar alterações</button>
+    <button class="edcl" onclick="closeDialog('edov');document.getElementById('edov').classList.remove('op')">Cancelar</button>
   </div>
 </div>
 
 <!-- BADGE OVERLAY -->
 <div class="bdov" id="bdov" role="dialog" aria-modal="true" aria-labelledby="bdmt" onclick="closeBadgeOverlay(event)">
   <div class="bdmo" style="position:relative">
-    <button onclick="document.getElementById('bdov').classList.remove('sh')" aria-label="Fechar" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--ci);display:flex;align-items:center;justify-content:center;line-height:1">×</button>
+    <button onclick="closeDialog('bdov');document.getElementById('bdov').classList.remove('sh')" aria-label="Fechar" style="position:absolute;top:10px;right:10px;background:var(--ar);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:16px;color:var(--ci);display:flex;align-items:center;justify-content:center;line-height:1">×</button>
     <span class="bdic" id="bdic" aria-hidden="true">🌳</span>
     <div class="bdse">🌱 +15 sementes conquistadas!</div>
     <h2 class="bdmt" id="bdmt" style="font-family:var(--fd);margin:0">Badge conquistado!</h2>
     <div class="bdmd" id="bdmd">Descrição</div>
     <div class="bdsrow">
       <button class="bdwbtn" id="bdwbtn"><svg class="waico"><use href="#wa"/></svg>Compartilhar</button>
-      <button class="bdbtn" onclick="document.getElementById('bdov').classList.remove('sh')">Ver no perfil</button>
+      <button class="bdbtn" onclick="closeDialog('bdov');document.getElementById('bdov').classList.remove('sh')">Ver no perfil</button>
     </div>
     <div style="font-size:11px;color:var(--ci);margin-top:8px">Toque fora ou no × para fechar</div>
   </div>
@@ -1959,7 +1959,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <div class="edf"><div class="edl">Contato para candidatos</div><input class="edi" type="tel" placeholder="WhatsApp ou e-mail"></div>
 
     <button class="edsv" onclick="submitCadVaga()">Publicar vaga →</button>
-    <button class="edcl" onclick="document.getElementById('cadvaga-ov').classList.remove('op')">Cancelar</button>
+    <button class="edcl" onclick="closeDialog('cadvaga-ov');document.getElementById('cadvaga-ov').classList.remove('op')">Cancelar</button>
   </div>
 </div>
 
@@ -2008,7 +2008,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       </div>
     </div>
     <button class="edsv" onclick="submitCadProjeto()">Salvar no meu perfil →</button>
-    <button class="edcl" onclick="document.getElementById('cadprojeto-ov').classList.remove('op')">Cancelar</button>
+    <button class="edcl" onclick="closeDialog('cadprojeto-ov');document.getElementById('cadprojeto-ov').classList.remove('op')">Cancelar</button>
   </div>
 </div>
 
@@ -2019,7 +2019,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
     <h2 id="editsec-title" style="font-family:var(--fd);font-size:20px;font-weight:300;color:var(--ca);margin:0 0 16px 0">Editar</h2>
     <div id="editsec-body"><!-- content injected by JS --></div>
     <button class="edsv" onclick="saveEditSection()">Salvar</button>
-    <button class="edcl" onclick="document.getElementById('editsec-ov').classList.remove('op')">Cancelar</button>
+    <button class="edcl" onclick="closeDialog('editsec-ov');document.getElementById('editsec-ov').classList.remove('op')">Cancelar</button>
   </div>
 </div>
 
@@ -2050,6 +2050,47 @@ setTimeout(()=>goTo('login'),2600);
 
 // A11y: marcar SVGs decorativos para leitores de tela
 document.querySelectorAll('.bni svg, .fab svg, .tic svg, .tav svg, .nic svg, .cav svg, .waico, .slf, .msvg').forEach(el=>el.setAttribute('aria-hidden','true'));
+
+// ── Foco-trap genérico para overlays/modais (S22) ──
+const _dialogState = new WeakMap();
+
+function _focalsOf(root) {
+  return Array.from(root.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )).filter(el => !el.disabled && el.offsetParent !== null);
+}
+
+function openDialog(idOrEl, openerEl) {
+  const el = typeof idOrEl === 'string' ? document.getElementById(idOrEl) : idOrEl;
+  if (!el) return;
+  const opener = openerEl || document.activeElement;
+  const onKey = (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); closeDialog(el); return; }
+    if (e.key !== 'Tab') return;
+    const focals = _focalsOf(el);
+    if (!focals.length) { e.preventDefault(); return; }
+    const first = focals[0], last = focals[focals.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  _dialogState.set(el, { opener, onKey });
+  el.addEventListener('keydown', onKey);
+  setTimeout(() => {
+    const focals = _focalsOf(el);
+    if (focals.length) focals[0].focus();
+  }, 50);
+}
+
+function closeDialog(idOrEl) {
+  const el = typeof idOrEl === 'string' ? document.getElementById(idOrEl) : idOrEl;
+  if (!el) return;
+  const st = _dialogState.get(el);
+  if (st) {
+    el.removeEventListener('keydown', st.onKey);
+    _dialogState.delete(el);
+    if (st.opener && typeof st.opener.focus === 'function') st.opener.focus();
+  }
+}
 
 // Tooltips: espelhar texto para title= como fallback nativo (touch + SR)
 document.querySelectorAll('.ht').forEach(el=>{
@@ -2094,7 +2135,7 @@ function nextOb(){
   else if(obStep===2){obStep=3;document.getElementById('os2').style.display='none';document.getElementById('os3').style.display='block';document.getElementById('op3').classList.add('a');}
   else if(obStep===3){obStep=4;document.getElementById('os3').style.display='none';document.getElementById('os4').style.display='block';document.getElementById('op4').classList.add('a');document.getElementById('onbtn').textContent='Entrar na Vila 🌿';}
   else{const ag=agents[currentAgent]||agents['cultivador'];
-    showBadge('Bem-vindo/a à Vila Viva!',ag.icon+' '+ag.name+' — '+ag.tipo+'. Arquétipo: '+ag.arq+'. Acesso: '+ag.acesso+'.','🌱');setTimeout(()=>{document.getElementById('bdov').classList.remove('sh');goTo('feed');},3200);}
+    showBadge('Bem-vindo/a à Vila Viva!',ag.icon+' '+ag.name+' — '+ag.tipo+'. Arquétipo: '+ag.arq+'. Acesso: '+ag.acesso+'.','🌱');setTimeout(()=>{closeDialog('bdov');document.getElementById('bdov').classList.remove('sh');goTo('feed');},3200);}
   const n=Math.min(obStep,4);
   document.getElementById('osn').textContent=n;
   if(titles[n])document.getElementById('oti').textContent=titles[n];
@@ -2106,17 +2147,18 @@ function setF(el){
   const afr=document.getElementById('agent-filter-row');
   if(afr)afr.style.display=(el.textContent.includes('agente')?'block':'none');
 }
-function openSh(){document.getElementById('bso').classList.add('sh');document.getElementById('bsh').style.display='block';}
+function openSh(){const opener=document.activeElement;document.getElementById('bso').classList.add('sh');document.getElementById('bsh').style.display='block';openDialog('bsh',opener);}
 function closeShByOverlay(e){if(e.target===document.getElementById('bso'))closeSh();}
-function closeSh(){document.getElementById('bso').classList.remove('sh');document.getElementById('bsh').style.display='none';}
+function closeSh(){closeDialog('bsh');document.getElementById('bso').classList.remove('sh');document.getElementById('bsh').style.display='none';}
 function closeShAct(pts,msg,icon){closeSh();seedCount+=pts;upSd();showBadge('Contribuição registrada!',msg,icon);}
 function showBadge(t,d,ic){
   document.getElementById('bdmt').textContent=t;
   document.getElementById('bdmd').textContent=d;
   document.getElementById('bdic').textContent=ic;
   const msg=encodeURIComponent('🎉 Ganhei o badge "'+t+'" no Biomas de Piracanga! '+d+' https://vilaviva.piracanga.org');
-  document.getElementById('bdwbtn').onclick=()=>{window.open('https://wa.me/?text='+msg,'_blank');document.getElementById('bdov').classList.remove('sh');};
+  document.getElementById('bdwbtn').onclick=()=>{window.open('https://wa.me/?text='+msg,'_blank');closeDialog('bdov');document.getElementById('bdov').classList.remove('sh');};
   document.getElementById('bdov').classList.add('sh');
+  openDialog('bdov');
   seedCount+=15;upSd();
 }
 function toggleCmt(btn){
@@ -2145,9 +2187,10 @@ function openCt(name,phone){
   const num='55'+phone.replace(/\D/g,'');
   document.getElementById('ct-link').href='https://wa.me/'+num+'?text='+msg;
   document.getElementById('ctmo').classList.add('op');
+  openDialog('ctmo');
   seedCount+=3;upSd();
 }
-function openEdit(){document.getElementById('edov').classList.add('op');}
+function openEdit(){document.getElementById('edov').classList.add('op');openDialog('edov');}
 function showMp(name,meta,skills){
   document.getElementById('mpn').textContent=name;
   document.getElementById('mpm').textContent=meta;
@@ -2199,7 +2242,7 @@ function setDesafioFilter(btn,tipo){
 }
 
 // ── Open/close cadastrar vaga ──
-function openCadVaga(){closeSh();document.getElementById('cadvaga-ov').classList.add('op');}
+function openCadVaga(){closeSh();document.getElementById('cadvaga-ov').classList.add('op');openDialog('cadvaga-ov');}
 function setVagaTipo(t){
   const vb=document.getElementById('vaga-tipo-vol'),rb=document.getElementById('vaga-tipo-rem');
   const rf=document.getElementById('remuneracao-field');
@@ -2214,14 +2257,16 @@ function setVagaTipo(t){
   }
 }
 function submitCadVaga(){
+  closeDialog('cadvaga-ov');
   document.getElementById('cadvaga-ov').classList.remove('op');
   seedCount+=5;upSd();
   showBadge('Vaga publicada!','Sua vaga aparece na seção Vagas da Vila Viva. Obrigada pela contribuição!','💼');
 }
 
 // ── Open/close cadastrar projeto no perfil ──
-function openCadProjeto(){document.getElementById('cadprojeto-ov').classList.add('op');}
+function openCadProjeto(){document.getElementById('cadprojeto-ov').classList.add('op');openDialog('cadprojeto-ov');}
 function submitCadProjeto(){
+  closeDialog('cadprojeto-ov');
   document.getElementById('cadprojeto-ov').classList.remove('op');
   seedCount+=10;upSd();
   // Inject a new project card into the profile list
@@ -2246,14 +2291,16 @@ function openEditSection(sec){
   document.getElementById('editsec-title').textContent=c.title;
   document.getElementById('editsec-body').innerHTML=c.body;
   document.getElementById('editsec-ov').classList.add('op');
+  openDialog('editsec-ov');
 }
 function saveEditSection(){
+  closeDialog('editsec-ov');
   document.getElementById('editsec-ov').classList.remove('op');
   showBadge('Perfil atualizado!','Seu perfil fica mais rico a cada informação. Outros moradores te conhecem melhor.','✏️');
 }
 
 // ── Badge overlay click-outside close ──
-function closeBadgeOverlay(e){if(e.target===document.getElementById('bdov'))document.getElementById('bdov').classList.remove('sh');}
+function closeBadgeOverlay(e){if(e&&e.target.id!=='bdov')return;closeDialog('bdov');document.getElementById('bdov').classList.remove('sh');}
 
 // ── Toggle PARTICIPAR with undo ──
 function toggleParticipate(btn){
