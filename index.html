@@ -145,7 +145,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 /* STORIES */
 .strw{padding:16px 0 4px}
 .strt{padding:0 16px 10px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--ci)}
-.strsc{display:flex;gap:12px;padding:0 16px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)}
+.strsc{display:flex;gap:12px;padding:0 16px;overflow-x:auto;scrollbar-width:none}
 .strsc::-webkit-scrollbar{display:none}
 .sri{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
 .srr{width:58px;height:58px;border-radius:50%;padding:2.5px}
@@ -155,7 +155,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
 .srn{font-size:11px;color:var(--ca2);max-width:60px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* FILTERS */
-.ffs{display:flex;gap:8px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(to right,#000 85%,transparent 100%);-webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%)}
+.ffs{display:flex;gap:8px;padding:8px 16px;overflow-x:auto;scrollbar-width:none}
 .ffs::-webkit-scrollbar{display:none}
 .fch{flex-shrink:0;padding:7px 14px;border-radius:var(--r3);font-size:13px;border:1.5px solid var(--bo);background:var(--br);color:var(--ca2);cursor:pointer;white-space:nowrap;transition:all .15s;position:relative}
 .fch.a{background:var(--vc);border-color:var(--v);color:var(--v);font-weight:500}
@@ -426,7 +426,7 @@ html,body{height:100dvh;overflow:hidden;font-family:var(--fb);background:var(--a
       <div class="lf"><label class="ll" for="login-email">Nome ou e-mail</label><input id="login-email" class="li" placeholder="monica@piracanga.org" type="text" autocomplete="username"></div>
       <div class="lf"><label class="ll" for="login-pwd">Senha</label><input id="login-pwd" class="li" placeholder="••••••••" type="password" autocomplete="current-password"></div>
       <button class="lbtn" onclick="goTo('feed')">Entrar na Vila →</button>
-      <div style="text-align:center;margin-top:10px"><button type="button" onclick="alert('Recuperação de senha em breve — use suas credenciais atuais.')" style="font-size:13px;color:var(--ci);background:none;border:none;text-decoration:underline;cursor:pointer;font:inherit;padding:0">Esqueci minha senha</button></div>
+      <div style="text-align:center;margin-top:10px"><button type="button" onclick="alert('Recuperação de senha em breve — use suas credenciais atuais.')" style="font-size:13px;color:var(--ci);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:inherit;padding:0">Esqueci minha senha</button></div>
     </div>
     <div id="fc" style="display:none">
       <div class="lf"><label class="ll" for="reg-nome">Nome completo</label><input id="reg-nome" class="li" placeholder="Seu nome na vila" autocomplete="name"></div>
