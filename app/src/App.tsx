@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import Login from '@/routes/Login';
 import Onboarding from '@/routes/Onboarding';
 import AdminFlags from '@/routes/AdminFlags';
+import Feed from '@/routes/Feed';
 
 export default function App() {
   const { session, loading } = useAuth();
@@ -24,7 +25,7 @@ export default function App() {
 }
 
 function Home() {
-  const { session, signOut } = useAuth();
+  const { session } = useAuth();
   const { data: profile, isLoading } = useQuery({
     queryKey: ['profile', session?.user.id],
     queryFn: async () => {
@@ -43,13 +44,7 @@ function Home() {
 
   if (!profile?.onboarding_completed_at) return <Onboarding />;
 
-  return (
-    <main className="p-6">
-      <h1 className="font-display text-3xl text-terra">Olá, {profile.nome}</h1>
-      <p className="mt-2">Feed virá na Task 12.</p>
-      <button onClick={signOut} className="mt-4 text-sm underline">Sair</button>
-    </main>
-  );
+  return <Feed />;
 }
 
 function Privacidade() {
