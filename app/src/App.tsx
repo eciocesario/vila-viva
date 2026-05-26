@@ -6,6 +6,7 @@ import Login from '@/routes/Login';
 import Onboarding from '@/routes/Onboarding';
 import AdminFlags from '@/routes/AdminFlags';
 import Feed from '@/routes/Feed';
+import Profile from '@/routes/Profile';
 
 export default function App() {
   const { session, loading } = useAuth();
@@ -20,6 +21,7 @@ export default function App() {
       <Route path="/" element={session ? <Home /> : <Navigate to="/login" replace />} />
       <Route path="/privacidade" element={<Privacidade />} />
       <Route path="/_/flags" element={<AdminFlags />} />
+      <Route path="/profile/:id" element={session ? <Profile /> : <Navigate to="/login" replace />} />
     </Routes>
   );
 }
