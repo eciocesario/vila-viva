@@ -4,6 +4,7 @@ import { useAuth } from '@/lib/useAuth';
 import { supabase } from '@/lib/supabase';
 import Login from '@/routes/Login';
 import Onboarding from '@/routes/Onboarding';
+import AdminFlags from '@/routes/AdminFlags';
 
 export default function App() {
   const { session, loading } = useAuth();
@@ -17,6 +18,7 @@ export default function App() {
       <Route path="/login" element={session ? <Navigate to="/" replace /> : <Login />} />
       <Route path="/" element={session ? <Home /> : <Navigate to="/login" replace />} />
       <Route path="/privacidade" element={<Privacidade />} />
+      <Route path="/_/flags" element={<AdminFlags />} />
     </Routes>
   );
 }
