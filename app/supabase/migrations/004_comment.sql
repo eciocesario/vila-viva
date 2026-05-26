@@ -23,6 +23,7 @@ CREATE POLICY "comment_update_own" ON public.comment
 CREATE POLICY "comment_delete_own" ON public.comment
   FOR DELETE TO authenticated USING (autor_id = auth.uid());
 
+DROP TRIGGER IF EXISTS comment_updated_at ON public.comment;
 CREATE TRIGGER comment_updated_at
   BEFORE UPDATE ON public.comment
   FOR EACH ROW EXECUTE FUNCTION public.tg_set_updated_at();

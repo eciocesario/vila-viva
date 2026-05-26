@@ -30,6 +30,7 @@ CREATE POLICY "post_update_own" ON public.post
 CREATE POLICY "post_delete_own" ON public.post
   FOR DELETE TO authenticated USING (autor_id = auth.uid());
 
+DROP TRIGGER IF EXISTS post_updated_at ON public.post;
 CREATE TRIGGER post_updated_at
   BEFORE UPDATE ON public.post
   FOR EACH ROW EXECUTE FUNCTION public.tg_set_updated_at();

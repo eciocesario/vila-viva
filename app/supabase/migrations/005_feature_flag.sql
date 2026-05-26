@@ -12,6 +12,7 @@ CREATE POLICY "feature_flag_select_authenticated" ON public.feature_flag
 
 -- INSERT/UPDATE/DELETE only via service_role (Supabase Studio)
 
+DROP TRIGGER IF EXISTS feature_flag_updated_at ON public.feature_flag;
 CREATE TRIGGER feature_flag_updated_at
   BEFORE UPDATE ON public.feature_flag
   FOR EACH ROW EXECUTE FUNCTION public.tg_set_updated_at();

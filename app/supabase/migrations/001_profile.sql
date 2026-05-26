@@ -50,6 +50,7 @@ RETURNS TRIGGER LANGUAGE plpgsql AS $$
 BEGIN NEW.updated_at = NOW(); RETURN NEW; END;
 $$;
 
+DROP TRIGGER IF EXISTS profile_updated_at ON public.profile;
 CREATE TRIGGER profile_updated_at
   BEFORE UPDATE ON public.profile
   FOR EACH ROW EXECUTE FUNCTION public.tg_set_updated_at();
