@@ -9,7 +9,7 @@
 
 ## 1. Posicionamento
 
-A Vila Viva Light é a execução antecipada da **F2a · MVP-Lite** do plano técnico v1.2, exposta em URL privada de staging para stakeholders da Ecovila Piracanga testarem do iPhone deles, antes da janela formal do piloto.
+A Vila Viva Light é a execução antecipada da **F2a · MVP-Lite** do plano técnico v1.2, exposta em URL privada de staging para stakeholders da Ecovila Piracanga testarem do iPhone deles, antes da janela formal do piloto. **Pace adotado:** 2 semanas corridas (compressão do S1–S4 original do plano v1.2 em duas entregas semanais), com convite a stakeholders ao fim da Semana 1.
 
 **O que é:**
 - Implementação real, em código, das features do F2a (Onboarding, Feed, Reactions, Comments, Match Pessoas, Profile, Notificações in-app, Edge Function `match-engine`, 1 Desafio piloto).
@@ -166,22 +166,22 @@ Decisão herdada da review de engenharia 2026-05-18: nunca usar `service_role` c
 
 ### 3.3 Feature flags — o núcleo da Abordagem A
 
-Estado inicial das flags no walking skeleton (S1):
+Estado inicial das flags ao fim da Semana 1 (antes dos convites):
 
 ```sql
 INSERT INTO feature_flag (key, enabled) VALUES
-  ('auth_signup',          true),   -- S1
-  ('onboarding',           true),   -- S1
-  ('feed_read',            true),   -- S1
-  ('feed_create_historia', true),   -- S1
-  ('feed_create_outros',   false),  -- S2 destrava
-  ('reactions',            false),  -- S2
-  ('comments',             false),  -- S2
-  ('share_wa',             false),  -- S2
-  ('match_pessoas',        false),  -- S3
-  ('profile_edit',         false),  -- S3
-  ('notifications',        false),  -- S3
-  ('challenge_piloto',     false);  -- S4
+  ('auth_signup',          true),   -- Sem 1
+  ('onboarding',           true),   -- Sem 1
+  ('feed_read',            true),   -- Sem 1
+  ('feed_create_historia', true),   -- Sem 1
+  ('feed_create_outros',   false),  -- Sem 1, destrava por convite
+  ('reactions',            false),  -- Sem 1, destrava por convite
+  ('comments',             false),  -- Sem 1, destrava por convite
+  ('share_wa',             false),  -- Sem 1, destrava por convite
+  ('match_pessoas',        false),  -- Sem 2
+  ('profile_edit',         false),  -- Sem 2
+  ('notifications',        false),  -- Sem 2
+  ('challenge_piloto',     false);  -- Sem 2
 ```
 
 **Como o frontend lê:** hook `useFlag('key')` que faz 1 query no boot, cached pelo TanStack Query por 60s. Componentes invisíveis quando flag off.
@@ -196,76 +196,61 @@ INSERT INTO feature_flag (key, enabled) VALUES
 
 ---
 
-## 4. Sequência de entrega (S1 → S4)
+## 4. Sequência de entrega (compactada em 2 semanas)
 
-Cada Sprint dura ~1 semana corrida. Saída de cada sprint é um deploy no staging com features novas atrás de flag. Stakeholders podem ser convidados a partir de qualquer S — você destrava flags conforme decide mostrar.
+**Decisão de pace:** o spin-off é executado em ~2 semanas corridas, ao invés dos 4 sprints originais do plano v1.2. Os marcos S1–S4 do plano são preservados conceitualmente mas fundidos em 2 entregas semanais. Stakeholders são convidados ao fim da Semana 1 e veem novas features destravadas por flag durante a Semana 2 — mesma URL, sem reconvite.
 
-### S1 · Fundação · ~7 dias
+### Semana 1 · Walking Skeleton + Conteúdo · 7 dias
 
-**Saída:** stakeholders logam via magic link, fazem onboarding em 4 steps, e leem o Feed com posts-seed do tipo "história".
+**Saída:** stakeholders logam, fazem onboarding em 4 steps, navegam o feed, **criam posts dos 5 tipos, reagem, comentam, compartilham no WhatsApp** e visualizam perfis dos seeds. Pace de S1+S2 do plano original, fundidos.
 
 **Entregas:**
 - Scaffold `app/`: Vite + TS strict + Tailwind + Workbox + ESLint + Prettier
 - Tokens do protótipo extraídos para `tailwind.config.ts` (cores, tipografia, raios)
-- Migrations `001_profile.sql`, `002_post.sql`, `003_feature_flag.sql`, `004_allowed_email.sql`
-- `seed.sql` com 20 perfis fictícios + ~30 posts tipo `historia`
-- Auth real Supabase magic link + página `/login`
+- Migrations `001_profile.sql`, `002_post.sql`, `003_reaction.sql`, `004_comment.sql`, `005_feature_flag.sql`, `006_allowed_email.sql`
+- `seed.sql` com ~15 perfis fictícios + ~25 posts distribuídos entre os 5 tipos
+- Auth real Supabase magic link + página `/login` + allowlist
 - Onboarding 4 steps persistindo em `profile` (nome, agente/arquétipo, casa, intenção)
-- Rota `/` (Feed) lendo da tabela `post` filtrada por `tipo='historia'`
-- Hook `useFlag()` + página admin `/_/flags` (acessível só pelo seu `auth.uid()`)
-- Deploy Vercel + Supabase linked + GitHub Actions configurado
-- Sentry + PostHog inicializados (eventos: `auth_signup_completed`, `onboarding_completed`, `feed_viewed`)
-- Política de privacidade v1 publicada em `/privacidade` (texto curto em §5.1)
-
-**Critério de saída:** você acessa a URL Vercel do iPhone, recebe magic link no e-mail, completa onboarding, vê o feed populado. Sentry sem erros não-tratados em 1 percorrida completa.
-
-### S2 · Conteúdo vivo · ~7 dias
-
-**Saída:** stakeholders criam posts dos 5 tipos, reagem, comentam, compartilham no WhatsApp.
-
-**Entregas:**
-- Migrations `005_reaction.sql`, `006_comment.sql`
+- Rota `/` (Feed) lendo da tabela `post` (5 tipos renderizados com layout específico, reaproveitando CSS do protótipo)
 - FAB de criar post + bottom-sheet com seletor de tipo (5 opções)
-- Renderização específica por tipo no `FeedCard` (cada tipo tem layout próprio — reaproveitar 100% do CSS do protótipo)
 - Reactions (4 tipos: coração, mão, semente, fogo) com optimistic UI
 - Comments (thread plana) com input no rodapé do card expandido
-- Botão "Compartilhar no WhatsApp" gera link `wa.me/?text=...` com URL do post
-- PostHog: `post_created`, `reaction_added`, `comment_posted`, `share_wa_clicked`
-- Flags `feed_create_outros`, `reactions`, `comments`, `share_wa` permanecem `false` até você destravar
+- Botão "Compartilhar no WhatsApp" gera link `wa.me/?text=...`
+- Tela `/profile/:id` (read-only nesta semana — edit fica para Semana 2)
+- Hook `useFlag()` + página admin `/_/flags` (oculta, só pelo seu `auth.uid()`)
+- Deploy Vercel + Supabase linked + GitHub Actions configurado
+- Sentry inicializado (PostHog completo só na Semana 2)
+- Política de privacidade v1 publicada em `/privacidade` (texto curto em §5.1)
+- Flags `feed_create_outros`, `reactions`, `comments`, `share_wa` podem ficar `false` até o convite real
 
-**Critério de saída:** do iPhone, você cria 1 post de cada tipo, reage e comenta em pelo menos 2, compartilha 1 no WhatsApp e o link abre o WhatsApp corretamente.
+**Critério de saída:** do iPhone, você completa o fluxo: magic link → onboarding → cria 1 post de cada tipo → reage e comenta em pelo menos 2 → compartilha 1 no WhatsApp e o link abre o WA. Sentry sem erros não-tratados na percorrida.
 
-### S3 · Conexão · ~7 dias
+**Convites enviados ao fim da Semana 1.**
 
-**Saída:** Match Pessoas com busca incremental e filtro por arquétipo, Profile editável, notificações in-app realtime.
+### Semana 2 · Conexão + Desafio + Polish · 7 dias
+
+**Saída:** Match Pessoas com busca incremental e filtro por arquétipo, Profile editável, notificações in-app realtime, 1 Desafio piloto end-to-end. Pace de S3+S4 do plano original, fundidos.
 
 **Entregas:**
-- Migrations `007_skill.sql`, `008_profile_skill.sql`, `009_notification.sql`, `010_connection_seen.sql`
+- Migrations `007_skill.sql`, `008_profile_skill.sql`, `009_notification.sql`, `010_connection_seen.sql`, `011_challenge.sql`, `012_challenge_progress.sql`
 - Catálogo `skill` populado via seed (~80 entradas extraídas do protótipo)
 - Tela `/match` com search-as-you-type (debounce 250ms) + chips de filtro por arquétipo
 - Edge Function `match-engine` — recebe JWT do usuário, devolve top-N profiles com score = interseção de skills + arquétipo compatível
-- Tela `/profile/:id` (read) + `/profile/me/edit` (bio, skills, foto)
+- Tela `/profile/me/edit` (bio, skills, foto via Boring Avatars)
 - Trigger Postgres: quando match relevante é gerado, `INSERT INTO notification`
 - Frontend faz Realtime subscribe no `notification` do usuário logado → badge no nav + toast
-- PostHog: `match_viewed`, `match_clicked`, `profile_edited`, `notification_received`
-
-**Critério de saída:** com 2 contas logadas em devices diferentes criando matches mútuos, a notificação aparece em tempo real (< 2s) na outra ponta.
-
-### S4 · Polimento + Desafio piloto · ~7 dias
-
-**Saída:** 1 Desafio piloto end-to-end ("Conectar Aliados Distantes") + hardening leve para a janela de testes.
-
-**Entregas:**
-- Migrations `011_challenge.sql`, `012_challenge_progress.sql`
-- Seed do desafio piloto: "Conectar Aliados Distantes", critério = enviar 3 mensagens iniciais para perfis de arquétipos diferentes do seu
+- Seed do desafio piloto: "Conectar Aliados Distantes", critério = enviar 3 mensagens iniciais para perfis de arquétipos diferentes
 - Tela `/desafios` listando challenges + card de progresso
 - Postgres function `recompute_challenge_progress(user_id, challenge_slug)` chamada por trigger no evento relevante
-- Bug-pass leve: você roda os 4 fluxos principais (onboarding, post, match, desafio) do iPhone e de 1 device desktop, anota o que travar
+- PostHog completo + funnel `signup → onboarding → primeiro_post → primeiro_match`
+- Bug-pass leve: você roda os 4 fluxos principais do iPhone e de 1 device desktop, anota o que travar
 - Lighthouse mobile alvo informal ≥ 80 (não bloqueante)
 
-**Critério de saída:** o Desafio piloto pode ser completado end-to-end por um stakeholder do iPhone, e a tela de progresso atualiza corretamente.
+**Critério de saída:** com 2 contas logadas em devices diferentes criando matches mútuos, notificação aparece em tempo real (< 2s) na outra ponta; Desafio piloto pode ser completado end-to-end por um stakeholder do iPhone.
 
-**Timeline total esperada:** ~4 semanas corridas (S1: dias 1-7, S2: 8-14, S3: 15-21, S4: 22-28). Como o rollout é por flag, stakeholders podem ser convidados a partir do S1 sem precisar esperar S4.
+### Pace, riscos e ponto de re-baseline
+
+Este pace de 2 semanas é **apertado mas viável** porque (a) o design system está 100% pronto no protótipo HTML e Tailwind apenas reembrulha tokens existentes, (b) Supabase elimina ~3 semanas de backend custom que existiam no plano v1.0, (c) Claude (Opus 4.7) atua como pair full-time. **Ponto de re-baseline:** ao fim do dia 5 da Semana 1, se algum bloco da Semana 1 estiver visivelmente atrasado, re-prioriza-se: Match (S2) tem precedência sobre Desafio (Semana 2 fim) — Desafio pode ser entregue depois do convite inicial, atrás de flag, sem reconvite.
 
 ---
 
@@ -273,7 +258,7 @@ Cada Sprint dura ~1 semana corrida. Saída de cada sprint é um deploy no stagin
 
 ### 5.1 Acesso dos stakeholders — allowlist on por default
 
-Magic link Supabase, com **allowlist habilitada** desde S1:
+Magic link Supabase, com **allowlist habilitada** desde a Semana 1:
 
 - Tabela `allowed_email` curada por você no Supabase Studio
 - Trigger `on_auth_user_created` bloqueia signup de e-mail fora da lista (raise exception → o Auth devolve erro amigável)
@@ -281,7 +266,7 @@ Magic link Supabase, com **allowlist habilitada** desde S1:
 
 Allowlist é justificada por dois motivos: (1) URL "privada" no Vercel não é segredo criptográfico — bots descobrem em horas; (2) free tier do Supabase tem limite de 4 e-mails/hora, então signup massivo quebraria o convite legítimo.
 
-**Política de privacidade v1**, publicada em `/privacidade` desde S1:
+**Política de privacidade v1**, publicada em `/privacidade` desde a Semana 1:
 > "Este é um ambiente de testes restrito a stakeholders convidados pela Ecovila Piracanga. Os dados visíveis (perfis, posts, conexões) são em sua maioria fictícios. Seu e-mail é usado apenas para autenticação via magic link, não é compartilhado, não é usado para marketing. Você pode pedir exclusão a qualquer momento por e-mail a eciocesario@gmail.com."
 
 ### 5.2 Seeds — os ~20 perfis fictícios
@@ -304,8 +289,8 @@ Quando um stakeholder real fizer signup, vira o 21º perfil, lado a lado com os 
 
 ### 5.4 Testes — pragmáticos
 
-- **Vitest** rodando em CI (GitHub Actions): cobre 70% de `app/src/domain/` (lógica pura — score de match, validação de onboarding, parse de tipos de post). Sem teste de componente React nesta janela.
-- **Playwright** com 1 smoke test do fluxo crítico: login magic-link mock → onboarding → criar post → ver no feed. Roda em CI a cada PR contra preview Vercel.
+- **Vitest** configurado na Semana 1, cobertura crescendo ao longo das 2 semanas: alvo de 70% em `app/src/domain/` ao fim da Semana 2 (lógica pura — score de match, validação de onboarding, parse de tipos de post). Sem teste de componente React no spin-off.
+- **Playwright** com 1 smoke test do fluxo crítico (login magic-link mock → onboarding → criar post → ver no feed), entregue na Semana 2. Roda em CI a cada PR contra preview Vercel.
 - **Sem QA em 5 dispositivos.** Isso é gate do piloto formal (plano v1.2 §6.F2a S4), não desta spin-off.
 
 ---
@@ -362,6 +347,8 @@ Quando um stakeholder real fizer signup, vira o 21º perfil, lado a lado com os 
 | 8 | E-mail provider: Supabase Auth default (4/hora) | Decidido (sem Resend nesta janela) |
 | 9 | Cortes vs. F2a oficial: apenas Painel SSO leve | Decidido |
 | 10 | Web app puro: zero submissão a App Store ou Play Store | Decidido |
+| 11 | Timeline: 2 semanas corridas (Sem 1 fundação+conteúdo, Sem 2 conexão+desafio) | Decidido |
+| 12 | Convite a stakeholders ao fim da Semana 1, com Sem 2 destravando features por flag sem reconvite | Decidido |
 
 ---
 
