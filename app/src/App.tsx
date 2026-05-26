@@ -1,6 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/lib/useAuth';
+import { supabase } from '@/lib/supabase';
 import Login from '@/routes/Login';
+import Onboarding from '@/routes/Onboarding';
 
 export default function App() {
   const { session, loading } = useAuth();
@@ -19,11 +22,29 @@ export default function App() {
 }
 
 function Home() {
-  const { signOut } = useAuth();
+  const { session, signOut } = useAuth();
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ['profile', session?.user.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profile')
+        .select('onboarding_completed_at, nome, agente')
+        .eq('id', session!.user.id)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!session,
+  });
+
+  if (isLoading) return <main className="p-6">Carregando…</main>;
+
+  if (!profile?.onboarding_completed_at) return <Onboarding />;
+
   return (
     <main className="p-6">
-      <h1 className="font-display text-3xl text-terra">Vila Viva Light</h1>
-      <p className="mt-2">Você está dentro. (Feed virá na Task 12.)</p>
+      <h1 className="font-display text-3xl text-terra">Olá, {profile.nome}</h1>
+      <p className="mt-2">Feed virá na Task 12.</p>
       <button onClick={signOut} className="mt-4 text-sm underline">Sair</button>
     </main>
   );
