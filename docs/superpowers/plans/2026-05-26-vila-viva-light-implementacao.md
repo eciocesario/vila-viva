@@ -20,7 +20,7 @@
 - [ ] npm ≥ 10 disponível (`npm -v`)
 - [ ] Supabase CLI instalada (`supabase --version`); se não, `scoop install supabase` ou `npm install -g supabase`
 - [ ] Conta Supabase logada na CLI (`supabase login`)
-- [ ] Projeto Supabase `qpfkppkizdexdbwxxacw` acessível (anon key + service role key em mãos)
+- [ ] Projeto Supabase `agzldrdonirirftgvdfl` acessível (anon key + service role key em mãos)
 - [ ] Conta Vercel criada e `vercel` CLI instalada (`npm i -g vercel`)
 - [ ] Conta Sentry com projeto `vila-viva-light` criado, DSN em mãos
 - [ ] Conta PostHog com projeto criado, key em mãos
@@ -201,7 +201,7 @@ export default function App() {
 - [ ] **Step 8: `.env.example` documentando variáveis**
 
 ```
-VITE_SUPABASE_URL=https://qpfkppkizdexdbwxxacw.supabase.co
+VITE_SUPABASE_URL=https://agzldrdonirirftgvdfl.supabase.co
 VITE_SUPABASE_ANON_KEY=
 VITE_SENTRY_DSN=
 VITE_POSTHOG_KEY=
@@ -256,7 +256,7 @@ supabase init
 - [ ] **Step 2: Linkar ao projeto remoto**
 
 ```bash
-supabase link --project-ref qpfkppkizdexdbwxxacw
+supabase link --project-ref agzldrdonirirftgvdfl
 ```
 
 Quando perguntar database password, informar a senha do projeto (do painel Supabase).
@@ -272,7 +272,7 @@ Expected: lista de migrations remotas (provavelmente vazia se o projeto está fr
 - [ ] **Step 4: Criar `.env.local` em `app/` (NÃO COMMITAR)**
 
 ```
-VITE_SUPABASE_URL=https://qpfkppkizdexdbwxxacw.supabase.co
+VITE_SUPABASE_URL=https://agzldrdonirirftgvdfl.supabase.co
 VITE_SUPABASE_ANON_KEY=<copiar do painel Supabase > API Settings>
 VITE_SENTRY_DSN=<DSN do Sentry>
 VITE_POSTHOG_KEY=<key do PostHog>
@@ -284,7 +284,7 @@ VITE_POSTHOG_HOST=https://us.i.posthog.com
 ```bash
 cd C:\Users\Samsung\projetos\vila-viva
 git add app/supabase/config.toml app/supabase/.gitignore
-git commit -m "chore(supabase): inicializar CLI e linkar projeto qpfkppkizdexdbwxxacw"
+git commit -m "chore(supabase): inicializar CLI e linkar projeto agzldrdonirirftgvdfl"
 ```
 
 ---
@@ -365,7 +365,7 @@ Expected: `Applied migration 001_profile.sql`
 
 - [ ] **Step 3: Verificar no Supabase Studio**
 
-Abrir https://supabase.com/dashboard/project/qpfkppkizdexdbwxxacw/database/tables, conferir que `profile` existe com as colunas e RLS habilitada.
+Abrir https://supabase.com/dashboard/project/agzldrdonirirftgvdfl/database/tables, conferir que `profile` existe com as colunas e RLS habilitada.
 
 - [ ] **Step 4: Commit**
 
@@ -681,7 +681,7 @@ supabase db push
 
 - [ ] **Step 3: Verificar no Studio**
 
-Em https://supabase.com/dashboard/project/qpfkppkizdexdbwxxacw — `profile` deve ter 15 linhas, `post` 25 linhas.
+Em https://supabase.com/dashboard/project/agzldrdonirirftgvdfl — `profile` deve ter 15 linhas, `post` 25 linhas.
 
 - [ ] **Step 4: Commit**
 
@@ -2492,7 +2492,7 @@ cd C:\Users\Samsung\projetos\vila-viva\app
 supabase functions deploy match-engine
 ```
 
-Expected: `Deployed Function match-engine to https://qpfkppkizdexdbwxxacw.supabase.co/functions/v1/match-engine`
+Expected: `Deployed Function match-engine to https://agzldrdonirirftgvdfl.supabase.co/functions/v1/match-engine`
 
 - [ ] **Step 4: Smoke test via curl**
 
@@ -2501,7 +2501,7 @@ curl -X POST \
   -H "Authorization: Bearer <ANON_KEY>" \
   -H "Content-Type: application/json" \
   -d '{"limit": 5}' \
-  https://qpfkppkizdexdbwxxacw.supabase.co/functions/v1/match-engine
+  https://agzldrdonirirftgvdfl.supabase.co/functions/v1/match-engine
 ```
 
 Expected: 401 (anon não é user); ao testar do app autenticado vai retornar array.

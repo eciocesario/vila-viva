@@ -39,7 +39,7 @@ A Vila Viva Light é a execução antecipada da **F2a · MVP-Lite** do plano té
 - Workbox para PWA (cache de assets; cache de dados fica para F2b)
 
 **Backend gerenciado (Supabase hosted, free tier, sa-east-1)**
-- Projeto Supabase já provisionado: `qpfkppkizdexdbwxxacw`
+- Projeto Supabase provisionado para o Light: `agzldrdonirirftgvdfl` (separado do projeto original `qpfkppkizdexdbwxxacw` do plano v1.2 — este Light tem o seu próprio projeto dedicado)
 - Postgres 15 + RLS como defesa primária de autorização
 - Supabase Auth (magic link via SMTP padrão Supabase, limite ~4 e-mails/hora no free tier)
 - Supabase Realtime para subscription na tabela `notification`
@@ -107,7 +107,7 @@ Nenhum servidor Node custom. Toda lógica que não cabe em RLS + Postgres functi
 
 Arquivo `.env.local` em `app/`, **nunca commitado**:
 
-- `VITE_SUPABASE_URL` — URL pública do projeto Supabase
+- `VITE_SUPABASE_URL` — URL pública do projeto Supabase (`https://agzldrdonirirftgvdfl.supabase.co`)
 - `VITE_SUPABASE_ANON_KEY` — anon key (público por design)
 - `VITE_SENTRY_DSN` — DSN do projeto Sentry
 - `VITE_POSTHOG_KEY` — projeto key do PostHog
