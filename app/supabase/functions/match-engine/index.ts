@@ -6,6 +6,12 @@ const COMPLEMENTARES: readonly [string, string][] = [
   ['artesao', 'visionario'],
 ];
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+};
+
 function score(eu: { agente: string; oferece: Set<string>; busca: Set<string> },
                o:  { agente: string; oferece: Set<string>; busca: Set<string> }): number {
   let s = 0;
@@ -17,8 +23,18 @@ function score(eu: { agente: string; oferece: Set<string>; busca: Set<string> },
 }
 
 Deno.serve(async (req) => {
+  // CORS preflight
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   const authHeader = req.headers.get('Authorization');
-  if (!authHeader) return new Response('Missing auth', { status: 401 });
+  if (!authHeader) {
+    return new Response(JSON.stringify({ error: 'Missing auth' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 
   const supabase = createClient(
     Deno.env.get('SUPABASE_URL')!,
@@ -27,7 +43,12 @@ Deno.serve(async (req) => {
   );
 
   const { data: { user }, error: authErr } = await supabase.auth.getUser();
-  if (authErr || !user) return new Response('Unauthorized', { status: 401 });
+  if (authErr || !user) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 
   // Body opcional: { agenteFilter?: string, limit?: number, search?: string }
   const body = req.method === 'POST' ? await req.json() : {};
@@ -38,7 +59,12 @@ Deno.serve(async (req) => {
     .select('id, agente')
     .eq('id', user.id)
     .single();
-  if (!meRow) return new Response('Profile not found', { status: 404 });
+  if (!meRow) {
+    return new Response(JSON.stringify({ error: 'Profile not found' }), {
+      status: 404,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 
   const { data: meSkills } = await supabase
     .from('profile_skill')
@@ -58,7 +84,12 @@ Deno.serve(async (req) => {
   if (body.search) query = query.ilike('nome', `%${body.search}%`);
 
   const { data: outros, error } = await query.limit(100);
-  if (error) return new Response(error.message, { status: 500 });
+  if (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
 
   const otherIds = (outros ?? []).map(o => o.id);
   const { data: otherSkillsRows } = await supabase
@@ -83,6 +114,6 @@ Deno.serve(async (req) => {
   }).sort((a, b) => b.score - a.score).slice(0, limit);
 
   return new Response(JSON.stringify(scored), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 });

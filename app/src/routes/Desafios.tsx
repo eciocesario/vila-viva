@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useFlag } from '@/lib/useFlag';
 import { useAuth } from '@/lib/useAuth';
@@ -81,6 +81,15 @@ export default function Desafios() {
               <p className="text-xs text-carvao/60">
                 {contador} / {meta} · {describeChallengeState(estado)}
               </p>
+            </div>
+
+            <div className="mt-3 pt-3 border-t border-carvao/10 text-xs opacity-70">
+              <p className="mb-2">
+                💡 Para avançar, comente em posts do Feed de pessoas com arquétipos diferentes do seu.
+              </p>
+              <Link to="/" className="inline-block text-terra hover:underline">
+                Ir para o Feed →
+              </Link>
             </div>
           </div>
         );
