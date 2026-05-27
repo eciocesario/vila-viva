@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { AGENTES, validateOnboarding, type OnboardingData } from '@/domain/onboardingValidation';
+import { track } from '@/lib/posthog';
 
 const STEPS = ['Nome', 'Agente', 'Casa', 'Intenção'] as const;
 
@@ -36,7 +37,10 @@ export default function Onboarding() {
         .eq('id', session!.user.id);
       if (error) throw error;
     },
-    onSuccess: () => nav('/'),
+    onSuccess: () => {
+      track('onboarding_completed');
+      nav('/');
+    },
     onError: (e) => setError(e instanceof Error ? e.message : 'Erro ao salvar'),
   });
 

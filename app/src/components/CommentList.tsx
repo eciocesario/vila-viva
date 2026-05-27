@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { useFlag } from '@/lib/useFlag';
+import { track } from '@/lib/posthog';
 
 export function CommentList({ postId }: { postId: string }) {
   const { session } = useAuth();
@@ -34,6 +35,7 @@ export function CommentList({ postId }: { postId: string }) {
       if (error) throw error;
     },
     onSuccess: () => {
+      track('comment_posted', { post_id: postId });
       setDraft('');
       qc.invalidateQueries({ queryKey: ['comments', postId] });
     },

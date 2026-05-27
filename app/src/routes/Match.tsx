@@ -1,10 +1,11 @@
-import { useState, useDeferredValue } from 'react';
+import { useState, useDeferredValue, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useFlag } from '@/lib/useFlag';
 import { AGENTES } from '@/domain/onboardingValidation';
 import { MatchCard, type MatchResult } from '@/components/MatchCard';
+import { track } from '@/lib/posthog';
 
 export default function Match() {
   const enabled = useFlag('match_pessoas');
@@ -28,6 +29,10 @@ export default function Match() {
     enabled,
     staleTime: 30_000,
   });
+
+  useEffect(() => {
+    if (data) track('match_viewed', { count: data.length });
+  }, [data]);
 
   if (!enabled) return <Navigate to="/" replace />;
 

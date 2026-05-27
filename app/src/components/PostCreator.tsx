@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { useFlag } from '@/lib/useFlag';
 import { POST_TIPOS, postTipoLabel, type PostTipo } from '@/domain/postTypes';
+import { track } from '@/lib/posthog';
 
 export function PostCreator() {
   const { session } = useAuth();
@@ -31,6 +32,7 @@ export function PostCreator() {
       if (error) throw error;
     },
     onSuccess: () => {
+      track('post_created', { tipo });
       void qc.invalidateQueries({ queryKey: ['feed'] });
       setOpen(false);
       setTitulo('');

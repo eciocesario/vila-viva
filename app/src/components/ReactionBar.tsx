@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { useFlag } from '@/lib/useFlag';
+import { track } from '@/lib/posthog';
 
 const REACOES = [
   { tipo: 'coracao', emoji: '🫶' },
@@ -52,6 +53,9 @@ export function ReactionBar({ postId }: { postId: string }) {
     },
     onError: (_e, _v, ctx) => {
       if (ctx?.prev) qc.setQueryData(['reactions', postId], ctx.prev);
+    },
+    onSuccess: (_data, tipo) => {
+      track('reaction_added', { tipo, post_id: postId });
     },
     onSettled: () => qc.invalidateQueries({ queryKey: ['reactions', postId] }),
   });

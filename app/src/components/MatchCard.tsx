@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { track } from '@/lib/posthog';
 
 export type MatchResult = {
   id: string;
@@ -13,6 +14,7 @@ export function MatchCard({ m }: { m: MatchResult }) {
   return (
     <Link
       to={`/profile/${m.id}`}
+      onClick={() => track('match_clicked', { profile_id: m.id })}
       className="block p-4 rounded-card bg-white border border-carvao/10 hover:border-mata"
     >
       <div className="flex items-baseline justify-between">
