@@ -300,7 +300,6 @@ export type Database = {
       }
       profile: {
         Row: {
-          agente: string
           bio: string | null
           casa: string | null
           created_at: string
@@ -309,10 +308,10 @@ export type Database = {
           intencao: string | null
           nome: string
           onboarding_completed_at: string | null
+          perfil_tipo: string
           updated_at: string
         }
         Insert: {
-          agente: string
           bio?: string | null
           casa?: string | null
           created_at?: string
@@ -321,10 +320,10 @@ export type Database = {
           intencao?: string | null
           nome: string
           onboarding_completed_at?: string | null
+          perfil_tipo: string
           updated_at?: string
         }
         Update: {
-          agente?: string
           bio?: string | null
           casa?: string | null
           created_at?: string
@@ -333,6 +332,7 @@ export type Database = {
           intencao?: string | null
           nome?: string
           onboarding_completed_at?: string | null
+          perfil_tipo?: string
           updated_at?: string
         }
         Relationships: []

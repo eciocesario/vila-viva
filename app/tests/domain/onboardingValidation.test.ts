@@ -4,7 +4,7 @@ import { validateOnboarding, type OnboardingData } from '@/domain/onboardingVali
 describe('validateOnboarding', () => {
   const valid: OnboardingData = {
     nome: 'Maria Silva',
-    agente: 'tecedor',
+    perfil_tipo: 'tecedor',
     casa: 'Casa do Vento',
     intencao: 'Tecer redes.',
   };
@@ -24,10 +24,10 @@ describe('validateOnboarding', () => {
     expect(r.ok).toBe(false);
   });
 
-  it('rejeita agente fora da lista de 14', () => {
-    const r = validateOnboarding({ ...valid, agente: 'inexistente' as never });
+  it('rejeita perfil_tipo fora da lista de 14', () => {
+    const r = validateOnboarding({ ...valid, perfil_tipo: 'inexistente' as never });
     expect(r.ok).toBe(false);
-    expect(r.ok === false && r.errors.agente).toBeDefined();
+    expect(r.ok === false && r.errors.perfil_tipo).toBeDefined();
   });
 
   it('aceita casa vazia (opcional)', () => {

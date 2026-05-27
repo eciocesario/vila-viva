@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { useFlag } from '@/lib/useFlag';
-import { AGENTES } from '@/domain/onboardingValidation';
+import { PERFIS } from '@/domain/onboardingValidation';
 
 export default function ProfileEdit() {
   const enabled = useFlag('profile_edit');
@@ -53,7 +53,7 @@ export default function ProfileEdit() {
   });
 
   const [nome, setNome] = useState('');
-  const [agente, setAgente] = useState('');
+  const [perfilTipo, setPerfilTipo] = useState('');
   const [casa, setCasa] = useState('');
   const [intencao, setIntencao] = useState('');
   const [bio, setBio] = useState('');
@@ -63,7 +63,7 @@ export default function ProfileEdit() {
   useEffect(() => {
     if (profile) {
       setNome(profile.nome ?? '');
-      setAgente(profile.agente ?? '');
+      setPerfilTipo(profile.perfil_tipo ?? '');
       setCasa(profile.casa ?? '');
       setIntencao(profile.intencao ?? '');
       setBio(profile.bio ?? '');
@@ -84,7 +84,7 @@ export default function ProfileEdit() {
         .from('profile')
         .update({
           nome,
-          agente,
+          perfil_tipo: perfilTipo,
           casa: casa || null,
           intencao: intencao || null,
           bio: bio || null,
@@ -149,13 +149,13 @@ export default function ProfileEdit() {
       </label>
 
       <label className="block">
-        <span className="text-xs opacity-70">Agente</span>
+        <span className="text-xs opacity-70">Perfil</span>
         <select
-          value={agente}
-          onChange={(e) => setAgente(e.target.value)}
+          value={perfilTipo}
+          onChange={(e) => setPerfilTipo(e.target.value)}
           className="w-full px-3 py-2 rounded-soft border border-carvao/20 bg-white"
         >
-          {AGENTES.map((a) => (
+          {PERFIS.map((a) => (
             <option key={a} value={a}>
               {a}
             </option>

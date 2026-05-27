@@ -10,7 +10,7 @@ export type FeedCardData = {
   titulo: string | null;
   corpo: string;
   created_at: string;
-  autor: { id: string; nome: string; agente: string };
+  autor: { id: string; nome: string; perfil_tipo: string };
 };
 
 const TIPO_COLOR: Record<PostTipo, string> = {
@@ -30,7 +30,7 @@ export function FeedCard({ post }: { post: FeedCardData }) {
             {post.autor.nome}
           </Link>
           <span className="mx-1">·</span>
-          <span>{post.autor.agente}</span>
+          <span>{post.autor.perfil_tipo}</span>
         </div>
         <span className="text-xs uppercase tracking-wider opacity-50">
           {postTipoLabel(post.tipo)}

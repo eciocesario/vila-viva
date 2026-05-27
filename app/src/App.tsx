@@ -42,7 +42,7 @@ function Home() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profile')
-        .select('onboarding_completed_at, nome, agente')
+        .select('onboarding_completed_at, nome, perfil_tipo')
         .eq('id', session!.user.id)
         .single();
       if (error) throw error;

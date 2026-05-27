@@ -9,7 +9,7 @@ export default function Feed() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('post')
-        .select('id, tipo, titulo, corpo, created_at, autor:profile!autor_id(id, nome, agente)')
+        .select('id, tipo, titulo, corpo, created_at, autor:profile!autor_id(id, nome, perfil_tipo)')
         .order('created_at', { ascending: false })
         .limit(50);
       if (error) throw error;

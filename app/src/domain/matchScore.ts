@@ -1,9 +1,9 @@
-import type { Agente } from './onboardingValidation';
+import type { Perfil } from './onboardingValidation';
 
-type Side = { agente: string; oferece: string[]; busca: string[] };
+type Side = { perfil_tipo: string; oferece: string[]; busca: string[] };
 
 // Pares complementares de arquétipos (bônus +1 cada par)
-const COMPLEMENTARES: ReadonlyArray<readonly [Agente, Agente]> = [
+const COMPLEMENTARES: ReadonlyArray<readonly [Perfil, Perfil]> = [
   ['tecedor', 'curador'],
   ['mediador', 'guardian'],
   ['sonhador', 'praticante'],
@@ -13,7 +13,7 @@ const COMPLEMENTARES: ReadonlyArray<readonly [Agente, Agente]> = [
   ['artesao', 'visionario'],
 ];
 
-function sameAgente(a: string, b: string): boolean {
+function samePerfil(a: string, b: string): boolean {
   return a === b;
 }
 
@@ -26,9 +26,9 @@ function complementar(a: string, b: string): boolean {
 export function computeMatchScore({ eu, outro }: { eu: Side; outro: Side }): number {
   let score = 0;
 
-  // Arquétipo: +1 mesmo, +1 complementar
-  if (sameAgente(eu.agente, outro.agente)) score += 1;
-  if (complementar(eu.agente, outro.agente)) score += 1;
+  // Perfil: +1 mesmo, +1 complementar
+  if (samePerfil(eu.perfil_tipo, outro.perfil_tipo)) score += 1;
+  if (complementar(eu.perfil_tipo, outro.perfil_tipo)) score += 1;
 
   // Skills cruzadas (eu busco × outro oferece)
   const setOferece = new Set(outro.oferece);

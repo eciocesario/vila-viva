@@ -1,20 +1,20 @@
-export const AGENTES = [
+export const PERFIS = [
   'tecedor', 'curador', 'mediador', 'guardian', 'sonhador',
   'praticante', 'aprendiz', 'guia', 'tradutor', 'semeador',
   'pesquisador', 'comunicador', 'artesao', 'visionario',
 ] as const;
 
-export type Agente = typeof AGENTES[number];
+export type Perfil = typeof PERFIS[number];
 
 export type OnboardingData = {
   nome: string;
-  agente: string;
+  perfil_tipo: string;
   casa: string;
   intencao: string;
 };
 
 export type ValidationResult =
-  | { ok: true; data: OnboardingData & { agente: Agente } }
+  | { ok: true; data: OnboardingData & { perfil_tipo: Perfil } }
   | { ok: false; errors: Partial<Record<keyof OnboardingData, string>> };
 
 export function validateOnboarding(d: OnboardingData): ValidationResult {
@@ -23,13 +23,13 @@ export function validateOnboarding(d: OnboardingData): ValidationResult {
   if (!d.nome || d.nome.trim().length < 2) {
     errors.nome = 'Nome precisa ter pelo menos 2 caracteres.';
   }
-  if (!AGENTES.includes(d.agente as Agente)) {
-    errors.agente = 'Escolha um agente da lista.';
+  if (!PERFIS.includes(d.perfil_tipo as Perfil)) {
+    errors.perfil_tipo = 'Escolha um perfil da lista.';
   }
   if (d.intencao && d.intencao.length > 280) {
     errors.intencao = 'Intenção precisa caber em 280 caracteres.';
   }
 
   if (Object.keys(errors).length > 0) return { ok: false, errors };
-  return { ok: true, data: { ...d, agente: d.agente as Agente } };
+  return { ok: true, data: { ...d, perfil_tipo: d.perfil_tipo as Perfil } };
 }

@@ -11,7 +11,7 @@ export default function Profile() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profile')
-        .select('id, nome, agente, casa, intencao, bio, foto_url')
+        .select('id, nome, perfil_tipo, casa, intencao, bio, foto_url')
         .eq('id', id!)
         .single();
       if (error) throw error;
@@ -39,7 +39,7 @@ export default function Profile() {
         )}
       </div>
       <p className="text-sm opacity-70 mt-1">
-        {data.agente} {data.casa ? `· ${data.casa}` : ''}
+        {data.perfil_tipo} {data.casa ? `· ${data.casa}` : ''}
       </p>
       {data.intencao && (
         <blockquote className="mt-4 italic border-l-4 border-mata pl-3">

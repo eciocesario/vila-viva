@@ -3,23 +3,23 @@ import { useQuery } from '@tanstack/react-query';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useFlag } from '@/lib/useFlag';
-import { AGENTES } from '@/domain/onboardingValidation';
+import { PERFIS } from '@/domain/onboardingValidation';
 import { MatchCard, type MatchResult } from '@/components/MatchCard';
 import { track } from '@/lib/posthog';
 
 export default function Match() {
   const enabled = useFlag('match_pessoas');
   const [search, setSearch] = useState('');
-  const [agenteFilter, setAgenteFilter] = useState<string>('');
+  const [perfilFilter, setPerfilFilter] = useState<string>('');
   const deferredSearch = useDeferredValue(search);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['match', deferredSearch, agenteFilter],
+    queryKey: ['match', deferredSearch, perfilFilter],
     queryFn: async (): Promise<MatchResult[]> => {
       const { data, error } = await supabase.functions.invoke('match-engine', {
         body: {
           search: deferredSearch || undefined,
-          agenteFilter: agenteFilter || undefined,
+          perfilFilter: perfilFilter || undefined,
           limit: 20,
         },
       });
@@ -50,19 +50,19 @@ export default function Match() {
 
       <div className="flex gap-2 flex-wrap mb-4">
         <button
-          onClick={() => setAgenteFilter('')}
+          onClick={() => setPerfilFilter('')}
           className={`px-2.5 py-1 rounded-full text-xs ${
-            agenteFilter === '' ? 'bg-terra text-areia' : 'bg-white border border-carvao/20'
+            perfilFilter === '' ? 'bg-terra text-areia' : 'bg-white border border-carvao/20'
           }`}
         >
           Todos
         </button>
-        {AGENTES.map((a) => (
+        {PERFIS.map((a) => (
           <button
             key={a}
-            onClick={() => setAgenteFilter(a)}
+            onClick={() => setPerfilFilter(a)}
             className={`px-2.5 py-1 rounded-full text-xs ${
-              agenteFilter === a ? 'bg-terra text-areia' : 'bg-white border border-carvao/20'
+              perfilFilter === a ? 'bg-terra text-areia' : 'bg-white border border-carvao/20'
             }`}
           >
             {a}

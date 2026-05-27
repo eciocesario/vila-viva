@@ -55,20 +55,20 @@ BEGIN
       ('00000000-0000-0000-0000-00000000000D'::uuid, 'marina@seed.vilaviva.local',  'Marina Albuquerque','artesao',      'Casa do Vento',   'Fazer com as mãos, em barro e linho.'),
       ('00000000-0000-0000-0000-00000000000E'::uuid, 'nuno@seed.vilaviva.local',    'Nuno Cassiano',     'visionario',   'Casa do Sol',     'Enxergar o todo, propor o novo.'),
       ('00000000-0000-0000-0000-00000000000F'::uuid, 'olivia@seed.vilaviva.local',  'Olívia Quitéria',   'tecedor',      'Casa da Lua',     'Conectar visitantes ao território.')
-    ) AS u(id, email, nome, agente, casa, intencao)
+    ) AS u(id, email, nome, perfil_tipo, casa, intencao)
   ) LOOP
     -- Criar entry em auth.users (trigger enforce_email_allowlist agora passa)
     INSERT INTO auth.users (id, email, email_confirmed_at, created_at, updated_at, raw_user_meta_data)
     VALUES (v_users.id, v_users.email, NOW(), NOW(), NOW(), jsonb_build_object('nome', v_users.nome, 'seed', true))
     ON CONFLICT (email) DO NOTHING;
 
-    -- Usar DO UPDATE para garantir que agente/casa/intencao do seed sobrescrevam
+    -- Usar DO UPDATE para garantir que perfil_tipo/casa/intencao do seed sobrescrevam
     -- os defaults inseridos automaticamente pelo trigger on_auth_user_created
-    INSERT INTO public.profile (id, nome, agente, casa, intencao, onboarding_completed_at)
-    VALUES (v_users.id, v_users.nome, v_users.agente, v_users.casa, v_users.intencao, NOW())
+    INSERT INTO public.profile (id, nome, perfil_tipo, casa, intencao, onboarding_completed_at)
+    VALUES (v_users.id, v_users.nome, v_users.perfil_tipo, v_users.casa, v_users.intencao, NOW())
     ON CONFLICT (id) DO UPDATE SET
       nome = EXCLUDED.nome,
-      agente = EXCLUDED.agente,
+      perfil_tipo = EXCLUDED.perfil_tipo,
       casa = EXCLUDED.casa,
       intencao = EXCLUDED.intencao,
       onboarding_completed_at = NOW();
@@ -98,5 +98,5 @@ JOIN LATERAL (VALUES
   ('evento',    'Roda de violão sábado',             'Às 19h no centro comunitário. Tragam o instrumento.', 2),
   ('conquista', 'Primeira muda de cacau brotou',     'Depois de 8 meses, ela apareceu.', 3)
 ) AS posts(tipo, titulo, corpo, dias_atras) ON true
-WHERE p.agente IN ('tecedor', 'curador', 'mediador', 'guardian', 'sonhador')
+WHERE p.perfil_tipo IN ('tecedor', 'curador', 'mediador', 'guardian', 'sonhador')
 LIMIT 25;

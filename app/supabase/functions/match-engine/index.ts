@@ -12,11 +12,11 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
-function score(eu: { agente: string; oferece: Set<string>; busca: Set<string> },
-               o:  { agente: string; oferece: Set<string>; busca: Set<string> }): number {
+function score(eu: { perfil_tipo: string; oferece: Set<string>; busca: Set<string> },
+               o:  { perfil_tipo: string; oferece: Set<string>; busca: Set<string> }): number {
   let s = 0;
-  if (eu.agente === o.agente) s += 1;
-  if (COMPLEMENTARES.some(([a,b]) => (a===eu.agente && b===o.agente) || (a===o.agente && b===eu.agente))) s += 1;
+  if (eu.perfil_tipo === o.perfil_tipo) s += 1;
+  if (COMPLEMENTARES.some(([a,b]) => (a===eu.perfil_tipo && b===o.perfil_tipo) || (a===o.perfil_tipo && b===eu.perfil_tipo))) s += 1;
   for (const x of eu.busca) if (o.oferece.has(x)) s += 1;
   for (const x of o.busca) if (eu.oferece.has(x)) s += 1;
   return s;
@@ -50,13 +50,13 @@ Deno.serve(async (req) => {
     });
   }
 
-  // Body opcional: { agenteFilter?: string, limit?: number, search?: string }
+  // Body opcional: { perfilFilter?: string, limit?: number, search?: string }
   const body = req.method === 'POST' ? await req.json() : {};
   const limit = Math.min(body.limit ?? 20, 50);
 
   const { data: meRow } = await supabase
     .from('profile')
-    .select('id, agente')
+    .select('id, perfil_tipo')
     .eq('id', user.id)
     .single();
   if (!meRow) {
@@ -76,11 +76,11 @@ Deno.serve(async (req) => {
 
   let query = supabase
     .from('profile')
-    .select('id, nome, agente, casa, intencao, foto_url')
+    .select('id, nome, perfil_tipo, casa, intencao, foto_url')
     .neq('id', user.id)
     .not('onboarding_completed_at', 'is', null);
 
-  if (body.agenteFilter) query = query.eq('agente', body.agenteFilter);
+  if (body.perfilFilter) query = query.eq('perfil_tipo', body.perfilFilter);
   if (body.search) query = query.ilike('nome', `%${body.search}%`);
 
   const { data: outros, error } = await query.limit(100);
@@ -108,8 +108,8 @@ Deno.serve(async (req) => {
     const s = skillsByProfile.get(o.id) ?? { oferece: new Set(), busca: new Set() };
     return {
       ...o,
-      score: score({ agente: meRow.agente, oferece: meOferece, busca: meBusca },
-                   { agente: o.agente, oferece: s.oferece, busca: s.busca }),
+      score: score({ perfil_tipo: meRow.perfil_tipo, oferece: meOferece, busca: meBusca },
+                   { perfil_tipo: o.perfil_tipo, oferece: s.oferece, busca: s.busca }),
     };
   }).sort((a, b) => b.score - a.score).slice(0, limit);
 

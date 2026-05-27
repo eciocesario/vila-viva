@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
-import { AGENTES, validateOnboarding, type OnboardingData } from '@/domain/onboardingValidation';
+import { PERFIS, validateOnboarding, type OnboardingData } from '@/domain/onboardingValidation';
 import { track } from '@/lib/posthog';
 
-const STEPS = ['Nome', 'Agente', 'Casa', 'Intenção'] as const;
+const STEPS = ['Nome', 'Perfil', 'Casa', 'Intenção'] as const;
 
 export default function Onboarding() {
   const { session } = useAuth();
@@ -14,7 +14,7 @@ export default function Onboarding() {
   const [step, setStep] = useState(0);
   const [data, setData] = useState<OnboardingData>({
     nome: '',
-    agente: '',
+    perfil_tipo: '',
     casa: '',
     intencao: '',
   });
@@ -29,7 +29,7 @@ export default function Onboarding() {
         .from('profile')
         .update({
           nome: d.nome,
-          agente: d.agente,
+          perfil_tipo: d.perfil_tipo,
           casa: d.casa || null,
           intencao: d.intencao || null,
           onboarding_completed_at: new Date().toISOString(),
@@ -72,12 +72,12 @@ export default function Onboarding() {
         )}
         {step === 1 && (
           <select
-            value={data.agente}
-            onChange={(e) => setData({ ...data, agente: e.target.value })}
+            value={data.perfil_tipo}
+            onChange={(e) => setData({ ...data, perfil_tipo: e.target.value })}
             className="w-full px-4 py-3 rounded-soft border border-carvao/20 bg-white"
           >
-            <option value="">Escolha um agente…</option>
-            {AGENTES.map((a) => (
+            <option value="">Escolha um perfil…</option>
+            {PERFIS.map((a) => (
               <option key={a} value={a}>{a}</option>
             ))}
           </select>
