@@ -13,6 +13,7 @@ export function AppLayout() {
             <Link to="/match" className="text-carvao/60 hover:text-terra">
               Pessoas
             </Link>
+            <Link to="/desafios" className="text-carvao/60 hover:text-terra">Desafios</Link>
           </nav>
           <NotificationBell />
         </div>

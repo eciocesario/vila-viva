@@ -9,6 +9,7 @@ import Feed from '@/routes/Feed';
 import Profile from '@/routes/Profile';
 import Match from '@/routes/Match';
 import ProfileEdit from '@/routes/ProfileEdit';
+import Desafios from '@/routes/Desafios';
 import { AppLayout } from '@/components/AppLayout';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/match" element={<Match />} />
         <Route path="/profile/me/edit" element={<ProfileEdit />} />
+        <Route path="/desafios" element={session ? <Desafios /> : <Navigate to="/login" replace />} />
       </Route>
     </Routes>
   );

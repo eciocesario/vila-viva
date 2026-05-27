@@ -57,6 +57,75 @@ export type Database = {
         }
         Relationships: []
       }
+      challenge: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          criterio_meta: Json
+          descricao: string
+          slug: string
+          titulo: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          criterio_meta?: Json
+          descricao: string
+          slug: string
+          titulo: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          criterio_meta?: Json
+          descricao?: string
+          slug?: string
+          titulo?: string
+        }
+        Relationships: []
+      }
+      challenge_progress: {
+        Row: {
+          challenge_slug: string
+          concluido_em: string | null
+          contador: number
+          estado: string
+          profile_id: string
+          updated_at: string
+        }
+        Insert: {
+          challenge_slug: string
+          concluido_em?: string | null
+          contador?: number
+          estado?: string
+          profile_id: string
+          updated_at?: string
+        }
+        Update: {
+          challenge_slug?: string
+          concluido_em?: string | null
+          contador?: number
+          estado?: string
+          profile_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "challenge_progress_challenge_slug_fkey"
+            columns: ["challenge_slug"]
+            isOneToOne: false
+            referencedRelation: "challenge"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "challenge_progress_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comment: {
         Row: {
           autor_id: string
