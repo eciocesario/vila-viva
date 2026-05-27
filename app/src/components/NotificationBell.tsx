@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { useFlag } from '@/lib/useFlag';
@@ -24,6 +24,29 @@ export function NotificationBell() {
     },
     enabled: !!session && enabled,
   });
+
+  const markAllRead = useMutation({
+    mutationFn: async (unreadIds: string[]) => {
+      if (unreadIds.length === 0) return;
+      const { error } = await supabase
+        .from('notification')
+        .update({ lida_em: new Date().toISOString() })
+        .in('id', unreadIds);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['notifications', session?.user.id] });
+    },
+  });
+
+  function handleToggle() {
+    const next = !open;
+    setOpen(next);
+    if (next && notifs) {
+      const unreadIds = notifs.filter((n) => !n.lida_em).map((n) => n.id);
+      if (unreadIds.length > 0) markAllRead.mutate(unreadIds);
+    }
+  }
 
   useEffect(() => {
     if (!session || !enabled) return;
@@ -52,7 +75,7 @@ export function NotificationBell() {
   return (
     <div className="relative">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={handleToggle}
         className="relative p-2 text-carvao/70 hover:text-terra transition-colors"
         aria-label={`Notificações${unread > 0 ? ` (${unread} não lidas)` : ''}`}
       >
