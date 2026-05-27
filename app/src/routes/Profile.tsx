@@ -1,9 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/useAuth';
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
+  const { session } = useAuth();
   const { data, isLoading, error } = useQuery({
     queryKey: ['profile', id],
     queryFn: async () => {
@@ -21,9 +23,21 @@ export default function Profile() {
   if (isLoading) return <main className="p-6">Carregando…</main>;
   if (error || !data) return <main className="p-6 text-terra">Perfil não encontrado.</main>;
 
+  const isOwn = session?.user.id === data.id;
+
   return (
     <main className="max-w-md mx-auto p-6">
-      <h1 className="font-display text-3xl text-terra">{data.nome}</h1>
+      <div className="flex items-start justify-between">
+        <h1 className="font-display text-3xl text-terra">{data.nome}</h1>
+        {isOwn && (
+          <Link
+            to="/profile/me/edit"
+            className="text-sm text-carvao/60 hover:text-terra underline"
+          >
+            Editar perfil
+          </Link>
+        )}
+      </div>
       <p className="text-sm opacity-70 mt-1">
         {data.agente} {data.casa ? `· ${data.casa}` : ''}
       </p>
