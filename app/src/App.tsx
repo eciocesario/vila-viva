@@ -7,6 +7,8 @@ import Onboarding from '@/routes/Onboarding';
 import AdminFlags from '@/routes/AdminFlags';
 import Feed from '@/routes/Feed';
 import Profile from '@/routes/Profile';
+import Match from '@/routes/Match';
+import ProfileEdit from '@/routes/ProfileEdit';
 
 export default function App() {
   const { session, loading } = useAuth();
@@ -22,6 +24,8 @@ export default function App() {
       <Route path="/privacidade" element={<Privacidade />} />
       <Route path="/_/flags" element={<AdminFlags />} />
       <Route path="/profile/:id" element={session ? <Profile /> : <Navigate to="/login" replace />} />
+      <Route path="/match" element={session ? <Match /> : <Navigate to="/login" replace />} />
+      <Route path="/profile/me/edit" element={session ? <ProfileEdit /> : <Navigate to="/login" replace />} />
     </Routes>
   );
 }
