@@ -9,6 +9,7 @@ import Feed from '@/routes/Feed';
 import Profile from '@/routes/Profile';
 import Match from '@/routes/Match';
 import ProfileEdit from '@/routes/ProfileEdit';
+import { AppLayout } from '@/components/AppLayout';
 
 export default function App() {
   const { session, loading } = useAuth();
@@ -20,12 +21,14 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={session ? <Navigate to="/" replace /> : <Login />} />
-      <Route path="/" element={session ? <Home /> : <Navigate to="/login" replace />} />
       <Route path="/privacidade" element={<Privacidade />} />
       <Route path="/_/flags" element={<AdminFlags />} />
-      <Route path="/profile/:id" element={session ? <Profile /> : <Navigate to="/login" replace />} />
-      <Route path="/match" element={session ? <Match /> : <Navigate to="/login" replace />} />
-      <Route path="/profile/me/edit" element={session ? <ProfileEdit /> : <Navigate to="/login" replace />} />
+      <Route element={session ? <AppLayout /> : <Navigate to="/login" replace />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/match" element={<Match />} />
+        <Route path="/profile/me/edit" element={<ProfileEdit />} />
+      </Route>
     </Routes>
   );
 }

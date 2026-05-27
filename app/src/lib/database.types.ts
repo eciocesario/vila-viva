@@ -99,6 +99,39 @@ export type Database = {
           },
         ]
       }
+      connection_seen: {
+        Row: {
+          observado_id: string
+          observador_id: string
+          seen_at: string
+        }
+        Insert: {
+          observado_id: string
+          observador_id: string
+          seen_at?: string
+        }
+        Update: {
+          observado_id?: string
+          observador_id?: string
+          seen_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connection_seen_observado_id_fkey"
+            columns: ["observado_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "connection_seen_observador_id_fkey"
+            columns: ["observador_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       feature_flag: {
         Row: {
           audience: string | null
@@ -119,6 +152,41 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      notification: {
+        Row: {
+          created_at: string
+          destinatario_id: string
+          id: string
+          lida_em: string | null
+          payload: Json
+          tipo: string
+        }
+        Insert: {
+          created_at?: string
+          destinatario_id: string
+          id?: string
+          lida_em?: string | null
+          payload?: Json
+          tipo: string
+        }
+        Update: {
+          created_at?: string
+          destinatario_id?: string
+          id?: string
+          lida_em?: string | null
+          payload?: Json
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_destinatario_id_fkey"
+            columns: ["destinatario_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       post: {
         Row: {
