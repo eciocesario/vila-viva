@@ -200,6 +200,42 @@ export type Database = {
         }
         Relationships: []
       }
+      profile_skill: {
+        Row: {
+          intencao: string
+          nivel: string | null
+          profile_id: string
+          skill_id: string
+        }
+        Insert: {
+          intencao: string
+          nivel?: string | null
+          profile_id: string
+          skill_id: string
+        }
+        Update: {
+          intencao?: string
+          nivel?: string | null
+          profile_id?: string
+          skill_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_skill_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profile_skill_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skill"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reaction: {
         Row: {
           autor_id: string
@@ -238,6 +274,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      skill: {
+        Row: {
+          categoria: string
+          id: string
+          rotulo: string
+          slug: string
+        }
+        Insert: {
+          categoria: string
+          id?: string
+          rotulo: string
+          slug: string
+        }
+        Update: {
+          categoria?: string
+          id?: string
+          rotulo?: string
+          slug?: string
+        }
+        Relationships: []
       }
     }
     Views: {
