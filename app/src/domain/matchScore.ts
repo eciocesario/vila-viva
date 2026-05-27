@@ -2,18 +2,15 @@ import type { Perfil } from './onboardingValidation';
 
 type Side = { perfil_tipo: string; oferece: string[]; busca: string[] };
 
-// Pares complementares de arquétipos (bônus +1 cada par)
+// Pares complementares explícitos do v3.3 (apresentação pp.07-09):
+// - Aliado e Cultivador são os "perfis-âncora" do MVP
+// - Sementes recebem onboarding mentorado por Guardiões na F3
 const COMPLEMENTARES: ReadonlyArray<readonly [Perfil, Perfil]> = [
-  ['tecedor', 'curador'],
-  ['mediador', 'guardian'],
-  ['sonhador', 'praticante'],
-  ['aprendiz', 'guia'],
-  ['tradutor', 'semeador'],
-  ['pesquisador', 'comunicador'],
-  ['artesao', 'visionario'],
+  ['aliado', 'cultivador'],
+  ['semente', 'guardiao'],
 ];
 
-function samePerfil(a: string, b: string): boolean {
+function sameAgente(a: string, b: string): boolean {
   return a === b;
 }
 
@@ -26,15 +23,12 @@ function complementar(a: string, b: string): boolean {
 export function computeMatchScore({ eu, outro }: { eu: Side; outro: Side }): number {
   let score = 0;
 
-  // Perfil: +1 mesmo, +1 complementar
-  if (samePerfil(eu.perfil_tipo, outro.perfil_tipo)) score += 1;
+  if (sameAgente(eu.perfil_tipo, outro.perfil_tipo)) score += 1;
   if (complementar(eu.perfil_tipo, outro.perfil_tipo)) score += 1;
 
-  // Skills cruzadas (eu busco × outro oferece)
   const setOferece = new Set(outro.oferece);
   for (const s of eu.busca) if (setOferece.has(s)) score += 1;
 
-  // Skills cruzadas (outro busca × eu ofereço)
   const meusOferece = new Set(eu.oferece);
   for (const s of outro.busca) if (meusOferece.has(s)) score += 1;
 

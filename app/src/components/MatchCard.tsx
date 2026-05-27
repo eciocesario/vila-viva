@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { track } from '@/lib/posthog';
+import { PERFIL_LABELS, type Perfil } from '@/domain/onboardingValidation';
 
 export type MatchResult = {
   id: string;
@@ -21,7 +22,7 @@ export function MatchCard({ m }: { m: MatchResult }) {
         <h3 className="font-display text-lg text-terra">{m.nome}</h3>
         <span className="text-xs opacity-50">score {m.score}</span>
       </div>
-      <p className="text-xs opacity-70">{m.perfil_tipo}{m.casa ? ` · ${m.casa}` : ''}</p>
+      <p className="text-xs opacity-70">{PERFIL_LABELS[m.perfil_tipo as Perfil] ?? m.perfil_tipo}{m.casa ? ` · ${m.casa}` : ''}</p>
       {m.intencao && <p className="text-sm mt-2 italic">{m.intencao}</p>}
     </Link>
   );

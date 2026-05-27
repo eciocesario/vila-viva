@@ -3,6 +3,7 @@ import { postTipoLabel, type PostTipo } from '@/domain/postTypes';
 import { ReactionBar } from '@/components/ReactionBar';
 import { CommentList } from '@/components/CommentList';
 import { ShareWaButton } from '@/components/ShareWaButton';
+import { PERFIL_LABELS, type Perfil } from '@/domain/onboardingValidation';
 
 export type FeedCardData = {
   id: string;
@@ -30,7 +31,7 @@ export function FeedCard({ post }: { post: FeedCardData }) {
             {post.autor.nome}
           </Link>
           <span className="mx-1">·</span>
-          <span>{post.autor.perfil_tipo}</span>
+          <span>{PERFIL_LABELS[post.autor.perfil_tipo as Perfil] ?? post.autor.perfil_tipo}</span>
         </div>
         <span className="text-xs uppercase tracking-wider opacity-50">
           {postTipoLabel(post.tipo)}

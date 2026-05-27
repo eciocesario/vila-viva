@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
+import { PERFIL_LABELS, type Perfil } from '@/domain/onboardingValidation';
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
@@ -39,7 +40,7 @@ export default function Profile() {
         )}
       </div>
       <p className="text-sm opacity-70 mt-1">
-        {data.perfil_tipo} {data.casa ? `· ${data.casa}` : ''}
+        {PERFIL_LABELS[data.perfil_tipo as Perfil] ?? data.perfil_tipo} {data.casa ? `· ${data.casa}` : ''}
       </p>
       {data.intencao && (
         <blockquote className="mt-4 italic border-l-4 border-mata pl-3">

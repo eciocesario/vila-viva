@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useFlag } from '@/lib/useFlag';
-import { PERFIS } from '@/domain/onboardingValidation';
+import { PERFIS_ONBOARDING, PERFIL_LABELS } from '@/domain/onboardingValidation';
 import { MatchCard, type MatchResult } from '@/components/MatchCard';
 import { track } from '@/lib/posthog';
 
@@ -57,16 +57,14 @@ export default function Match() {
         >
           Todos
         </button>
-        {PERFIS.map((a) => (
+        {PERFIS_ONBOARDING.map((p) => (
           <button
-            key={a}
-            onClick={() => setPerfilFilter(a)}
+            key={p}
+            onClick={() => setPerfilFilter(p)}
             className={`px-2.5 py-1 rounded-full text-xs ${
-              perfilFilter === a ? 'bg-terra text-areia' : 'bg-white border border-carvao/20'
+              perfilFilter === p ? 'bg-terra text-areia' : 'bg-white border border-carvao/20'
             }`}
-          >
-            {a}
-          </button>
+          >{PERFIL_LABELS[p]}</button>
         ))}
       </div>
 

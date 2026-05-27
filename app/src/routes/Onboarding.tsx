@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
-import { PERFIS, validateOnboarding, type OnboardingData } from '@/domain/onboardingValidation';
+import { PERFIS_ONBOARDING, PERFIL_LABELS, PERFIL_DESCRICOES, validateOnboarding, type OnboardingData } from '@/domain/onboardingValidation';
 import { track } from '@/lib/posthog';
 
 const STEPS = ['Nome', 'Perfil', 'Casa', 'Intenção'] as const;
@@ -71,16 +71,23 @@ export default function Onboarding() {
           />
         )}
         {step === 1 && (
-          <select
-            value={data.perfil_tipo}
-            onChange={(e) => setData({ ...data, perfil_tipo: e.target.value })}
-            className="w-full px-4 py-3 rounded-soft border border-carvao/20 bg-white"
-          >
-            <option value="">Escolha um perfil…</option>
-            {PERFIS.map((a) => (
-              <option key={a} value={a}>{a}</option>
-            ))}
-          </select>
+          <div>
+            <select
+              value={data.perfil_tipo}
+              onChange={(e) => setData({ ...data, perfil_tipo: e.target.value })}
+              className="w-full px-4 py-3 rounded-soft border border-carvao/20 bg-white"
+            >
+              <option value="">Escolha um perfil…</option>
+              {PERFIS_ONBOARDING.map((p) => (
+                <option key={p} value={p}>{PERFIL_LABELS[p]}</option>
+              ))}
+            </select>
+            {data.perfil_tipo && PERFIS_ONBOARDING.includes(data.perfil_tipo as never) && (
+              <p className="mt-2 text-xs opacity-70">
+                {PERFIL_DESCRICOES[data.perfil_tipo as keyof typeof PERFIL_DESCRICOES]}
+              </p>
+            )}
+          </div>
         )}
         {step === 2 && (
           <input

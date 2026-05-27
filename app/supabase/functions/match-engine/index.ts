@@ -1,9 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 const COMPLEMENTARES: readonly [string, string][] = [
-  ['tecedor', 'curador'], ['mediador', 'guardian'], ['sonhador', 'praticante'],
-  ['aprendiz', 'guia'], ['tradutor', 'semeador'], ['pesquisador', 'comunicador'],
-  ['artesao', 'visionario'],
+  ['aliado', 'cultivador'],
+  ['semente', 'guardiao'],
 ];
 
 const corsHeaders = {

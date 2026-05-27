@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { useFlag } from '@/lib/useFlag';
-import { PERFIS } from '@/domain/onboardingValidation';
+import { PERFIS_ONBOARDING, PERFIL_LABELS } from '@/domain/onboardingValidation';
 
 export default function ProfileEdit() {
   const enabled = useFlag('profile_edit');
@@ -155,11 +155,7 @@ export default function ProfileEdit() {
           onChange={(e) => setPerfilTipo(e.target.value)}
           className="w-full px-3 py-2 rounded-soft border border-carvao/20 bg-white"
         >
-          {PERFIS.map((a) => (
-            <option key={a} value={a}>
-              {a}
-            </option>
-          ))}
+          {PERFIS_ONBOARDING.map(p => <option key={p} value={p}>{PERFIL_LABELS[p]}</option>)}
         </select>
       </label>
 

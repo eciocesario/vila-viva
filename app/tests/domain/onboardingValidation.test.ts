@@ -4,9 +4,9 @@ import { validateOnboarding, type OnboardingData } from '@/domain/onboardingVali
 describe('validateOnboarding', () => {
   const valid: OnboardingData = {
     nome: 'Maria Silva',
-    perfil_tipo: 'tecedor',
+    perfil_tipo: 'cultivador',
     casa: 'Casa do Vento',
-    intencao: 'Tecer redes.',
+    intencao: 'Cuidar da terra.',
   };
 
   it('aceita dados válidos', () => {
@@ -24,10 +24,15 @@ describe('validateOnboarding', () => {
     expect(r.ok).toBe(false);
   });
 
-  it('rejeita perfil_tipo fora da lista de 14', () => {
+  it('rejeita perfil_tipo fora da lista de onboarding', () => {
     const r = validateOnboarding({ ...valid, perfil_tipo: 'inexistente' as never });
     expect(r.ok).toBe(false);
     expect(r.ok === false && r.errors.perfil_tipo).toBeDefined();
+  });
+
+  it('rejeita observador (fora do MVP) no onboarding', () => {
+    const r = validateOnboarding({ ...valid, perfil_tipo: 'observador' });
+    expect(r.ok).toBe(false);
   });
 
   it('aceita casa vazia (opcional)', () => {
