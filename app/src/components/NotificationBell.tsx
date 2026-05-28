@@ -23,6 +23,9 @@ export function NotificationBell() {
       return data;
     },
     enabled: !!session && enabled,
+    staleTime: 0,                  // always considered stale; refetch eagerly
+    refetchOnWindowFocus: true,    // refresh quando volta a focar a aba
+    refetchInterval: 30_000,       // fallback polling 30s caso Realtime caia
   });
 
   const markAllRead = useMutation({

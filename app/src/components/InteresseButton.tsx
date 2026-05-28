@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
-import { useAuth } from '@/lib/useAuth';
 import { track } from '@/lib/posthog';
+import { useAuth } from '@/lib/useAuth';
 
 export function InteresseButton({
   vagaId,
@@ -15,6 +16,7 @@ export function InteresseButton({
   const { session } = useAuth();
   const qc = useQueryClient();
   const isAutor = session?.user.id === autorId;
+  const [optimisticDelta, setOptimisticDelta] = useState(0);
 
   const { data: mine, isLoading: mineLoading } = useQuery({
     queryKey: ['vaga_interesse_mine', vagaId, session?.user.id],
@@ -30,6 +32,12 @@ export function InteresseButton({
     },
     enabled: !!session && !isAutor,
   });
+
+  // Quando o countServer atualiza (após refetch da vaga pelo trigger), o servidor
+  // já reflete o estado real — zera o delta otimista.
+  useEffect(() => {
+    setOptimisticDelta(0);
+  }, [countServer]);
 
   const toggle = useMutation({
     mutationFn: async () => {
@@ -51,6 +59,8 @@ export function InteresseButton({
       await qc.cancelQueries({ queryKey: ['vaga_interesse_mine', vagaId, session?.user.id] });
       const prev = qc.getQueryData<boolean>(['vaga_interesse_mine', vagaId, session?.user.id]);
       qc.setQueryData(['vaga_interesse_mine', vagaId, session?.user.id], !prev);
+      // Ajuste otimista no contador
+      setOptimisticDelta(prev ? -1 : 1);
       track('vaga_interesse_clicked', { vaga_id: vagaId, acao: !prev ? 'add' : 'remove' });
       return { prev };
     },
@@ -58,6 +68,7 @@ export function InteresseButton({
       if (ctx?.prev !== undefined) {
         qc.setQueryData(['vaga_interesse_mine', vagaId, session?.user.id], ctx.prev);
       }
+      setOptimisticDelta(0);
     },
     onSettled: () => {
       void qc.invalidateQueries({ queryKey: ['vaga_interesse_mine', vagaId, session?.user.id] });
@@ -77,6 +88,8 @@ export function InteresseButton({
     );
   }
 
+  const displayCount = Math.max(0, countServer + optimisticDelta);
+
   return (
     <button
       onClick={() => toggle.mutate()}
@@ -86,7 +99,7 @@ export function InteresseButton({
       } disabled:opacity-50`}
     >
       {mine ? 'Você se interessou ✓' : 'Tenho interesse'}
-      <span className="ml-2 opacity-80">({mine == null ? countServer : mine ? countServer + 1 : Math.max(0, countServer - 1)})</span>
+      <span className="ml-2 opacity-80">({displayCount})</span>
     </button>
   );
 }
