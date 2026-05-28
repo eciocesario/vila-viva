@@ -16,6 +16,7 @@ export function AppLayout() {
             <NavLink to="/match" className={navClass}>
               Pessoas
             </NavLink>
+            <NavLink to="/vagas" className={navClass}>Vagas</NavLink>
             <NavLink to="/desafios" className={navClass}>Desafios</NavLink>
           </nav>
           <NotificationBell />
