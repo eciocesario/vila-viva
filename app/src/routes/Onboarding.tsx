@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { PERFIS_ONBOARDING, PERFIL_LABELS, PERFIL_DESCRICOES, validateOnboarding, type OnboardingData } from '@/domain/onboardingValidation';
@@ -11,6 +11,7 @@ const STEPS = ['Nome', 'Perfil', 'Casa', 'Intenção'] as const;
 export default function Onboarding() {
   const { session } = useAuth();
   const nav = useNavigate();
+  const qc = useQueryClient();
   const [step, setStep] = useState(0);
   const [data, setData] = useState<OnboardingData>({
     nome: '',
@@ -39,6 +40,16 @@ export default function Onboarding() {
     },
     onSuccess: () => {
       track('onboarding_completed');
+      // Optimistically update the cached profile so Home re-renders to Feed immediately
+      qc.setQueryData(['profile', session!.user.id], (old: { onboarding_completed_at: string | null; nome: string; perfil_tipo: string } | undefined) => ({
+        ...(old ?? { nome: '', perfil_tipo: '' }),
+        onboarding_completed_at: new Date().toISOString(),
+        nome: data.nome,
+        perfil_tipo: data.perfil_tipo,
+      }));
+      // Also invalidate so the next render gets server truth
+      void qc.invalidateQueries({ queryKey: ['profile', session!.user.id] });
+      // nav('/') is a no-op (already at /) but harmless
       nav('/');
     },
     onError: (e) => setError(e instanceof Error ? e.message : 'Erro ao salvar'),
