@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
+import { track } from '@/lib/posthog';
 
 export function InteresseButton({
   vagaId,
@@ -50,6 +51,7 @@ export function InteresseButton({
       await qc.cancelQueries({ queryKey: ['vaga_interesse_mine', vagaId, session?.user.id] });
       const prev = qc.getQueryData<boolean>(['vaga_interesse_mine', vagaId, session?.user.id]);
       qc.setQueryData(['vaga_interesse_mine', vagaId, session?.user.id], !prev);
+      track('vaga_interesse_clicked', { vaga_id: vagaId, acao: !prev ? 'add' : 'remove' });
       return { prev };
     },
     onError: (_e, _v, ctx) => {

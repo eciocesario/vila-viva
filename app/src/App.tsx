@@ -12,6 +12,7 @@ import ProfileEdit from '@/routes/ProfileEdit';
 import Desafios from '@/routes/Desafios';
 import Vagas from '@/routes/Vagas';
 import VagaDetail from '@/routes/VagaDetail';
+import VagaInteressados from '@/routes/VagaInteressados';
 import { AppLayout } from '@/components/AppLayout';
 
 export default function App() {
@@ -32,6 +33,10 @@ export default function App() {
         <Route path="/match" element={<Match />} />
         <Route path="/vagas" element={session ? <Vagas /> : <Navigate to="/login" replace />} />
         <Route path="/vagas/:id" element={session ? <VagaDetail /> : <Navigate to="/login" replace />} />
+        <Route
+          path="/vagas/:id/interessados"
+          element={session ? <VagaInteressados /> : <Navigate to="/login" replace />}
+        />
         <Route path="/profile/me/edit" element={<ProfileEdit />} />
         <Route path="/desafios" element={session ? <Desafios /> : <Navigate to="/login" replace />} />
       </Route>

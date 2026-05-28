@@ -5,6 +5,7 @@ import { useAuth } from '@/lib/useAuth';
 import { useFlag } from '@/lib/useFlag';
 import { VAGA_TIPOS, vagaTipoLabel, type VagaTipo } from '@/domain/vagaTypes';
 import { VagaSkillSelector } from './VagaSkillSelector';
+import { track } from '@/lib/posthog';
 
 export function VagaCreator() {
   const { session } = useAuth();
@@ -48,6 +49,7 @@ export function VagaCreator() {
       }
     },
     onSuccess: () => {
+      track('vaga_created', { tipo });
       void qc.invalidateQueries({ queryKey: ['vagas'] });
       setOpen(false);
       setTitulo('');

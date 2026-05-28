@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
+import { track } from '@/lib/posthog';
 import { useFlag } from '@/lib/useFlag';
 import { useAuth } from '@/lib/useAuth';
 import { vagaTipoLabel, type VagaTipo } from '@/domain/vagaTypes';
@@ -53,6 +54,7 @@ export default function VagaDetail() {
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ['vaga', vaga!.id] });
       void qc.invalidateQueries({ queryKey: ['vagas'] });
+      track('vaga_closed', { vaga_id: vaga!.id });
     },
   });
 
@@ -110,6 +112,7 @@ export default function VagaDetail() {
             href={`https://wa.me/?text=${encodeURIComponent(text)}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track('vaga_share_wa_clicked', { vaga_id: vaga.id })}
             className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-mata/10 text-mata"
           >
             Compartilhar no WhatsApp
