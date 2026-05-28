@@ -118,6 +118,8 @@ function describeNotif(tipo: string): string {
       return 'Nova conexão sugerida no Match.';
     case 'challenge_progresso':
       return 'Você avançou em um desafio.';
+    case 'vaga_interesse_recebido':
+      return 'Alguém demonstrou interesse na sua vaga.';
     default:
       return 'Notificação.';
   }
