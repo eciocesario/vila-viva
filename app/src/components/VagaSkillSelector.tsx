@@ -10,7 +10,7 @@ export function VagaSkillSelector({
   selected: Set<string>;
   onChange: (next: Set<string>) => void;
 }) {
-  const { data: skills, isLoading } = useQuery({
+  const { data: skills, isLoading, isError } = useQuery({
     queryKey: ['skill_catalog'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -23,6 +23,7 @@ export function VagaSkillSelector({
   });
 
   if (isLoading) return <p className="text-xs opacity-60">Carregando habilidades…</p>;
+  if (isError) return <p className="text-xs text-terra">Erro ao carregar habilidades.</p>;
 
   function toggle(id: string) {
     const next = new Set(selected);

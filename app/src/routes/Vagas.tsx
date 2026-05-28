@@ -13,9 +13,10 @@ export default function Vagas() {
   const [skillFilter, setSkillFilter] = useState<Set<string>>(new Set());
 
   const skillIds = Array.from(skillFilter);
+  const skillIdsSortedKey = [...skillIds].sort().join(',');
 
   const { data, isLoading } = useQuery({
-    queryKey: ['vagas', tipo, skillIds.sort().join(',')],
+    queryKey: ['vagas', tipo, skillIdsSortedKey],
     queryFn: async () => {
       let query = supabase
         .from('vaga')

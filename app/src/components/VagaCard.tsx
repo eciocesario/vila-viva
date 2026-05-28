@@ -45,8 +45,8 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
       </p>
       {vaga.skills && vaga.skills.length > 0 && (
         <div className="flex gap-1 flex-wrap mb-2">
-          {vaga.skills.slice(0, 3).map((s, i) => (
-            <span key={i} className="px-2 py-0.5 rounded-full bg-white text-xs">
+          {vaga.skills.slice(0, 3).map((s) => (
+            <span key={s.rotulo} className="px-2 py-0.5 rounded-full bg-white text-xs">
               {s.rotulo}
             </span>
           ))}
