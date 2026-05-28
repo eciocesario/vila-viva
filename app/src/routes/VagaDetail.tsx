@@ -1,5 +1,5 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useFlag } from '@/lib/useFlag';
 import { useAuth } from '@/lib/useAuth';
@@ -40,6 +40,21 @@ export default function VagaDetail() {
   const skills = (vaga.skills as { skill: { rotulo: string } | null }[])
     .map((s) => s.skill?.rotulo).filter(Boolean) as string[];
   const isAutor = session?.user.id === vaga.autor_id;
+
+  const qc = useQueryClient();
+  const fechar = useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase
+        .from('vaga')
+        .update({ status: 'fechada' })
+        .eq('id', vaga!.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ['vaga', vaga!.id] });
+      void qc.invalidateQueries({ queryKey: ['vagas'] });
+    },
+  });
 
   return (
     <main className="max-w-2xl mx-auto p-4 space-y-4">
@@ -110,6 +125,17 @@ export default function VagaDetail() {
           >
             Ver interessados ({vaga.count_interesses})
           </Link>
+          {vaga.status === 'aberta' && (
+            <button
+              onClick={() => {
+                if (confirm('Fechar a vaga? Ela some da lista pública.')) fechar.mutate();
+              }}
+              disabled={fechar.isPending}
+              className="w-full px-4 py-2 rounded-soft border border-terra/40 text-terra text-sm disabled:opacity-50"
+            >
+              {fechar.isPending ? 'Fechando…' : 'Fechar vaga'}
+            </button>
+          )}
         </div>
       )}
     </main>
