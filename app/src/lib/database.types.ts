@@ -433,6 +433,122 @@ export type Database = {
         }
         Relationships: []
       }
+      vaga: {
+        Row: {
+          autor_id: string
+          count_interesses: number
+          created_at: string
+          descricao: string
+          id: string
+          local: string | null
+          periodo: string | null
+          status: string
+          tipo: string
+          titulo: string
+          updated_at: string
+          valor_remuneracao: string | null
+        }
+        Insert: {
+          autor_id: string
+          count_interesses?: number
+          created_at?: string
+          descricao: string
+          id?: string
+          local?: string | null
+          periodo?: string | null
+          status?: string
+          tipo: string
+          titulo: string
+          updated_at?: string
+          valor_remuneracao?: string | null
+        }
+        Update: {
+          autor_id?: string
+          count_interesses?: number
+          created_at?: string
+          descricao?: string
+          id?: string
+          local?: string | null
+          periodo?: string | null
+          status?: string
+          tipo?: string
+          titulo?: string
+          updated_at?: string
+          valor_remuneracao?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaga_autor_id_fkey"
+            columns: ["autor_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vaga_interesse: {
+        Row: {
+          created_at: string
+          interessado_id: string
+          vaga_id: string
+        }
+        Insert: {
+          created_at?: string
+          interessado_id: string
+          vaga_id: string
+        }
+        Update: {
+          created_at?: string
+          interessado_id?: string
+          vaga_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaga_interesse_interessado_id_fkey"
+            columns: ["interessado_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vaga_interesse_vaga_id_fkey"
+            columns: ["vaga_id"]
+            isOneToOne: false
+            referencedRelation: "vaga"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vaga_skill: {
+        Row: {
+          skill_id: string
+          vaga_id: string
+        }
+        Insert: {
+          skill_id: string
+          vaga_id: string
+        }
+        Update: {
+          skill_id?: string
+          vaga_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vaga_skill_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skill"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vaga_skill_vaga_id_fkey"
+            columns: ["vaga_id"]
+            isOneToOne: false
+            referencedRelation: "vaga"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
