@@ -15,7 +15,7 @@ export function InteresseButton({
   const qc = useQueryClient();
   const isAutor = session?.user.id === autorId;
 
-  const { data: mine } = useQuery({
+  const { data: mine, isLoading: mineLoading } = useQuery({
     queryKey: ['vaga_interesse_mine', vagaId, session?.user.id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -78,13 +78,13 @@ export function InteresseButton({
   return (
     <button
       onClick={() => toggle.mutate()}
-      disabled={toggle.isPending}
+      disabled={toggle.isPending || mineLoading}
       className={`w-full px-4 py-3 rounded-soft font-medium ${
         mine ? 'bg-mata text-areia' : 'bg-terra text-areia'
       } disabled:opacity-50`}
     >
       {mine ? 'Você se interessou ✓' : 'Tenho interesse'}
-      <span className="ml-2 opacity-80">({countServer + (mine && countServer === 0 ? 1 : 0)})</span>
+      <span className="ml-2 opacity-80">({mine == null ? countServer : mine ? countServer + 1 : Math.max(0, countServer - 1)})</span>
     </button>
   );
 }
