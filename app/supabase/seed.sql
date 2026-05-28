@@ -101,6 +101,41 @@ BEGIN
   END LOOP;
 END $$;
 
+-- Seed de 8 vagas (4 voluntariado + 4 remunerado) atribuídas 1:1 aos primeiros
+-- 8 seed users (ordenados por id). Cada vaga ganha 1-3 skills aleatórios.
+WITH numbered_profiles AS (
+  SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS rn
+  FROM public.profile
+  WHERE id IN (SELECT id FROM auth.users WHERE email LIKE '%@seed.vilaviva.local')
+  LIMIT 8
+),
+vaga_data AS (
+  SELECT * FROM (VALUES
+    (1, 'voluntariado', 'Ajuda pra carregar caminhão de mudas',  'Sábado de manhã, trago 200 mudas de cacau pra plantar. Preciso de 3-4 pessoas.', 'Casa da Mata',        'Sábado 8h-12h',     NULL::text),
+    (2, 'voluntariado', 'Mediação de Reunião Casa do Vento',     'Reunião comunitária na próxima quarta, preciso de alguém pra facilitar.',         'Casa do Vento',       'Quarta 19h-21h',    NULL::text),
+    (3, 'voluntariado', 'Tradução de carta pra parceria BIOMAS', 'Carta de 1 página em inglês pra parceria com o Painel Biomas.',                   'Remoto',              'Até dia 30',        NULL::text),
+    (4, 'voluntariado', 'Acompanhar visita de pesquisador',      'Pesquisador da UFBA vem semana que vem, alguém que conhece a vila pra tour.',      'Vila Viva',           'Próxima semana',    NULL::text),
+    (5, 'remunerado',   'Aulas de inglês 2x/sem',                'Procuro professor/a de inglês pra meu filho de 12 anos. Duas vezes por semana, 1h.','Casa do Sol',         'Semanal ongoing',   'R$ 120/aula'),
+    (6, 'remunerado',   'Manutenção elétrica casa',              'Casa precisa revisão elétrica completa, ~2 dias de serviço.',                      'Casa do Rio',         'Próximo mês',       'A combinar'),
+    (7, 'remunerado',   'Diarista 1x/sem',                       'Limpeza geral 4h, uma vez por semana.',                                             'Casa da Terra',       'Sextas 8h-12h',     'R$ 150 + transporte'),
+    (8, 'remunerado',   'Aula de yoga semanal',                  'Yoga ao ar livre, sábado de manhã, grupo de 5-8 pessoas.',                         'Centro comunitário',  'Sábados 7h-8h',     'R$ 60/aula')
+  ) AS v(rn, tipo, titulo, descricao, local, periodo, valor_remuneracao)
+),
+inserted_vagas AS (
+  INSERT INTO public.vaga (autor_id, tipo, titulo, descricao, local, periodo, valor_remuneracao)
+  SELECT np.id, vd.tipo, vd.titulo, vd.descricao, vd.local, vd.periodo, vd.valor_remuneracao
+  FROM numbered_profiles np
+  JOIN vaga_data vd ON vd.rn = np.rn
+  RETURNING id
+)
+-- Para cada vaga inserida, vincular 1-3 skills aleatórios do catálogo
+INSERT INTO public.vaga_skill (vaga_id, skill_id)
+SELECT iv.id, s.id
+FROM inserted_vagas iv
+CROSS JOIN LATERAL (
+  SELECT id FROM public.skill ORDER BY random() LIMIT (1 + (random() * 2)::int)
+) AS s;
+
 -- Cleanup allowlist temp
 DELETE FROM public.allowed_email
 WHERE added_by = 'seed-temp' AND email LIKE '%@seed.vilaviva.local';
