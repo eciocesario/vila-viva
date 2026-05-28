@@ -133,7 +133,7 @@ INSERT INTO public.vaga_skill (vaga_id, skill_id)
 SELECT iv.id, s.id
 FROM inserted_vagas iv
 CROSS JOIN LATERAL (
-  SELECT id FROM public.skill ORDER BY random() LIMIT (1 + (random() * 2)::int)
+  SELECT id FROM public.skill ORDER BY random() LIMIT (1 + (random() * 3)::int)
 ) AS s;
 
 -- Cleanup allowlist temp
