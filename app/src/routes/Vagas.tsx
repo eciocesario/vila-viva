@@ -6,6 +6,7 @@ import { useFlag } from '@/lib/useFlag';
 import { VAGA_TIPOS, vagaTipoLabel, type VagaTipo } from '@/domain/vagaTypes';
 import { VagaCard, type VagaCardData } from '@/components/VagaCard';
 import { VagaSkillSelector } from '@/components/VagaSkillSelector';
+import { VagaCreator } from '@/components/VagaCreator';
 
 export default function Vagas() {
   const enabled = useFlag('vagas');
@@ -95,6 +96,7 @@ export default function Vagas() {
           Nenhuma vaga encontrada nesse tipo/filtro.
         </p>
       )}
+      <VagaCreator />
     </main>
   );
 }
