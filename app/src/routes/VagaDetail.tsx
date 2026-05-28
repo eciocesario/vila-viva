@@ -12,6 +12,7 @@ export default function VagaDetail() {
   const enabled = useFlag('vagas');
   const { id } = useParams<{ id: string }>();
   const { session } = useAuth();
+  const qc = useQueryClient();
 
   const { data: vaga, isLoading, error } = useQuery({
     queryKey: ['vaga', id],
@@ -32,6 +33,23 @@ export default function VagaDetail() {
     enabled: !!id && enabled,
   });
 
+  const fechar = useMutation({
+    mutationFn: async () => {
+      if (!vaga) throw new Error('Vaga não carregada');
+      const { error } = await supabase
+        .from('vaga')
+        .update({ status: 'fechada' })
+        .eq('id', vaga.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      if (!vaga) return;
+      void qc.invalidateQueries({ queryKey: ['vaga', vaga.id] });
+      void qc.invalidateQueries({ queryKey: ['vagas'] });
+      track('vaga_closed', { vaga_id: vaga.id });
+    },
+  });
+
   if (!enabled) return <Navigate to="/" replace />;
   if (isLoading) return <main className="p-6">Carregando…</main>;
   if (error || !vaga) return <main className="p-6 text-terra">Vaga não encontrada.</main>;
@@ -41,22 +59,6 @@ export default function VagaDetail() {
   const skills = (vaga.skills as { skill: { rotulo: string } | null }[])
     .map((s) => s.skill?.rotulo).filter(Boolean) as string[];
   const isAutor = session?.user.id === vaga.autor_id;
-
-  const qc = useQueryClient();
-  const fechar = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase
-        .from('vaga')
-        .update({ status: 'fechada' })
-        .eq('id', vaga!.id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      void qc.invalidateQueries({ queryKey: ['vaga', vaga!.id] });
-      void qc.invalidateQueries({ queryKey: ['vagas'] });
-      track('vaga_closed', { vaga_id: vaga!.id });
-    },
-  });
 
   return (
     <main className="max-w-2xl mx-auto p-4 space-y-4">
