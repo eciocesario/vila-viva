@@ -6,7 +6,7 @@ import { PERFIL_LABELS, type Perfil } from '@/domain/onboardingValidation';
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
-  const { session } = useAuth();
+  const { session, signOut } = useAuth();
   const { data, isLoading, error } = useQuery({
     queryKey: ['profile', id],
     queryFn: async () => {
@@ -31,12 +31,25 @@ export default function Profile() {
       <div className="flex items-start justify-between">
         <h1 className="font-display text-3xl text-terra">{data.nome}</h1>
         {isOwn && (
-          <Link
-            to="/profile/me/edit"
-            className="text-sm text-carvao/60 hover:text-terra underline"
-          >
-            Editar perfil
-          </Link>
+          <div className="flex flex-col items-end gap-2">
+            <Link
+              to="/profile/me/edit"
+              className="text-sm text-carvao/60 hover:text-terra underline"
+            >
+              Editar perfil
+            </Link>
+            <button
+              onClick={async () => {
+                if (confirm('Sair da Vila Viva?')) {
+                  await signOut();
+                  // session becomes null → AppLayout redirects to /login
+                }
+              }}
+              className="px-4 py-1.5 rounded-soft border border-terra/40 text-terra text-sm"
+            >
+              Sair
+            </button>
+          </div>
         )}
       </div>
       <p className="text-sm opacity-70 mt-1">
