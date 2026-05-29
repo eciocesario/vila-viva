@@ -3,6 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
 import { PERFIL_LABELS, type Perfil } from '@/domain/onboardingValidation';
+import { calcularSementes, type SementesCounts } from '@/domain/sementes';
+import { badgesDesbloqueados } from '@/domain/badges';
+import { SementesDisplay } from '@/components/SementesDisplay';
+import { BadgesGrid } from '@/components/BadgesGrid';
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
@@ -21,10 +25,67 @@ export default function Profile() {
     enabled: !!id,
   });
 
+  const { data: postCounts } = useQuery({
+    queryKey: ['profile_post_counts', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('post')
+        .select('tipo')
+        .eq('autor_id', id!);
+      if (error) throw error;
+      const counts: SementesCounts = {
+        historia: 0,
+        pedido: 0,
+        evento: 0,
+        projeto: 0,
+        conquista: 0,
+        vaga: 0,
+      };
+      for (const p of data) {
+        const t = p.tipo as keyof SementesCounts;
+        if (t in counts) counts[t]++;
+      }
+      return counts;
+    },
+    enabled: !!id,
+  });
+
+  const { data: vagaCounts } = useQuery({
+    queryKey: ['profile_vaga_counts', id],
+    queryFn: async () => {
+      const [{ count: vagas_criadas }, { count: vaga_interesses }] = await Promise.all([
+        supabase.from('vaga').select('*', { count: 'exact', head: true }).eq('autor_id', id!),
+        supabase
+          .from('vaga_interesse')
+          .select('*', { count: 'exact', head: true })
+          .eq('interessado_id', id!),
+      ]);
+      return {
+        vaga: vagas_criadas ?? 0,
+        vaga_interesse: vaga_interesses ?? 0,
+      };
+    },
+    enabled: !!id,
+  });
+
   if (isLoading) return <main className="p-6">Carregando…</main>;
   if (error || !data) return <main className="p-6 text-terra">Perfil não encontrado.</main>;
 
   const isOwn = session?.user.id === data.id;
+
+  const sementesTotal =
+    postCounts && vagaCounts
+      ? calcularSementes({ ...postCounts, vaga: vagaCounts.vaga })
+      : null;
+
+  const unlocked =
+    postCounts && vagaCounts
+      ? badgesDesbloqueados({
+          projeto: postCounts.projeto,
+          conquista: postCounts.conquista,
+          vaga_interesse: vagaCounts.vaga_interesse,
+        })
+      : null;
 
   return (
     <main className="max-w-md mx-auto p-6">
@@ -62,6 +123,12 @@ export default function Profile() {
       )}
       {data.bio && (
         <p className="mt-4 whitespace-pre-wrap">{data.bio}</p>
+      )}
+      {(sementesTotal !== null || (unlocked && unlocked.length > 0)) && (
+        <div className="pt-4 border-t border-carvao/10 space-y-4">
+          {sementesTotal !== null && <SementesDisplay total={sementesTotal} />}
+          {unlocked && <BadgesGrid unlocked={unlocked} />}
+        </div>
       )}
     </main>
   );
