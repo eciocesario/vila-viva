@@ -53,13 +53,18 @@ export default function Profile() {
   const { data: vagaCounts } = useQuery({
     queryKey: ['profile_vaga_counts', id],
     queryFn: async () => {
-      const [{ count: vagas_criadas }, { count: vaga_interesses }] = await Promise.all([
+      const [
+        { count: vagas_criadas, error: e1 },
+        { count: vaga_interesses, error: e2 },
+      ] = await Promise.all([
         supabase.from('vaga').select('*', { count: 'exact', head: true }).eq('autor_id', id!),
         supabase
           .from('vaga_interesse')
           .select('*', { count: 'exact', head: true })
           .eq('interessado_id', id!),
       ]);
+      if (e1) throw e1;
+      if (e2) throw e2;
       return {
         vaga: vagas_criadas ?? 0,
         vaga_interesse: vaga_interesses ?? 0,
