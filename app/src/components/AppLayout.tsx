@@ -1,6 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { NotificationBell } from './NotificationBell';
+import { OfflineBanner } from './OfflineBanner';
 import { useFlag } from '@/lib/useFlag';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
@@ -31,6 +32,7 @@ export function AppLayout() {
 
   return (
     <>
+      <OfflineBanner />
       <header className="sticky top-0 bg-areia/80 backdrop-blur border-b border-carvao/10 z-30">
         <div className="max-w-2xl mx-auto flex items-center justify-between px-4 py-2">
           <nav className="flex gap-4 text-sm">
