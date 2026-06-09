@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from './supabase';
 import { identify } from './posthog';
+import { queryClient } from './queryClient';
+import { clearPersistedCache } from './persistQuery';
 
 export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
@@ -34,6 +36,8 @@ export function useAuth() {
 
   async function signOut() {
     await supabase.auth.signOut();
+    queryClient.clear();
+    await clearPersistedCache();
   }
 
   return { session, loading, signIn, signOut };
