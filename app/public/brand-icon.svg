@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <!-- Vila Viva brand mark: sprout on areia field, terra leaves + stem -->
+  <rect width="512" height="512" rx="112" fill="#F7F2EA"/>
+  <g transform="translate(256 256)">
+    <!-- stem -->
+    <path d="M0 150 C0 70 0 30 0 -20" stroke="#B85C2A" stroke-width="26" stroke-linecap="round"/>
+    <!-- left leaf -->
+    <path d="M0 30
+             C -70 30 -118 -8 -126 -78
+             C -56 -86 -8 -48 0 22 Z" fill="#B85C2A"/>
+    <!-- right leaf -->
+    <path d="M0 -10
+             C 70 -10 118 -48 126 -118
+             C 56 -126 8 -88 0 -18 Z" fill="#D17A47"/>
+  </g>
+</svg>
