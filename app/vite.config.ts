@@ -17,6 +17,10 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         navigateFallback: '/index.html',
+        // SW assume o controle da aba já aberta na primeira visita (sem precisar de 2º reload),
+        // garantindo que o app-shell venha do precache assim que a rede cair.
+        clientsClaim: true,
+        skipWaiting: true,
         // NÃO cacheamos respostas do Supabase aqui — dados ficam no TanStack Query.
       },
       manifest: {
