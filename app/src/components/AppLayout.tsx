@@ -2,6 +2,7 @@ import { Outlet, NavLink } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { NotificationBell } from './NotificationBell';
 import { OfflineBanner } from './OfflineBanner';
+import { InstallPrompt } from './InstallPrompt';
 import { useFlag } from '@/lib/useFlag';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
@@ -60,6 +61,7 @@ export function AppLayout() {
         </div>
       </header>
       <Outlet />
+      <InstallPrompt />
     </>
   );
 }
