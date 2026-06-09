@@ -8,6 +8,9 @@ import { initSentry } from '@/lib/sentry';
 import { initPostHog } from '@/lib/posthog';
 import { queryClient } from '@/lib/queryClient';
 import { persistOptions } from '@/lib/persistQuery';
+import { registerSW } from 'virtual:pwa-register';
+
+registerSW({ immediate: true });
 
 initSentry();
 initPostHog();
