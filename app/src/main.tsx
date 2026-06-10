@@ -8,6 +8,7 @@ import { initSentry } from '@/lib/sentry';
 import { initPostHog } from '@/lib/posthog';
 import { queryClient } from '@/lib/queryClient';
 import { persistOptions } from '@/lib/persistQuery';
+import { AuthProvider } from '@/lib/useAuth';
 import { registerSW } from 'virtual:pwa-register';
 
 registerSW({ immediate: true });
@@ -18,9 +19,11 @@ initPostHog();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
     </PersistQueryClientProvider>
   </React.StrictMode>,
 );
