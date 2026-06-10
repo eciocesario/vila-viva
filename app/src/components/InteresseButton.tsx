@@ -34,8 +34,10 @@ export function InteresseButton({
   });
 
   // Quando o countServer atualiza (após refetch da vaga pelo trigger), o servidor
-  // já reflete o estado real — zera o delta otimista.
+  // já reflete o estado real — zera o delta otimista. Sincronizar estado local
+  // com um valor externo que mudou é uso legítimo do effect.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOptimisticDelta(0);
   }, [countServer]);
 

@@ -46,25 +46,25 @@ interface InstallPromptState {
 
 export function useInstallPrompt(): InstallPromptState {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
-  const [visible, setVisible] = useState(false);
   const isIOS = detectIOS(window.navigator.userAgent);
 
-  useEffect(() => {
+  // Decide a visibilidade no init do useState (uma vez no mount) em vez de
+  // setState dentro do effect. bumpVisits roda aqui; em produção (sem
+  // StrictMode) roda 1x. iOS não dispara beforeinstallprompt, então a decisão
+  // não depende do evento.
+  const [visible, setVisible] = useState<boolean>(() => {
     const visits = bumpVisits();
     const dismissed = sessionStorage.getItem(DISMISS_KEY) === '1';
     const standalone = isStandalone();
+    return shouldShowPrompt({ visits, dismissed, standalone });
+  });
 
+  useEffect(() => {
     const onBeforeInstall = (e: Event) => {
       e.preventDefault();
       setDeferred(e as BeforeInstallPromptEvent);
     };
     window.addEventListener('beforeinstallprompt', onBeforeInstall);
-
-    // iOS não dispara beforeinstallprompt — decide na hora.
-    if (shouldShowPrompt({ visits, dismissed, standalone })) {
-      setVisible(true);
-    }
-
     return () => window.removeEventListener('beforeinstallprompt', onBeforeInstall);
   }, []);
 

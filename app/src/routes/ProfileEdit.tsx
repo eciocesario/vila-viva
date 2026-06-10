@@ -60,6 +60,9 @@ export default function ProfileEdit() {
   const [oferece, setOferece] = useState<Set<string>>(new Set());
   const [busca, setBusca] = useState<Set<string>>(new Set());
 
+  // Hidrata os campos editáveis a partir dos dados buscados (profile/mySkills).
+  // É o uso legítimo do effect: os dados chegam async, não dá pra semear no init.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (profile) {
       setNome(profile.nome ?? '');
@@ -77,6 +80,7 @@ export default function ProfileEdit() {
       );
     }
   }, [profile, mySkills]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const save = useMutation({
     mutationFn: async () => {
