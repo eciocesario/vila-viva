@@ -5,6 +5,9 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
+// Dispensar é por SESSÃO (sessionStorage), não permanente: fechar o banner
+// esconde só na sessão atual; ao reabrir o app ele volta, até a pessoa instalar
+// (aí roda em standalone e o banner não aparece mais).
 const DISMISS_KEY = 'vila-viva-install-dismissed';
 const VISITS_KEY = 'vila-viva-visits';
 
@@ -48,7 +51,7 @@ export function useInstallPrompt(): InstallPromptState {
 
   useEffect(() => {
     const visits = bumpVisits();
-    const dismissed = localStorage.getItem(DISMISS_KEY) === '1';
+    const dismissed = sessionStorage.getItem(DISMISS_KEY) === '1';
     const standalone = isStandalone();
 
     const onBeforeInstall = (e: Event) => {
@@ -66,7 +69,7 @@ export function useInstallPrompt(): InstallPromptState {
   }, []);
 
   function dismiss() {
-    localStorage.setItem(DISMISS_KEY, '1');
+    sessionStorage.setItem(DISMISS_KEY, '1');
     setVisible(false);
   }
 
