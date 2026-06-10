@@ -2,6 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/useAuth';
+import { useOnlineStatus } from '@/lib/useOnlineStatus';
+import { OfflineNotice } from '@/components/OfflineNotice';
 import { PERFIL_LABELS, type Perfil } from '@/domain/onboardingValidation';
 import { calcularSementes, type SementesCounts } from '@/domain/sementes';
 import { badgesDesbloqueados } from '@/domain/badges';
@@ -11,6 +13,7 @@ import { BadgesGrid } from '@/components/BadgesGrid';
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
   const { session, signOut } = useAuth();
+  const online = useOnlineStatus();
   const { data, isLoading, error } = useQuery({
     queryKey: ['profile', id],
     queryFn: async () => {
@@ -74,7 +77,15 @@ export default function Profile() {
   });
 
   if (isLoading) return <main className="p-6">Carregando…</main>;
-  if (error || !data) return <main className="p-6 text-terra">Perfil não encontrado.</main>;
+  if (error || !data) {
+    return online ? (
+      <main className="p-6 text-terra">Perfil não encontrado.</main>
+    ) : (
+      <main className="p-6">
+        <OfflineNotice />
+      </main>
+    );
+  }
 
   const isOwn = session?.user.id === data.id;
 

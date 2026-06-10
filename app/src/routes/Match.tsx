@@ -3,12 +3,15 @@ import { useQuery } from '@tanstack/react-query';
 import { Navigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useFlag } from '@/lib/useFlag';
+import { useOnlineStatus } from '@/lib/useOnlineStatus';
 import { PERFIS_ONBOARDING, PERFIL_LABELS } from '@/domain/onboardingValidation';
 import { MatchCard, type MatchResult } from '@/components/MatchCard';
+import { OfflineNotice } from '@/components/OfflineNotice';
 import { track } from '@/lib/posthog';
 
 export default function Match() {
   const enabled = useFlag('match_pessoas');
+  const online = useOnlineStatus();
   const [search, setSearch] = useState('');
   const [perfilFilter, setPerfilFilter] = useState<string>('');
   const deferredSearch = useDeferredValue(search);
@@ -69,11 +72,14 @@ export default function Match() {
       </div>
 
       {isLoading && <p className="text-sm opacity-60">Buscando…</p>}
-      {error && (
-        <p className="text-sm text-terra">
-          Erro ao buscar pessoas: {error instanceof Error ? error.message : 'Tente novamente.'}
-        </p>
-      )}
+      {error &&
+        (online ? (
+          <p className="text-sm text-terra">
+            Erro ao buscar pessoas: {error instanceof Error ? error.message : 'Tente novamente.'}
+          </p>
+        ) : (
+          <OfflineNotice />
+        ))}
       <div className="space-y-3">
         {data?.map((m) => <MatchCard key={m.id} m={m} />)}
       </div>
